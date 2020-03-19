@@ -7,6 +7,7 @@ import ProductList from "./ProductList";
 import Product from "./Product";
 import ProductDetails from "./ProductDetails";
 import Cart  from "./Cart";
+import Modal from "./Modal";
 
 class UserHome extends Component{
 
@@ -19,6 +20,7 @@ class UserHome extends Component{
                     <Route path="/ProductDetails" component={ProductDetails}/>
                     <Route path="/Cart" component={Cart}/>
                 </Switch>
+                <Modal/>
             </React.Fragment>
         );
     }

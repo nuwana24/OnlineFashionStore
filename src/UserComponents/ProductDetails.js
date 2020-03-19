@@ -48,7 +48,8 @@ class ProductDetails extends Component {
                                             Cart
                                             disabled = {inCart? true: false}
                                             onClick={() => {
-                                                value.addToCart(id)
+                                                value.addToCart(id);
+                                                value.openModal(id);
                                         }}>
                                             {inCart? "In Cart": "Add to Cart"}
                                         </CartButtonContainer>
