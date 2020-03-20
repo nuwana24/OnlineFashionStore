@@ -1,11 +1,45 @@
 import React, {Component} from 'react';
-
 import {ProductConsumer } from "../context";
 import {Link } from "react-router-dom";
 import {CartButtonContainer} from "./Buttons";
+import {ReviewButtonContainer} from "./Buttons";
+import StarRatingComponent from './StarRatingComponent';
+
+
+import {TextField} from "@material-ui/core";
 
 class ProductDetails extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            value: 'Please write review about this product.'
+        };
+
+        this.state = {
+            rating: 1
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+            alert('An Review was submitted');
+            event.preventDefault();
+    }
+
+    onStarClick(nextValue, prevValue, name) {
+        this.setState({rating: nextValue});
+    }
+
     render() {
+        const { rating } = this.state;
+
         return (
             <ProductConsumer>
                 {value => {
@@ -40,6 +74,26 @@ class ProductDetails extends Component {
                                     <p className="text-muted lead">
                                         {info}
                                     </p>
+                                    <div>
+                                        <h5>Ratings: {rating}</h5>
+                                        <StarRatingComponent
+                                            name="rate1"
+                                            starCount={5}
+                                            value={rating}
+                                            onStarClick={this.onStarClick.bind(this)}
+                                        />
+                                        <form onSubmit={this.handleSubmit}>
+                                            <label>
+                                                <h5>Summary of Review</h5>
+                                                <textarea value={this.state.value} onChange={this.handleChange} />
+                                            </label>
+                                            <div>
+                                                <ReviewButtonContainer type="submit">Submit Review</ReviewButtonContainer>
+
+                                            </div>
+
+                                        </form>
+                                    </div>
                                     <div>
                                         <Link to='/'>
                                             <CartButtonContainer> Back to Home</CartButtonContainer>

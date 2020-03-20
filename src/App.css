@@ -52,6 +52,8 @@
   --mainWhite: #f3f3f3;
   --mainDark: #232528;
   --mainYellow: #ffa400;
+  --reviewColourLight:#aeb6bf;
+  --reviewColour: #273746  ;
 }
 
 body {
