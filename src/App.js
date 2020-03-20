@@ -13,7 +13,7 @@ import ViewStats from "./AdminComponents/ViewStats";
 import EditStoreManager from "./AdminComponents/EditStoreManager";
 import ProductList from "./UserComponents/ProductList";
 import ProductDetails from "./UserComponents/ProductDetails";
-import Cart from "./UserComponents/Cart";
+import Cart from "./UserComponents/Cart/Cart";
 
 function App() {
   return (
