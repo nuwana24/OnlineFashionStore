@@ -4,7 +4,11 @@ import ReactDOM from "react-dom";
 import {Input} from "@material-ui/core";
 import logo from '../Images/plusLogo.png'
 import NavBar from "./NavBar";
+import background from "../Images/AdminBackgroud.jpg";
 // import axios from 'axios';
+var sectionstyle ={
+    backgroundImage: `url(${background})`
+}
 
 export default class AddCategories extends Component {
     constructor(props) {
@@ -104,12 +108,14 @@ export default class AddCategories extends Component {
             <div>
 
                 <NavBar />
+                <section style={sectionstyle}>
                 <Container>
-                <h3>Add New Category</h3>
+                <div className="p-3 mb-2 bg-light text-dark">
+                    <center><h3>Add New Category</h3></center>
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">
-                        <label>Category :  </label>
+                        <label>Category </label>
                         <input  type="text"
                                 required
                                 className="form-control"
@@ -118,11 +124,21 @@ export default class AddCategories extends Component {
                         />
                         </div>
                     <div>
-                        <p>Sub categories</p>
+
+                        <p>Sub categories {" "}
+
+
+                        <button
+                            type="button"
+                            onClick={this.handleAddSubCategory}
+                            className="btn btn-info btn-sm"
+                        >
+                            +
+                        </button>
+                        </p>
                     {this.state.subCategories.map((subcategory, idx) => (
 
                         <div className="subcategory">
-
                             <input
                                 type="text"
                                 placeholder={`Sub Category #${idx + 1} `}
@@ -140,18 +156,11 @@ export default class AddCategories extends Component {
 
                         </div>
                     ))}
-                    <br />
-                    <button
-                        type="button"
-                        onClick={this.handleAddSubCategory}
-                        className="btn btn-info btn-sm"
-                    >
-                        Add Sub Category
-                    </button>
-                        <br />
-                        <div className="subcategory">
+
+
+                        <div className="description">
                             <br />
-                            <label>Description : </label>
+                            <label>Description  </label>
                             <input  type="text"
                                     required
                                     className="form-control"
@@ -165,7 +174,9 @@ export default class AddCategories extends Component {
                         <input type="submit" value="Add Category" className="btn btn-info" />
                     </div>
                 </form>
+                </div>
                 </Container>
+            </section>
             </div>
 
         )
