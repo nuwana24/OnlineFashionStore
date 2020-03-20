@@ -6,7 +6,7 @@ import NavBar from "./NavBar";
 import ProductList from "./ProductList";
 import Product from "./Product";
 import ProductDetails from "./ProductDetails";
-import Cart  from "./Cart";
+import Cart  from "./Cart/Cart";
 import Modal from "./Modal";
 
 class UserHome extends Component{
