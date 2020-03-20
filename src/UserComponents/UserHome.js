@@ -15,8 +15,9 @@ class UserHome extends Component{
         return (
             <React.Fragment>
                 <NavBar/>
+                <ProductList />
                 <Switch>
-                    <Route exact path="/" component={ProductList}/>
+                    {/*<Route exact path="/ProductList" component={ProductList}/>*/}
                     <Route path="/ProductDetails" component={ProductDetails}/>
                     <Route path="/Cart" component={Cart}/>
                 </Switch>
