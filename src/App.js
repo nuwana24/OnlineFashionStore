@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserHome from "./UserComponents/UserHome";
-import NavBar from "./UserComponents/NavBar"
+import NavBar from "./AdminComponents/NavBar";
 import FooterPage from "./AdminComponents/Footer";
 import CreateLogin from "./AdminComponents/CreateLogin";
 import AdminMain from "./AdminComponents/AdminMain";
@@ -13,12 +13,11 @@ import ViewStats from "./AdminComponents/ViewStats";
 import EditStoreManager from "./AdminComponents/EditStoreManager";
 import ProductList from "./UserComponents/ProductList";
 import ProductDetails from "./UserComponents/ProductDetails";
-import Cart from "./UserComponents/Cart/Cart";
-import Modal from "./UserComponents/Modal";
+import Cart from "./UserComponents/Cart";
 
 function App() {
   return (
-      <React.Fragment>
+      <Router>
 
           <div>
               <ul className="navbar-nav mr-auto">
@@ -30,7 +29,7 @@ function App() {
           </div>
       {/*<UserHome/>*/}
 
-        <NavBar/>
+
       <br />
       <switch>
 
@@ -43,17 +42,15 @@ function App() {
           <Route path="/AddCategory" exact component={AddCategories}/>
           <Route path="/ViewStats" exact component={ViewStats}/>
 
-          {/*User
-          <Route path="/" exact component={UserHome} />*/}
-          <Route exact path="/" component={ProductList}/>
+          {/*User*/}
+          <Route path="/" exact component={UserHome} />
+          <Route exact path="/ProductList" component={ProductList}/>
           <Route path="/ProductDetails" component={ProductDetails}/>
           <Route path="/Cart" component={Cart}/>
-
           <br />
       </switch>
-          <Modal/>
       <FooterPage/>
-      </React.Fragment>
+      </Router>
     );
 }
 
