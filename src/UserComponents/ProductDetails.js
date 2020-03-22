@@ -61,15 +61,14 @@ class ProductDetails extends Component {
                                         WishList
                                         onClick={() => {
                                             value.HandleWishList(id);
-                                            value.addToWishList(id);
-                                            value.changned();
+                                            // value.changned();
                                         }}>
-                                        <span className="mr-1">
+                                        <span className="mr1">
                                             <i className=" fas fa-heart" ></i>
                                         </span>
+                                        Add to WishList
                                     </ReviewButtonContainer>
                                 </div>
-
                                 <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
                                     <h2>Model : {title}</h2>
                                     <h4 className="text-title text-uppercase text-muted mt-3 mb-2">

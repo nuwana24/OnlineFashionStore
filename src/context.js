@@ -235,7 +235,7 @@ class ProductProvider extends Component {
         const favourite = this.getFavourites(id);
         console.log(favourite);
 
-        if(favourite.inWishList){
+        if(! favourite.inWishList){
             console.log('IN IF()');
             this.addToWishList(id);
         }
@@ -245,9 +245,9 @@ class ProductProvider extends Component {
         }
     };
 
-    changned = () =>{
-        alert("Added to WishList")
-    };
+    // changned = () =>{
+    //     alert("Added to WishList")
+    // };
 
     render() {
         return (
@@ -265,7 +265,7 @@ class ProductProvider extends Component {
                 addToWishList: this.addToWishList,
                 removeFavourites: this.removeFavourites,
                 HandleWishList: this.HandleWishList,
-                changned: this.changned
+                // changned: this.changned
             }}>
                 {this.props.children}
             </ProductContext.Provider>
