@@ -3,8 +3,8 @@ import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserHome from "./UserComponents/UserHome";
-import NavBar from "./AdminComponents/NavBar";
-import Navbar from "./UserComponents/NavBar";
+
+// Admin
 import FooterPage from "./AdminComponents/Footer";
 import CreateLogin from "./AdminComponents/CreateLogin";
 import AdminMain from "./AdminComponents/AdminMain";
@@ -12,14 +12,18 @@ import ViewManager from "./AdminComponents/ViewStoreManagers";
 import AddCategories from "./AdminComponents/AddCategories";
 import ViewStats from "./AdminComponents/ViewStats";
 import EditStoreManager from "./AdminComponents/EditStoreManager";
+
+// User
 import ProductList from "./UserComponents/ProductList";
 import ProductDetails from "./UserComponents/ProductDetails";
 import Cart from "./UserComponents/Cart/Cart";
-
 import WishListMain from "./UserComponents/WishList/WishListMain";
 import WishListItemsList from "./UserComponents/WishList/WishListItemsList";
 import WishListHome from "./UserComponents/WishList/WishListHome";
 
+// manager
+import ManagerHome from "./ManagerComponents/ManagerHome";
+import addItem from "./ManagerComponents/addItem";
 
 function App() {
   return (
@@ -27,17 +31,19 @@ function App() {
 
           <div>
               <ul className="navbar-nav mr-auto">
+
                   <li><Link to={'/'} className="nav-link"> User </Link></li>
 
                   <li><Link to={'/Admin'} className="nav-link">Admin</Link></li>
-                  {/*<li><Link to={'/about'} className="nav-link">About</Link></li>*/}
+                  <li><Link to={'/Manager'} className="nav-link">Manager</Link></li>
+
               </ul>
           </div>
       {/*<UserHome/>*/}
 
 
       <br />
-      <Navbar/>
+
       <switch>
 
           {/*Admin*/}
@@ -57,6 +63,10 @@ function App() {
           <Route path="/WishListMain"component={WishListMain} />
           <Route path="/WishListItemList" component={WishListItemsList}/>
           <Route path="/WishListHome" component={WishListHome}/>
+
+          {/*Manager*/}
+          <Route path="/Manager" exact component={ManagerHome}/>
+          <Route path="/AddItem" exact component={addItem}/>
           <br />
       </switch>
       <FooterPage/>

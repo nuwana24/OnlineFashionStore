@@ -3,6 +3,10 @@ import NavBar from "./NavBar";
 import FooterPage from "./Footer";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import background from '../Images/AdminBackgroud.jpg';
+import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import emailjs from 'emailjs-com';
 
 var sectionstyle ={
     backgroundImage: `url(${background})`
@@ -11,34 +15,44 @@ export default class CreateLogin extends Component {
    constructor(props) {
        super(props);
 
+       this.onChangefirstName = this.onChangefirstName.bind(this);
+       this.onChangelastName = this.onChangelastName.bind(this);
        this.onChangeEmail = this.onChangeEmail.bind(this);
        this.onChangePassword = this.onChangePassword.bind(this);
-       this.onChangeRePassword = this.onChangeRePassword.bind(this);
        this.onChangeGender = this.onChangeGender.bind(this);
-       this.onChangeDOB = this.onChangeDOB.bind(this);
+       this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
        this.onChangeAddress = this.onChangeAddress.bind(this);
        this.onChangeAddress2 = this.onChangeAddress2.bind(this);
        this.onChangeCity = this.onChangeCity.bind(this);
-       this.onChangeStates = this.onChangeStates.bind(this);
        this.onChangeZip = this.onChangeZip.bind(this);
        this.onSubmit = this.onSubmit.bind(this);
 
        this.state ={
+           firstName:'',
+           lastName:'',
            email : '',
+           genders: ['Male','Female','Prefer not to say'],
            gender:'',
            password :'',
-           rePassword :'',
-           DOB : new Date(),
+           dateOfBirth : new Date(),
            Address : '',
            Address2 : '',
            city : '',
-           states :'',
            zip : 0
        }
    }
 
-   componentDidMount() {
-   }
+
+    onChangefirstName(e){
+        this.setState({
+            firstName: e.target.value
+        });
+    }
+    onChangelastName(e){
+        this.setState({
+            lastName: e.target.value
+        });
+    }
 
     onChangeEmail=(e)=>{
        this.setState({
@@ -50,19 +64,14 @@ export default class CreateLogin extends Component {
            password: e.target.value
        });
    }
-   onChangeRePassword(e){
-       this.setState({
-           rePassword: e.target.value
-       });
-   }
     onChangeGender(e){
         this.setState({
             gender: e.target.value
         });
     }
-   onChangeDOB(date){
+   onChangeDateOfBirth(date){
        this.setState({
-           DOB: date
+           dateOfBirth: date
        });
    }
    onChangeAddress(e){
@@ -81,11 +90,6 @@ export default class CreateLogin extends Component {
            city: e.target.value
        });
    }
-   onChangeStates(e){
-       this.setState({
-           states: e.target.value
-       });
-   }
 
    onChangeZip(e){
        this.setState({
@@ -99,18 +103,36 @@ export default class CreateLogin extends Component {
        e.preventDefault();
 
        const manager = {
-           email:this.state.email,
-           password: this.state.password,
-           rePassword: this.state.rePassword,
+           firstName: this.state.firstName,
+           lastName: this.state.lastName,
+           email: this.state.email,
            gender: this.state.gender,
-           DOB: this.state.DOB,
+           password:this.state.password,
+           dateOfBirth: this.state.dateOfBirth,
            Address: this.state.Address,
            Address2: this.state.Address2,
            city: this.state.city,
-           states: this.state.states,
            zip: this.state.zip
        }
        console.log(manager)
+       axios.post('http://localhost:5000/managers/add', manager)
+           .then(res => console.log(res.data));
+
+       const template_params = {
+           _semail: 'rashinikavindya@gmail.com',
+           _sfirstName: 'Rashini',
+           _spassword: 'this.password'
+       };
+
+       // var service_id = "default_service";
+       // var template_id = "manager_added";
+       // emailjs.send(service_id, template_id, template_params);
+       emailjs.send('gmail', 'manager_added', template_params,'user_9WG54Qaz01s5b2BnGY2Jq')
+           .then((response) => {
+               console.log('SUCCESS!', response.status, response.text);
+           }, (err) => {
+               console.log('FAILED...', err);
+           });;
 
        window.location = '/CreateLogin';
    }
@@ -119,6 +141,7 @@ export default class CreateLogin extends Component {
 
         return (
             <header>
+
                 <NavBar />
                 <div>
                     <div>
@@ -137,7 +160,17 @@ export default class CreateLogin extends Component {
                                         <h2>
                                             <center>Add a Login for a stock Manager</center>
                                         </h2>
-                                        <form onSubmit={this.onSubmit}>
+                                        <Form onSubmit={this.onSubmit}>
+                                            <Form.Row>
+                                            <Form.Group as={Col} controlId="formGridFname">
+                                                <Form.Label>First Name</Form.Label>
+                                                <Form.Control  type = "text" placeholder="Enter First Name"  value = {this.state.firstName} onChange = {this.onChangefirstName}/>
+                                            </Form.Group>
+                                                <Form.Group as={Col} controlId="formGridLname">
+                                                    <Form.Label>Last Name</Form.Label>
+                                                    <Form.Control placeholder="Enter Last Name" onChange = {this.onChangelastName} value = {this.state.lastName}/>
+                                                </Form.Group>
+                                        </Form.Row>
                                             <Form.Row>
                                                 <Form.Group as={Col} controlId="formGridEmail">
                                                     <Form.Label>Email</Form.Label>
@@ -150,24 +183,37 @@ export default class CreateLogin extends Component {
                                                     <Form.Control type="password" placeholder="Password" onChange = {this.onChangePassword} value = {this.state.password}/>
                                                 </Form.Group>
 
-                                                <Form.Group as={Col} controlId="formGridPassword">
+                                                <Form.Group as={Col} controlId="formGridRePassword">
                                                     <Form.Label>Re-enter Password</Form.Label>
-                                                    <Form.Control type="password" placeholder="Re-enter Password" onChange = {this.onChangeRePassword} value = {this.state.rePassword}/>
+                                                    <Form.Control type="password" placeholder="Re-enter Password" />
                                                 </Form.Group>
 
                                             </Form.Row>
                                             <Form.Row>
                                                 <Form.Group as={Col} controlId="fromGridDOB">
-                                                    <Form.Label>Date of Birth</Form.Label>
-                                                    <Form.Control type="date" placeholder="" onChange = {this.onChangeDOB} />
+                                                    {/*<Form.Label>Date of Birth</Form.Label>*/}
+                                                    {/*<Form.Control type="date"  onChange = {this.onChangeDateOfBirth} selected = {this.state.dateOfBirth}/>*/}
+
+                                                    <label>Date of Birth: </label>
+                                                    <div>
+                                                        <DatePicker
+                                                            selected={this.state.dateOfBirth}
+                                                            onChange={this.onChangeDateOfBirth}
+                                                        />
+                                                    </div>
                                                 </Form.Group>
 
                                                 <Form.Group as={Col} controlId="fromGridGender">
                                                     <Form.Label>Gender</Form.Label><br/>
-                                                    <Form.Control as="select" placeholder="Choose..." onChange = {this.onChangeGender} value = {this.state.gender}>
-                                                        <option>Male</option>
-                                                        <option>Female</option>
-                                                        <option>Prefer not to say</option>
+                                                    <Form.Control as="select"  placeholder="Choose..." onChange = {this.onChangeGender} value = {this.state.gender}>
+                                                        {
+                                                            this.state.genders.map(function(gender) {
+                                                                return <option
+                                                                    key={gender}
+                                                                    value={gender}>{gender}
+                                                                </option>;
+                                                            })
+                                                        }
                                                     </Form.Control>
                                                 </Form.Group>
 
@@ -188,14 +234,6 @@ export default class CreateLogin extends Component {
                                                     <Form.Control onChange = {this.onChangeCity} value = {this.state.city}/>
                                                 </Form.Group>
 
-                                                <Form.Group as={Col} controlId="formGridState" >
-                                                    <Form.Label>State</Form.Label>
-                                                    <Form.Control as="select"  onChange = {this.onChangeStates} value = {this.state.states}>
-                                                        <option>Choose...</option>
-                                                        <option>...</option>
-                                                    </Form.Control>
-                                                </Form.Group>
-
                                                 <Form.Group as={Col} controlId="formGridZip">
                                                     <Form.Label>Zip</Form.Label>
                                                     <Form.Control  onChange = {this.onChangeZip} value = {this.state.zip}/>
@@ -210,7 +248,7 @@ export default class CreateLogin extends Component {
                                                     Submit
                                                 </Button>
                                             </center>
-                                        </form>
+                                        </Form>
                                     </div>
                                 </Col>
 

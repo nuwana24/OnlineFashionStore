@@ -5,7 +5,7 @@ import {Input} from "@material-ui/core";
 import logo from '../Images/plusLogo.png'
 import NavBar from "./NavBar";
 import background from "../Images/AdminBackgroud.jpg";
-// import axios from 'axios';
+import axios from 'axios';
 var sectionstyle ={
     backgroundImage: `url(${background})`
 }
@@ -15,6 +15,8 @@ export default class AddCategories extends Component {
         super(props);
 
         this.onChangeCategory = this.onChangeCategory.bind(this);
+        this.handleAddSubCategory = this.handleAddSubCategory.bind(this);
+        this.handleRemoveSubCategory = this.handleRemoveSubCategory.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
@@ -36,7 +38,7 @@ export default class AddCategories extends Component {
 
     handleAddSubCategory = () => {
         this.setState({
-            subCategories: this.state.subCategories.concat([{category: "" }])
+            subCategories: this.state.subCategories.concat([{name: "" }])
         });
     };
 
@@ -45,55 +47,40 @@ export default class AddCategories extends Component {
             subCategories: this.state.subCategories.filter((s, sidx) => idx !== sidx)
         });
     };
-    // onChangeSubs(e){
-    //     this.setState({
-    //         subcats: e.target.value
-    //     })
-    // }
+
     onChangeCategory(e) {
         this.setState({
             category: e.target.value
         })
     }
 
-    // onChangeSubCategory(e) {
-    //     this.setState({
-    //         category: e.target.value
-    //     })
-    // }
+    onChangeSubCategory(e){
+        this.setState({
+            subCategories: e.target.value
+        })
+    }
 
     onChangeDescription(e){
         this.setState({
             description: e.target.value
         })
     }
-
-
-    // onAddCategory() {
-    //     console.log('clicked');
-    //     const name = `ingrediant-${Object.keys(this.state.subcats).length}`;
-    //     let inputbox = <Input name={name}
-    //                           onChange={this.onChange.bind(this, name)}/>
-    //     const inputs = this.state.inputs;
-    //     inputs.push( inputbox );
-    //     this.setState( { inputs } );
-    //
-    // }
     onSubmit(e) {
         e.preventDefault();
 
-        const user = {
+        const categories = {
             category: this.state.category,
             subCategories: this.state.subCategories,
             description: this.state.description
         }
 
-        const { category, subCategories } = this.state;
-        console.log(user);
-        alert('${category} added with ${subCategories.length} Sub Categories');
+        // console.log(categories.subCategories);
 
-        // axios.post('http://localhost:5000/users/add', user)
-        //     .then(res => console.log(res.data));
+        console.log(categories);
+        // alert(`${category} added with ${subCategories.length} Sub Categories`);
+
+        axios.post('http://localhost:5000/category/add', categories)
+            .then(res => console.log(res.data));
 
         this.setState({
             category: '',
