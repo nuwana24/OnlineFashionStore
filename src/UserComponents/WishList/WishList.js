@@ -9,7 +9,6 @@ export default function WishList({value}) {
 
     return (
         <div>
-            <NavBar />
         <div className="container-fluid">
             {WishList.map(item => {
                 return <WishListItems key = {item.id} item={item} value={value}/>
