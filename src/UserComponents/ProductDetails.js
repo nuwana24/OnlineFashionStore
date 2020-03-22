@@ -4,7 +4,7 @@ import {Link } from "react-router-dom";
 import {CartButtonContainer} from "./Buttons";
 import {ReviewButtonContainer} from "./Buttons";
 import StarRatingComponent from './StarRatingComponent';
-
+import NavBar from "./NavBar";
 
 import {TextField} from "@material-ui/core";
 
@@ -48,6 +48,7 @@ class ProductDetails extends Component {
 
                     return (
                         <div className="container py-5">
+                        <NavBar />
                             <div className="row">
                                  <div className="col-10 mx-auto text-center text-slanted text-blue my-5">
                                      <h1>{title}</h1>
