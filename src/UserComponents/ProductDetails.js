@@ -44,6 +44,7 @@ class ProductDetails extends Component {
             <ProductConsumer>
                 {value => {
                     const {id, company, img, info, price, title, inCart} = value.detailProduct;
+                    const {inWishList} = value.favouritesProduct;
 
                     return (
                         <div className="container py-5">
@@ -56,6 +57,17 @@ class ProductDetails extends Component {
                             <div className="row">
                                 <div className="col-10 mx-auto col-md-6 my-3">
                                     <img src ={img} className="img-fluid" alt="product"/>
+                                    <ReviewButtonContainer
+                                        WishList
+                                        onClick={() => {
+                                            value.HandleWishList(id);
+                                            value.addToWishList(id);
+                                            value.changned();
+                                        }}>
+                                        <span className="mr-1">
+                                            <i className=" fas fa-heart" ></i>
+                                        </span>
+                                    </ReviewButtonContainer>
                                 </div>
 
                                 <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
@@ -89,9 +101,7 @@ class ProductDetails extends Component {
                                             </label>
                                             <div>
                                                 <ReviewButtonContainer type="submit">Submit Review</ReviewButtonContainer>
-
                                             </div>
-
                                         </form>
                                     </div>
                                     <div>

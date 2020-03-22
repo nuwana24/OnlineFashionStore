@@ -20,15 +20,24 @@ class NavBar extends Component {
                         </Link>
                     </li>
                 </ul>
-
-                <Link to='/Cart' className="ml-auto">
-                     <CartButtonContainer>
+                    <Link to='/WishListMain' className="ml-1">
+                        <CartButtonContainer>
+                         <span className="mr-2">
+                             <i className=" fas fa-heart"></i>
+                         </span>
+                            WishList
+                        </CartButtonContainer>
+                    </Link>
+                    <Link to='/Cart' className="ml-auto">
+                        <CartButtonContainer>
                          <span className="mr-2">
                             <i className="fas fa-cart-plus"/>
                          </span>
-                         Cart
-                     </CartButtonContainer>
-                </Link>
+                            Cart
+                        </CartButtonContainer>
+                    </Link>
+
+
             </NavWrapper>
         );
     }

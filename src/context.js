@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
 import {storeProducts, detailProduct } from "./data";
+import {storeFavourites, favouritesProduct } from "./UserComponents/WishList/WishListFaves";
+import WishList from "./UserComponents/WishList/WishList";
 const ProductContext = React.createContext();
 
 
@@ -14,11 +16,16 @@ class ProductProvider extends Component {
         modalProduct: detailProduct,
         cartSubTotal: 0,
         cartTax: 0,
-        cartTotal: 0
+        cartTotal: 0,
+        //WishList
+        WishListItems: [],
+        favouritesProduct: favouritesProduct,
+        WishList: []
     };
 
     componentDidMount() {
         this.setProducts();
+        this.setFavourites();
     }
 
     setProducts = () => {
@@ -162,6 +169,86 @@ class ProductProvider extends Component {
         });
     };
 
+    //WishList Context
+
+    //set favourites for wishList
+    setFavourites = () =>{
+        let tempItem = [];
+        storeFavourites.forEach(item => {
+            const FavsOne = {...item};
+            tempItem = [...tempItem, FavsOne];
+        });
+
+        this.setState(() => {
+            return {WishListItems: tempItem};
+        });
+    }
+
+    //get favourites
+    getFavourites = (id) =>{
+        const favourite = this.state.WishListItems.find(item => item.id === id );
+        return favourite;
+    }
+
+    //handle favourites
+    handleFavourites = (id) =>{
+        const favourite = this.getFavourites(id);
+        this.setState(() => {
+            return {favouritesProduct: favourite}
+        })
+    };
+
+    //Add to wishList
+    addToWishList = id =>{
+        let tempItem = [...this.state.WishListItems];
+        const index = tempItem.indexOf(this.getFavourites(id));
+        const favourite = tempItem[index];
+        favourite.inWishList = true;
+
+        this.setState(() => {
+            return {WishListItems: tempItem, WishList: [...this.state.WishList,favourite]}
+        });
+
+    };
+    //Remove Favourites
+    removeFavourites = (id) => {
+        let tempItem = [...this.state.WishListItems];
+        let tempCart = [...this.state.WishList];
+
+        tempCart = tempCart.filter(item => item.id !== id);
+        const index = tempItem.indexOf(this.getFavourites(id));
+        let removedFavourites = tempItem[index];
+
+        removedFavourites.inWishList = false;
+
+        this.setState(() => {
+            return{
+                WishList: [...tempCart],
+                WishListItems: [...tempItem]
+            }
+        });
+    };
+
+    //Handle
+    HandleWishList = (id) =>{
+
+        const favourite = this.getFavourites(id);
+        console.log(favourite);
+
+        if(favourite.inWishList){
+            console.log('IN IF()');
+            this.addToWishList(id);
+        }
+        else {
+            console.log('IN ELSE()');
+            this.removeFavourites(id);
+        }
+    };
+
+    changned = () =>{
+        alert("Added to WishList")
+    };
+
     render() {
         return (
             <ProductContext.Provider value={{
@@ -173,7 +260,12 @@ class ProductProvider extends Component {
                 increment: this.increment,
                 decrement: this.decrement,
                 removeItem: this.removeItem,
-                clearCart: this.clearCart
+                clearCart: this.clearCart,
+                handleFavourites: this.handleFavourites,
+                addToWishList: this.addToWishList,
+                removeFavourites: this.removeFavourites,
+                HandleWishList: this.HandleWishList,
+                changned: this.changned
             }}>
                 {this.props.children}
             </ProductContext.Provider>
