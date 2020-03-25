@@ -7,11 +7,13 @@ import {ProductConsumer} from "../../context";
 
 import CartList from "./CartList";
 import CartTotals from "./CartTotals"
+import NavBar from "../NavBar";
 
 class Cart extends Component {
     render() {
         return (
             <section>
+            <NavBar />
                 <ProductConsumer>
                     {value => {
                         const {cart} = value;

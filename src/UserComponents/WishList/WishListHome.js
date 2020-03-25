@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ProductConsumer} from "../../context";
 import EmptyWishList from "./EmptyWishList";
+import NavBar from "../NavBar";
 
 class WishListHome extends Component {
     render() {

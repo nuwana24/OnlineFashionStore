@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/OnlineFashionStore.iml" filepath="$PROJECT_DIR$/.idea/OnlineFashionStore.iml" />
+=======
+<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/.idea/OnlineFashionStore.iml" filepath="$PROJECT_DIR$/.idea/OnlineFashionStore.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/OnlineFashionStoreF.iml" filepath="$PROJECT_DIR$/.idea/OnlineFashionStoreF.iml" />
+>>>>>>> origin/master
+>>>>>>> origin/master
     </modules>
   </component>
 </project>
