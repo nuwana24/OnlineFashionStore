@@ -32,6 +32,12 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/:id').get((req, res) => {
+    Manager.findById(req.params.id)
+        .then(managers => res.json(managers))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/:id').delete((req, res) => {
     Manager.findByIdAndDelete(req.params.id)
         .then(() => res.json('Manager deleted.'))
@@ -47,7 +53,7 @@ router.route('/update/:id').post((req, res) => {
             managers.gender = req.body.gender;
             managers.password = req.body.password;
             // managers.rePassword = req.body.rePassword;
-            managers.dateOfBirth = req.body.dateOfBirth;
+            managers.dateOfBirth = Date.parse(req.body.dateOfBirth);
             managers.Address = req.body.Address;
             managers.Address2 = req.body.Address2;
             managers.city = req.body.city;

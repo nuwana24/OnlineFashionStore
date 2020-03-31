@@ -12,6 +12,7 @@ import ViewManager from "./AdminComponents/ViewStoreManagers";
 import AddCategories from "./AdminComponents/AddCategories";
 import ViewStats from "./AdminComponents/ViewStats";
 import EditStoreManager from "./AdminComponents/EditStoreManager";
+import ViewCategories from "./AdminComponents/ViewCategories";
 
 // User
 import ProductList from "./UserComponents/ProductList";
@@ -51,8 +52,9 @@ function App() {
           <Route path="/Admin" exact component={AdminMain}/>
           <Route path="/CreateLogin" exact component={CreateLogin}/>
           <Route path="/ViewManager" exact component={ViewManager}/>
-          <Route path="/EditManager" exact component={EditStoreManager}/>
+          <Route path="/EditManager/:id" exact component={EditStoreManager}/>
           <Route path="/AddCategory" exact component={AddCategories}/>
+          <Route path="/ViewCategories" exact component={ViewCategories}/>
           <Route path="/ViewStats" exact component={ViewStats}/>
 
           {/*User*/}
