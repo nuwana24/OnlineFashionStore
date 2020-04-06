@@ -20,6 +20,10 @@ import Cart from "./UserComponents/Cart/Cart";
 import WishListMain from "./UserComponents/WishList/WishListMain";
 import WishListItemsList from "./UserComponents/WishList/WishListItemsList";
 import WishListHome from "./UserComponents/WishList/WishListHome";
+import Modal from "./UserComponents/Modal";
+import login from "./UserComponents/login";
+import { Provider } from 'react-redux';
+import store from './UserComponents/LoginHandler/store';
 
 // manager
 import ManagerHome from "./ManagerComponents/ManagerHome";
@@ -44,6 +48,7 @@ function App() {
 
       <br />
 
+      <Provider store={store}>
       <switch>
 
           {/*Admin*/}
@@ -63,6 +68,8 @@ function App() {
           <Route path="/WishListMain"component={WishListMain} />
           <Route path="/WishListItemList" component={WishListItemsList}/>
           <Route path="/WishListHome" component={WishListHome}/>
+          <Route path="/Modal" component={Modal}/>
+          <Route path="/login" component={login}/>
 
           {/*Manager*/}
           <Route path="/Manager" exact component={ManagerHome}/>
@@ -70,6 +77,7 @@ function App() {
           <br />
       </switch>
       <FooterPage/>
+      </Provider>
       </Router>
     );
 }

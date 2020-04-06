@@ -7,6 +7,7 @@ import {CartButtonContainer} from './Buttons';
 
 class NavBar extends Component {
     render() {
+
         return (
             <NavWrapper className="navbar navbar-expand-sm navbar-darkv px-sm-5">
                 <Link to="/">
@@ -28,6 +29,14 @@ class NavBar extends Component {
                             WishList
                         </CartButtonContainer>
                     </Link>
+                <Link to='/login' className="ml-auto">
+                    <CartButtonContainer>
+                         <span className="mr-2">
+                            <i className="fas fa-cart-plus"/>
+                         </span>
+                        Login
+                    </CartButtonContainer>
+                </Link>
                     <Link to='/Cart' className="ml-auto">
                         <CartButtonContainer>
                          <span className="mr-2">
