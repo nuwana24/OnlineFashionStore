@@ -11,6 +11,7 @@ import emailjs from 'emailjs-com';
 var sectionstyle ={
     backgroundImage: `url(${background})`
 }
+
 export default class CreateLogin extends Component {
    constructor(props) {
        super(props);
@@ -38,7 +39,12 @@ export default class CreateLogin extends Component {
            Address : '',
            Address2 : '',
            city : '',
-           zip : 0
+           zip : 0,
+           // errors :{
+           //     email:'',
+           //     password:'',
+           //
+           // }
        }
    }
 
@@ -119,28 +125,33 @@ export default class CreateLogin extends Component {
            .then(res => console.log(res.data));
 
        const template_params = {
-           _semail: 'rashinikavindya@gmail.com',
-           _sfirstName: 'Rashini',
-           _spassword: 'this.password'
-       };
+           "_semail": manager.email,
+           "_sfirstName": manager.firstName,
+           "_spassword": manager.password
+       }
 
-       // var service_id = "default_service";
-       // var template_id = "manager_added";
-       // emailjs.send(service_id, template_id, template_params);
-       emailjs.send('gmail', 'manager_added', template_params,'user_9WG54Qaz01s5b2BnGY2Jq')
+       const service_id = 'default_service';
+       var template_id = 'manager_added';
+       emailjs.send(service_id, template_id, template_params)
            .then((response) => {
                console.log('SUCCESS!', response.status, response.text);
            }, (err) => {
                console.log('FAILED...', err);
-           });;
+           });
 
-       window.location = '/CreateLogin';
+
    }
     render() {
 
 
         return (
             <header>
+                <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js'></script>
+                <script type='text/javascript'>
+                    { (function(){
+                    emailjs.init('user_9WG54Qaz01s5b2BnGY2Jq');
+                })()}
+                </script>
 
                 <NavBar />
                 <div>

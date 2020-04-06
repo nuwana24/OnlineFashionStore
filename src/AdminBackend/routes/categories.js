@@ -3,9 +3,10 @@ let Category = require('../Models/Category.model');
 
 router.route('/').get((req, res) => {
     Category.find()
-        .then(category => res.json(category))
+        .then(categories => res.json(categories))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
 
 router.route('/add').post((req, res) => {
     const category = req.body.category;
@@ -17,6 +18,12 @@ router.route('/add').post((req, res) => {
 
     newCategory.save()
         .then(() => res.json('Category added!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/:id').get((req, res) => {
+    Category.findById(req.params.id)
+        .then(categories => res.json(categories))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
