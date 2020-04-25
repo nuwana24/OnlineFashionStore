@@ -15,6 +15,7 @@ class ProductProvider extends Component {
         modalOpen: false,
         modalProduct: detailProduct,
         cartSubTotal: 0,
+        categorys: [],
         cartTax: 0,
         cartTotal: 0,
         //WishList
