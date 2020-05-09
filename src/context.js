@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {storeProducts, detailProduct } from "./data";
 import {storeFavourites, favouritesProduct } from "./UserComponents/WishList/WishListFaves";
 import WishList from "./UserComponents/WishList/WishList";
+import Axios from "axios";
 const ProductContext = React.createContext();
 
 
@@ -21,12 +22,14 @@ class ProductProvider extends Component {
         //WishList
         WishListItems: [],
         favouritesProduct: favouritesProduct,
-        WishList: []
+        WishList: [],
+        details:''
     };
 
     componentDidMount() {
         this.setProducts();
         this.setFavourites();
+
     }
 
     setProducts = () => {
@@ -44,14 +47,21 @@ class ProductProvider extends Component {
     getItem = (id) => {
         const product = this.state.products.find(item => item.id === id );
         return product;
-    }
+    };
 
-    handleDetail = (id) =>{
-        const product = this.getItem(id);
+    handleDetail = (details) =>{
+
         this.setState(() => {
-            return {detailProduct: product}
+            return {details: details}
         })
     };
+
+    // handleDetail = (id) =>{
+    //     const product = this.getItem(id);
+    //     this.setState(() => {
+    //         return {detailProduct: product}
+    //     })
+    // };
 
     addToCart = id =>{
         let tempProducts = [...this.state.products];
@@ -231,20 +241,20 @@ class ProductProvider extends Component {
     };
 
     //Handle
-    HandleWishList = (id) =>{
-
-        const favourite = this.getFavourites(id);
-        console.log(favourite);
-
-        if(! favourite.inWishList){
-            console.log('IN IF()');
-            this.addToWishList(id);
-        }
-        else {
-            console.log('IN ELSE()');
-            this.removeFavourites(id);
-        }
-    };
+    // HandleWishList = (id) =>{
+    //
+    //     const favourite = this.getFavourites(id);
+    //     console.log(favourite);
+    //
+    //     if(! favourite.inWishList){
+    //         console.log('IN IF()');
+    //         this.addToWishList(id);
+    //     }
+    //     else {
+    //         console.log('IN ELSE()');
+    //         this.removeFavourites(id);
+    //     }
+    // };
 
     // changned = () =>{
     //     alert("Added to WishList")

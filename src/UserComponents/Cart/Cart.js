@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 
 import Titles  from "../Titles";
 import CartColumns from './CartColumns';
@@ -8,111 +8,102 @@ import {ProductConsumer} from "../../context";
 import CartList from "./CartList";
 import CartTotals from "./CartTotals"
 import NavBar from "../NavBar";
-import axios from 'axios';
-import PropTypes from "prop-types";
-import store from '../LoginHandler/store';
-import { isAuth } from '../LoginHandler/actions/authActions'
-import {AUTH_FAIL, AUTH_SUCCESS} from "../LoginHandler/actions/types";
-import { connect } from "react-redux";
-import { buttonReset} from '../LoginHandler/actions/uiActions';
+import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
+import Axios from "axios";
 
-class Cart extends Component {
-    constructor(props) {
-        super(props);
+const mapStateToProps = ({ session}) => ({
+    session
+});
 
-        this.state = {
-            users : ''
-        };
-    }
+const Cart = ({session}) => {
 
-    // componentDidMount() {
-    //     fetch('http://localhost:5000/users/validate')
-    //         .then(response => response.text())
-    //         .then(response => { console.log(response)
-    //         });
-    //
-    //     console.log(this.state.validity);
-    //
-    //     if(this.state.validity === ''){
-    //         console.log('Null')
-    //     } else {
-    //         console.log('Validity'+this.state.validity)
-    //     }
-    //
-    // }
-    // componentDidMount() {
-    //     axios.get('http://localhost:5000/users/authenticator', {withCredentials:true})
-    //         .then(res => {
-    //             console.log(res);
-    //             return res.json()
-    //         })
-    //         .then(users => {
-    //             console.log(users);
-    //             this.setState({users})
-    //         })
-    //}
-    componentDidMount() {
-        //Check if session cookie is present
-        store.dispatch(isAuth());
-        // axios.defaults.withCredentials = true;
-        // axios
-        //     .get("http://localhost:5000/users/authchecker",{withCredentials:true})
-        //     .then((res) =>
-        //         console.log(res.data)
-        //     );
-    }
+    const [Cart, setCart] = useState([]);
 
-    // static propTypes = {
-    //     button: PropTypes.bool,
-    //     isAuthenticated: PropTypes.bool,
-    // };
-    static propTypes = {
-        button: PropTypes.bool,
-        authState: PropTypes.object.isRequired,
-        buttonReset: PropTypes.func.isRequired,
-        logout: PropTypes.func.isRequired,
-    };
+    useEffect(() => {
+        if(session.userId !== null){
 
-    render() {
-        if(this.props.authState.isAuthenticated) {
+            Axios.get('http://localhost:5000/api/cart/getCart', {params:{userId: session.userId}})
+                .then(res => {
+                    const cart = res.data;
+
+                    let tempProducts = [];
+                    cart.forEach(item => {
+                        const singleItem = {...item};
+                        tempProducts = [...tempProducts, singleItem];
+                    });
+
+                    setCart(tempProducts);
+                })
+        }
+
+    }, []);
+
+        if(session.username !== null){
+            console.log(Cart)
             return (
                 <section>
-                    <NavBar/>
-                    <ProductConsumer>
-                        {value => {
-                            const {cart} = value;
-
-                            if (cart.length > 0) {
-                                return (
+                    <NavBar />
+                        {(Cart.length > 0) ? (
                                     <React.Fragment>
-                                        <Titles name="Your " title="Cart">Cart</Titles>
+                                        <Titles name ="Your " title = "Cart">Cart</Titles>
                                         <CartColumns/>
-                                        <CartList value={value}/>
-                                        <CartTotals value={value}/>
+                                        <CartList cart = {Cart}/>
+                                        <CartTotals value={Cart}/>
                                     </React.Fragment>
-                                );
-                            } else {
-                                return (
+                            ) : (
                                     <EmptyCart/>
-                                );
-                            }
-                        }}
-                    </ProductConsumer>
+                            )
+                        }
                 </section>
             );
         } else {
-            return (
-                <section>
-                    <NavBar/>
-                    <p>Please log in</p>
-                </section>
+            return(
+                <Redirect to="/login" />
             );
         }
-    }
 }
 
-const mapStateToProps = (state) => ({ //Maps state to redux store as props
-    button: state.ui.button,
-    authState: state.auth
-});
-export default connect(mapStateToProps, { buttonReset })(Cart);
+export default connect(
+    mapStateToProps
+)(Cart);
+
+
+// class Cart extends Component {
+//
+//     render() {
+//
+//         if(session.username !== undefined){
+//             return (
+//                 <section>
+//                     <NavBar />
+//                     <ProductConsumer>
+//                         {value => {
+//                             const {cart} = value;
+//
+//                             if(cart.length > 0){
+//                                 return(
+//                                     <React.Fragment>
+//                                         <Titles name ="Your " title = "Cart">Cart</Titles>
+//                                         <CartColumns/>
+//                                         <CartList value = {value}/>
+//                                         <CartTotals value={value}/>
+//                                     </React.Fragment>
+//                                 );
+//                             } else {
+//                                 return (
+//                                     <EmptyCart/>
+//                                 );
+//                             }
+//                         }}
+//                     </ProductConsumer>
+//                 </section>
+//             );
+//         } else {
+//             return(
+//                 <Redirect to="/login" />
+//             );
+//         }
+//
+//     }
+// }

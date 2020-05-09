@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {ProductConsumer} from "../../context";
 import EmptyWishList from "./EmptyWishList";
 import NavBar from "../NavBar";
+import Axios from "axios";
 
 class WishListHome extends Component {
+
     render() {
         return (
             <section>
