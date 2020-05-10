@@ -12,7 +12,6 @@ import ViewManager from "./AdminComponents/ViewStoreManagers";
 import AddCategories from "./AdminComponents/AddCategories";
 import ViewStats from "./AdminComponents/ViewStats";
 import EditStoreManager from "./AdminComponents/EditStoreManager";
-import ViewCategories from "./AdminComponents/ViewCategories";
 
 // User
 import ProductList from "./UserComponents/ProductList";
@@ -23,8 +22,7 @@ import WishListItemsList from "./UserComponents/WishList/WishListItemsList";
 import WishListHome from "./UserComponents/WishList/WishListHome";
 import Modal from "./UserComponents/Modal";
 import login from "./UserComponents/login";
-import { Provider } from 'react-redux';
-import store from './UserComponents/LoginHandler/store';
+import register from "./UserComponents/register";
 
 // manager
 import ManagerHome from "./ManagerComponents/ManagerHome";
@@ -49,7 +47,6 @@ function App() {
 
       <br />
 
-      <Provider store={store}>
       <switch>
 
           {/*Admin*/}
@@ -57,9 +54,8 @@ function App() {
           <Route path="/Admin" exact component={AdminMain}/>
           <Route path="/CreateLogin" exact component={CreateLogin}/>
           <Route path="/ViewManager" exact component={ViewManager}/>
-          <Route path="/EditManager/:id" exact component={EditStoreManager}/>
+          <Route path="/EditManager" exact component={EditStoreManager}/>
           <Route path="/AddCategory" exact component={AddCategories}/>
-          <Route path="/ViewCategories" exact component={ViewCategories}/>
           <Route path="/ViewStats" exact component={ViewStats}/>
 
           {/*User*/}
@@ -72,6 +68,7 @@ function App() {
           <Route path="/WishListHome" component={WishListHome}/>
           <Route path="/Modal" component={Modal}/>
           <Route path="/login" component={login}/>
+          <Route path="/register" component={register}/>
 
           {/*Manager*/}
           <Route path="/Manager" exact component={ManagerHome}/>
@@ -79,7 +76,6 @@ function App() {
           <br />
       </switch>
       <FooterPage/>
-      </Provider>
       </Router>
     );
 }

@@ -7,6 +7,7 @@ import StarRatingComponent from './StarRatingComponent';
 import NavBar from "./NavBar";
 
 import {TextField} from "@material-ui/core";
+import Axios from "axios";
 
 class ProductDetails extends Component {
 
@@ -37,14 +38,25 @@ class ProductDetails extends Component {
         this.setState({rating: nextValue});
     }
 
+    addToWishList = (item) => {
+        Axios.post('http://localhost:5000/api/WishList/addToWishList', item);
+
+        console.log('Added to wishlist');
+    }
+
     render() {
         const { rating } = this.state;
 
         return (
             <ProductConsumer>
                 {value => {
-                    const {id, company, img, info, price, title, inCart} = value.detailProduct;
-                    const {inWishList} = value.favouritesProduct;
+                    const {userId, id, img, description, price, name, material} = value.details;
+                    const item = {
+                        userId: userId,
+                        productId : id,
+                        name : name,
+                        img : img
+                    };
 
                     return (
                         <div>
@@ -53,7 +65,7 @@ class ProductDetails extends Component {
 
                             <div className="row">
                                  <div className="col-10 mx-auto text-center text-slanted text-blue my-5">
-                                     <h1>{title}</h1>
+                                     <h1>{name}</h1>
                                  </div>
                             </div>
 
@@ -63,8 +75,7 @@ class ProductDetails extends Component {
                                     <ReviewButtonContainer
                                         WishList
                                         onClick={() => {
-                                            value.HandleWishList(id);
-                                            // value.changned();
+                                            this.addToWishList(item)
                                         }}>
                                         <span className="mr1">
                                             <i className=" fas fa-heart" ></i>
@@ -73,9 +84,9 @@ class ProductDetails extends Component {
                                     </ReviewButtonContainer>
                                 </div>
                                 <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
-                                    <h2>Model : {title}</h2>
+                                    <h2>Item : {name}</h2>
                                     <h4 className="text-title text-uppercase text-muted mt-3 mb-2">
-                                        Made By : <span className="text-uppercase "> {company} </span>
+                                        Material : <span className="text-uppercase "> {material} </span>
                                     </h4>
                                     <h4 className="text-blue">
                                         <strong>
@@ -86,7 +97,7 @@ class ProductDetails extends Component {
                                         About Product
                                     </p>
                                     <p className="text-muted lead">
-                                        {info}
+                                        {description}
                                     </p>
                                     <div>
                                         <h5>Ratings: {rating}</h5>
@@ -112,12 +123,11 @@ class ProductDetails extends Component {
                                         </Link>
                                         <CartButtonContainer
                                             Cart
-                                            disabled = {inCart? true: false}
                                             onClick={() => {
                                                 value.addToCart(id);
                                                 value.openModal(id);
                                         }}>
-                                            {inCart? "In Cart": "Add to Cart"}
+                                            {"Add to Cart"}
                                         </CartButtonContainer>
                                     </div>
                                 </div>
@@ -133,3 +143,134 @@ class ProductDetails extends Component {
 }
 
 export default ProductDetails;
+
+
+
+
+
+
+
+// class ProductDetails extends Component {
+//
+//     constructor() {
+//         super();
+//         this.state = {
+//             value: 'Please write review about this product.'
+//         };
+//
+//         this.state = {
+//             rating: 1
+//         };
+//
+//         this.handleChange = this.handleChange.bind(this);
+//         this.handleSubmit = this.handleSubmit.bind(this);
+//     }
+//
+//     handleChange(event) {
+//         this.setState({value: event.target.value});
+//     }
+//
+//     handleSubmit(event) {
+//         alert('An Review was submitted');
+//         event.preventDefault();
+//     }
+//
+//     onStarClick(nextValue, prevValue, name) {
+//         this.setState({rating: nextValue});
+//     }
+//
+//     render() {
+//         const { rating } = this.state;
+//
+//         return (
+//             <ProductConsumer>
+//                 {value => {
+//                     const {id, img, description, price, name, material} = value.details;
+// //                    const {id, company, img, info, price, title, inCart} = value.detailProduct;
+//
+//                     //const {inWishList} = value.favouritesProduct;
+//
+//                     return (
+//                         <div>
+//                             <NavBar />
+//                             <div className="container py-5">
+//
+//                                 <div className="row">
+//                                     <div className="col-10 mx-auto text-center text-slanted text-blue my-5">
+//                                         <h1>{name}</h1>
+//                                     </div>
+//                                 </div>
+//
+//                                 <div className="row">
+//                                     <div className="col-10 mx-auto col-md-6 my-3">
+//                                         <img src ={img} className="img-fluid" alt="product"/>
+//                                         <ReviewButtonContainer
+//                                             WishList
+//                                             onClick={() => {
+//                                                 value.HandleWishList(id);
+//                                                 // value.changned();
+//                                             }}>
+//                                         <span className="mr1">
+//                                             <i className=" fas fa-heart" ></i>
+//                                         </span>
+//                                             Add to WishList
+//                                         </ReviewButtonContainer>
+//                                     </div>
+//                                     <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
+//                                         <h2>Item : {name}</h2>
+//                                         <h4 className="text-title text-uppercase text-muted mt-3 mb-2">
+//                                             Material : <span className="text-uppercase "> {material} </span>
+//                                         </h4>
+//                                         <h4 className="text-blue">
+//                                             <strong>
+//                                                 Price : <span>$</span> {price}
+//                                             </strong>
+//                                         </h4>
+//                                         <p className="text-capitalize font-weight-bold mt-3 mb-0">
+//                                             About Product
+//                                         </p>
+//                                         <p className="text-muted lead">
+//                                             {description}
+//                                         </p>
+//                                         <div>
+//                                             <h5>Ratings: {rating}</h5>
+//                                             <StarRatingComponent
+//                                                 name="rate1"
+//                                                 starCount={5}
+//                                                 value={rating}
+//                                                 onStarClick={this.onStarClick.bind(this)}
+//                                             />
+//                                             <form onSubmit={this.handleSubmit}>
+//                                                 <label>
+//                                                     <h5>Summary of Review</h5>
+//                                                     <textarea value={this.state.value} onChange={this.handleChange} />
+//                                                 </label>
+//                                                 <div>
+//                                                     <ReviewButtonContainer type="submit">Submit Review</ReviewButtonContainer>
+//                                                 </div>
+//                                             </form>
+//                                         </div>
+//                                         <div>
+//                                             <Link to='/'>
+//                                                 <CartButtonContainer> Back to Home</CartButtonContainer>
+//                                             </Link>
+//                                             <CartButtonContainer
+//                                                 Cart
+//                                                 onClick={() => {
+//                                                     value.addToCart(id);
+//                                                     value.openModal(id);
+//                                                 }}>
+//                                                 {"Add to Cart"}
+//                                             </CartButtonContainer>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     );
+//                 }}
+//
+//             </ProductConsumer>
+//         );
+//     }
+// }
