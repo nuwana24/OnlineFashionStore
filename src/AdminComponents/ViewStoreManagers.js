@@ -19,7 +19,7 @@ const Manager = props => (
         <td>{props.manager.city}</td>
         <td>{props.manager.zip}</td>
         <td>
-            <Link to={"/EditManager/"+props.manager._id}>Edit</Link> <a href="#" onClick={() => {props.RemoveManager(props.manager._id)}}>Delete</a>
+            <Link to={"/EditManager/"+props.manager._id} className='actionLink bg-info'>Edit</Link> <a href="#" onClick={() => {props.RemoveManager(props.manager._id)}} className='actionLink bg-danger'>Delete</a>
         </td>
     </tr>
 )
@@ -69,7 +69,7 @@ export default class ViewManager extends Component{
         return (
             <div>
                 <NavBar />
-                <Container>
+                <Container style={{marginLeft:'8%'}}>
 
                 <h3 className="text-center text-bright">Store Managers</h3>
                 <table className="table">

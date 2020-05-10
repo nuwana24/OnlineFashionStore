@@ -9,7 +9,7 @@ const Category = props => (
 
     <tr>
         <td>{props.category.category}</td>
-        <td>{props.category.subCategories.name}</td>
+
         <td>{props.category.description}</td>
 
         <td>
@@ -32,23 +32,24 @@ export default class ViewCategory extends Component{
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/categories/')
+        axios.get('http://localhost:5000/category/')
             .then(response => {
                 this.setState({
                     categories: response.data
                 })
+                console.log(response.data);
 
             })
             .catch((error) => {
                 console.log(error);
             })
-        axios.get('http://localhost:5000/categories/find')
+        axios.get('http://localhost:5000/category/find')
             .then(res => console.log(res.data))
 
     }
 
     RemoveCategory(id){
-        axios.delete('http://localhost:5000/managers/'+id)
+        axios.delete('http://localhost:5000/category/'+id)
             .then(res => console.log(res.data));
 
         this.setState({
@@ -73,7 +74,6 @@ export default class ViewCategory extends Component{
                         <thead className="thead-light">
                         <tr>
                             <th>Categories</th>
-                            <th>Sub categories</th>
                             <th>Description</th>
                             <th>Action</th>
                         </tr>

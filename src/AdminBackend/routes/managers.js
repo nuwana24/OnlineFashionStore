@@ -1,7 +1,14 @@
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const express = require('express');
 const router = require('express').Router();
 let Manager = require('../Models/Manager.model');
 
 
+const app = express();
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 router.route('/').get((req, res) => {
     Manager.find()
@@ -23,6 +30,14 @@ router.route('/add').post((req, res) => {
     // const states = req.body.states;
     const zip = Number(req.body.zip);
 
+
+    // const hashedPWD = bcrypt.hash(password,12);
+    const hashedPWD = bcrypt.hash(password,12).then(
+        function (hashedPwd) {
+            return hashedPwd;
+
+        }
+    )
 
     // const newManager = new Manager({fname,lname,email,gender,password,rePassword,DOB,Address,Address2,city,states,zip});
     const newManager = new Manager({firstName,lastName,email,gender,password,dateOfBirth,Address,Address2,city,zip});

@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import UserHome from "./UserComponents/UserHome";
 
 // Admin
+import AdminAndManagerLogin from "./AdminComponents/Admin&ManagerLogin/adminAndManagerLogin";
 import FooterPage from "./AdminComponents/Footer";
 import CreateLogin from "./AdminComponents/CreateLogin";
 import AdminMain from "./AdminComponents/AdminMain";
@@ -12,6 +13,8 @@ import ViewManager from "./AdminComponents/ViewStoreManagers";
 import AddCategories from "./AdminComponents/AddCategories";
 import ViewStats from "./AdminComponents/ViewStats";
 import EditStoreManager from "./AdminComponents/EditStoreManager";
+import EditCategories from "./AdminComponents/EditCategories";
+import ViewCategory from "./AdminComponents/ViewCategories";
 
 // User
 import ProductList from "./UserComponents/ProductList";
@@ -32,31 +35,19 @@ function App() {
   return (
       <Router>
 
-          <div>
-              <ul className="navbar-nav mr-auto">
-
-                  <li><Link to={'/'} className="nav-link"> User </Link></li>
-
-                  <li><Link to={'/Admin'} className="nav-link">Admin</Link></li>
-                  <li><Link to={'/Manager'} className="nav-link">Manager</Link></li>
-
-              </ul>
-          </div>
-      {/*<UserHome/>*/}
-
-
-      <br />
-
       <switch>
 
           {/*Admin*/}
 
+          <Route path="/AdLog" exact component={AdminAndManagerLogin} />
           <Route path="/Admin" exact component={AdminMain}/>
           <Route path="/CreateLogin" exact component={CreateLogin}/>
           <Route path="/ViewManager" exact component={ViewManager}/>
-          <Route path="/EditManager" exact component={EditStoreManager}/>
+          <Route path="/EditManager/:id" exact component={EditStoreManager}/>
+          <Route path="/EditCategory/:id" exact component={EditCategories} />
           <Route path="/AddCategory" exact component={AddCategories}/>
           <Route path="/ViewStats" exact component={ViewStats}/>
+          <Route path="/ViewCategory" exact component={ViewCategory}/>
 
           {/*User*/}
           {/*<Route path="/UserHome" component={UserHome} />*/}
@@ -75,7 +66,7 @@ function App() {
           <Route path="/AddItem" exact component={addItem}/>
           <br />
       </switch>
-      <FooterPage/>
+      <FooterPage className='footer'/>
       </Router>
     );
 }

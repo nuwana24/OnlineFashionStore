@@ -21,17 +21,19 @@ export default class NavBar extends Component{
                     <NavDropdown title="Manage Categories" id="categoryManager" className="bg-dark">
                         <Link to="/AddCategory" className = "nav-item text-bright">Add New Category</Link>
                         <NavDropdown.Divider />
-                        <Link to="/ViewCategories" className = "nav-item text-bright">View Categories</Link>
+                        <Link to="/ViewCategory" className = "nav-item text-bright">View Categories</Link>
                     </NavDropdown>
-                    <NavDropdown title="Manage Users" id="userManagerDD" className="bg-dark">
+                    <NavDropdown title="Manage Store Managers" id="userManagerDD" className="bg-dark">
                         <Link to="/CreateLogin" className = "nav-item text-bright">Create Login for Store Manager</Link>
                         <NavDropdown.Divider />
                         <Link to="/ViewManager" className = "nav-item text-bright">View Store Managers</Link>
                     </NavDropdown>
                 </Nav>
                 <Nav>
-                    <Nav.Link href="##">Logout</Nav.Link>
-                    <Navbar.Text>Hello Admin</Navbar.Text>
+                    <form method='post' action='/logout'>
+                        <Nav.Link>Logout</Nav.Link>
+                    </form>
+
                 </Nav>
 
               </Navbar>

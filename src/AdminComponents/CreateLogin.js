@@ -167,7 +167,7 @@ export default class CreateLogin extends Component {
                                 </Col>
 
                                 <Col>
-                                    <div className="FormAddLogin" className="p-3 mb-2 bg-light text-dark">
+                                    <div className="FormAddLogin" className="p-4 mb-2 bg-light text-dark">
                                         <h2>
                                             <center>Add a Login for a stock Manager</center>
                                         </h2>
@@ -250,14 +250,11 @@ export default class CreateLogin extends Component {
                                                     <Form.Control  onChange = {this.onChangeZip} value = {this.state.zip}/>
                                                 </Form.Group>
                                             </Form.Row>
-
-                                            <Form.Group id="formGridCheckbox">
-                                                <Form.Check type="checkbox" label="Notify by email"/>
-                                            </Form.Group>
                                             <center>
                                                 <Button variant="info btn-lg" type="submit">
                                                     Submit
                                                 </Button>
+                                                <br />
                                             </center>
                                         </Form>
                                     </div>

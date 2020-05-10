@@ -92,14 +92,16 @@ export default class AddCategories extends Component {
     render() {
         return (
 
-            <div>
+            <div style={sectionstyle}>
 
                 <NavBar />
                 <section style={sectionstyle}>
                 <Container>
-                <div className="p-3 mb-2 bg-light text-dark">
+
+                <div className="p-5 mb-2 mt-3 bg-light text-dark">
+
                     <center><h3>Add New Category</h3></center>
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.onSubmit} className=' center'>
 
                     <div className="form-group">
                         <label>Category </label>
@@ -118,7 +120,7 @@ export default class AddCategories extends Component {
                         <button
                             type="button"
                             onClick={this.handleAddSubCategory}
-                            className="btn btn-info btn-sm"
+                            className="btn btn-info btn-sm "
                         >
                             +
                         </button>
@@ -158,7 +160,9 @@ export default class AddCategories extends Component {
                     </div>
                     <br />
                     <div className="form-group">
-                        <input type="submit" value="Add Category" className="btn btn-info" />
+                        <center>
+                        <input type="submit" value="Add Category" className="btn btn-info " />
+                        </center>
                     </div>
                 </form>
                 </div>
