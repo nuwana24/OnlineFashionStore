@@ -1,38 +1,28 @@
 import React,{Component} from "react";
 import NavBar from "./NavBar";
 import {Link} from 'react-router-dom';
-import {Button, ButtonToolbar, Container} from "react-bootstrap";
-import {discountPopUp} from "./discountPopUp";
+import {Button, Container} from "react-bootstrap";
 import axios from 'axios';
+import editItem from "./editItem";
 
 const Item = props => (
 
     <tr>
         {/*<div className="image-container" ><img src={/uploads/}{...props.item.img} alt="icon" width="300" height="400" /> </div>*/}
         {/*<td>{props.item.img}</td>*/}
-        {/*<td>{props.item.description}</td>*/}
+        {/*<img src= {"/uploads/"}{...props.item.img} width="150" height="200"/>*/}
+        <img style={{width:"150px", height:"200px"}} src={(`/uploads/${props.item.img}`) }/>
         <td>{props.item.name}</td>
         <td>{props.item.category}</td>
+        <td>{props.item.description}</td>
         <td>LKR.{props.item.price}</td>
-        {/*<td>{props.item.quantity}</td>*/}
-        <td>LKR.{props.item.discount}</td>
-
-        {/*<td>{props.item.size}</td>*/}
+        <td>{props.item.quantity}</td>
+        <td>{props.item.size}</td>
         {/*<td>{props.item.sizes}</td>*/}
-        {/*<td>{props.item.meterial}</td>*/}
+        <td>{props.item.meterial}</td>
         <td>
-            {/*<button type="button" className="btn btn-success" <Link to={"/EditManager/"+props.manager._id}>Edit</Link>>Edit</button>*/}
-            <Link to={"/discountPopUp/"+props.item._id}><Button style={{marginTop: "-5%", marginRight:"5%"}} type="button" className="btn btn-primary">Add</Button></Link>
-
-            {/*<button style={{marginTop: "-5%"}} type="button" className="btn btn-primary" onClick={()=> this.setState({addModalShow:true})}>Add Discount</button>*/}
-            {/*<ButtonToolbar>*/}
-            {/*    <discountPopUp*/}
-            {/*    show = {this.state.addModalShow}*/}
-            {/*    onHide = {addModalClose}*/}
-            {/*    />*/}
-            {/*</ButtonToolbar>*/}
-            {/*<Link to={"/editItem/"+props.item._id}>Edit</Link>*/}
-            {/*onClick={() => {props.deleteItem(props.item._id)}}*/}
+            <Link to={"/editItem/"+props.item._id}><Button style={{marginTop: "-5%", marginLeft:"5%",marginBottom:"5%"}} type="button" className="btn btn-success">Edit</Button></Link>
+            <button style={{marginTop: "5%"}} type="button" className="btn btn-danger" onClick={() => {props.deleteItem(props.item._id)}}>Delete</button>
         </td>
     </tr>
 )
@@ -44,8 +34,7 @@ export default class ItemList extends Component {
         this.deleteItem = this.deleteItem.bind(this);
 
         this.state = {
-            itemlist: [], addModalShow: false,
-
+            itemlist: []
 
         }
 
@@ -79,27 +68,25 @@ export default class ItemList extends Component {
     }
 
     render() {
-
-    // let addModalClose =() =>this.setState({addModalShow:false});
         return (
             <div>
                 <NavBar />
                 <Container>
 
-                    <h3 style={{marginTop:"3%"}} className="text-center text-bright">Item List</h3>
-                    <table className="table" style={{marginLeft: "2%"}}>
-                        <thead className="thead-dark" >
+                    <h3 style={{marginTop:"3%",marginBottom:"2%"}} className="text-center text-bright">Item List</h3>
+                    <table className="table">
+                        <thead style={{marginBottom:"3%"}} className="thead-dark" >
                         <tr>
-                            {/*<th>Image</th>*/}
+                            <th>Image</th>
                             {/*<th>URL</th>*/}
-                            <th>Item Name</th>
+                            <th>Name</th>
                             <th>Category</th>
-                            {/*<th>Description</th>*/}
+                            <th>Description</th>
                             <th>Price</th>
-                            <th>Discount</th>
-
-                            <th></th>
-                            {/*<th>Meterial</th>*/}
+                            <th>Quantity</th>
+                            <th>Size</th>
+                            <th>Meterial</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>

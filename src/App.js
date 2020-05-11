@@ -30,6 +30,14 @@ import register from "./UserComponents/register";
 // manager
 import ManagerHome from "./ManagerComponents/ManagerHome";
 import addItem from "./ManagerComponents/addItem";
+import ItemList from "./ManagerComponents/ItemList";
+import editItem from "./ManagerComponents/editItem";
+import addDiscount from "./ManagerComponents/addDiscount";
+import discountPopUp from "./ManagerComponents/discountPopUp";
+
+
+
+
 
 function App() {
   return (
@@ -64,6 +72,14 @@ function App() {
           {/*Manager*/}
           <Route path="/Manager" exact component={ManagerHome}/>
           <Route path="/AddItem" exact component={addItem}/>
+          <Route path="/itemList" exact component={ItemList}/>
+          <Route path="/editItem/:id" exact component={editItem}/>
+          <Route path="/addDiscount" exact component={addDiscount}/>
+          <Route path="/discountPopUp/:id" exact component={discountPopUp}/>
+
+
+
+
           <br />
       </switch>
       <FooterPage className='footer'/>

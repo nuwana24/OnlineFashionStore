@@ -3,14 +3,21 @@ import {Button, Container, Form} from "react-bootstrap";
 import ReactDOM from "react-dom";
 import {Input} from "@material-ui/core";
 import NavBar from "./NavBar";
+import Footer from "../AdminComponents/Footer"
 import background from "../Images/AdminBackgroud.jpg";
 import axios from "axios";
 import Dropzone from "react-dropzone";
 
 
+
 var sectionstyle ={
     backgroundImage: `url(${background})`
 }
+const Category = props => (
+
+
+        <option>{props.category.category}</option>
+)
 
 export default class addItem extends Component {
     constructor(props) {
@@ -24,6 +31,7 @@ export default class addItem extends Component {
         this.onChangeQuantity = this.onChangeQuantity.bind(this);
         this.onChangeSize = this.onChangeSize.bind(this);
         this.onChangeMeterial = this.onChangeMeterial.bind(this);
+        this.onChangeDiscount = this.onChangeDiscount.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -35,37 +43,14 @@ export default class addItem extends Component {
             quantity : '',
             size :'',
             sizes : ['Small','Medium','Large'],
-            meterial : ''
+            meterial : '',
+            discount : 0,
+            categories : []
 
         }
     }
 
-    // handleSubCategoryNameChange = idx => evt => {
-    //     const newSubCategories = this.state.subCategories.map((subcategory, sidx) => {
-    //         if (idx !== sidx) return subcategory;
-    //         return { ...subcategory, name: evt.target.value };
-    //     });
-    //
-    //     this.setState({ subCategories: newSubCategories });
-    // };
-    //
-    // handleAddSubCategory = () => {
-    //     this.setState({
-    //         subCategories: this.state.subCategories.concat([{category: "" }])
-    //     });
-    // };
-    //
-    // handleRemoveSubCategory = idx => () => {
-    //     this.setState({
-    //         subCategories: this.state.subCategories.filter((s, sidx) => idx !== sidx)
-    //     });
-    // };
-    // onChangeSubs(e){
-    //     this.setState({
-    //         subcats: e.target.value
-    //     })
-    // }
-    onChange
+
 
 
     onChangeCategory(e) {
@@ -74,15 +59,14 @@ export default class addItem extends Component {
         })
     }
 
-    // onChangeSubCategory(e) {
-    //     this.setState({
-    //         category: e.target.value
-    //     })
-    // }
-
     onChangeDescription(e){
         this.setState({
             description: e.target.value
+        })
+    }
+    onChangeDiscount(e){
+        this.setState({
+            discount: e.target.value
         })
     }
 
@@ -117,29 +101,6 @@ export default class addItem extends Component {
     }
 
 
-    // onAddCategory() {
-    //     console.log('clicked');
-    //     const name = `ingrediant-${Object.keys(this.state.subcats).length}`;
-    //     let inputbox = <Input name={name}
-    //                           onChange={this.onChange.bind(this, name)}/>
-    //     const inputs = this.state.inputs;
-    //     inputs.push( inputbox );
-    //     this.setState( { inputs } );
-    //
-    // }
-    // onSubmit(e) {
-    //     e.preventDefault();
-    //
-    //     const additem = {
-    //         img: this.state.file.name,
-    //         category: this.state.category,
-    //         description: this.state.description,
-    //         name : this.state.name,
-    //         price : this.state.price,
-    //         quantity : this.state.quantity,
-    //         size : this.state.size,
-    //         meterial : this.state.meterial
-    //     }
     onSubmit = (e) => {
         e.preventDefault();
 
@@ -153,6 +114,8 @@ export default class addItem extends Component {
         additem.append('quantity', this.state.quantity)
         additem.append('size', this.state.size)
         additem.append('meterial', this.state.meterial)
+        // additem.append('discount', this.state.discount)
+
 
 
         console.log(additem);
@@ -160,6 +123,7 @@ export default class addItem extends Component {
         axios.post('http://localhost:5000/additem/add', additem)
             .then(res => console.log(res.data))
             .catch(err => console.log(err))
+            alert('Item Added')
 
 
 
@@ -174,8 +138,10 @@ export default class addItem extends Component {
             price : '',
             quantity : '',
             size : '',
-            meterial : ''
+            meterial : '',
+            discount: 0
         })
+        window.location ='/ItemList'
 
     }
     state =  {
@@ -199,12 +165,26 @@ export default class addItem extends Component {
         reader.readAsDataURL(event.target.files[0])
 
     }
-    getAllCategories(){
-        axios.get('http://localhost:5000/categories/getAllCategories').then(response =>{
-            this.setState({category: response.data});
-        }).catch(function (error) {
-            console.log(error);
 
+    componentDidMount() {
+        axios.get('http://localhost:5000/category/')
+            .then(response => {
+                this.setState({
+                    categories: response.data
+                })
+                console.log(response.data);
+
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        axios.get('http://localhost:5000/category/find')
+            .then(res => console.log(res.data))
+
+    }
+    categoryList(){
+        return this.state.categories.map(currentcategory =>{
+            return <Category category={currentcategory} key = {currentcategory._id} />;
         })
     }
 
@@ -236,40 +216,11 @@ export default class addItem extends Component {
 
                 <NavBar />
                 <section style={sectionstyle}>
-                    <Container>
+                    <Container >
                         <div className="p-3 mb-2 bg-light text-dark">
                             <center><h3>Add Item</h3></center>
                             <form onSubmit={this.onSubmit} enctype="multipart/form-data" >
-                                {/*<div style={{display: 'flex', justifyContent:'space-between'}}>*/}
-                                {/*    <Dropzone*/}
-                                {/*        onDrop={onDrop}*/}
-                                {/*        multiple*/}
-                                {/*        maxSize*/}
-                                {/*    >*/}
-                                {/*        {({getRootProps, getInputProps}) =>(*/}
-                                {/*            <div style={{width:'300px', height:'240px', border:'1px solid lightgrey', display:'flex',alignItems:'center', justifyContent:'center'}}*/}
-                                {/*                 {...getRootProps()}*/}
-                                {/*            >*/}
-                                {/*                <input{...getInputProps()}/>*/}
-                                {/*                <Icon type="plus" style={{fontSize:'3rem',color:'#949494'}}/>*/}
 
-                                {/*            </div>*/}
-                                {/*        )}*/}
-
-                                {/*    </Dropzone>*/}
-
-                                {/*    <div style={{  width:'300px', height:'240px', border:'1px solid lightgrey', display:'flex',overflowX:'scroll'}}>*/}
-
-                                {/*        <div>*/}
-                                {/*            <img/>*/}
-                                {/*        </div>*/}
-
-
-
-                                {/*    </div>*/}
-
-
-                                {/*</div>*/}
 
                                 <div className="form-group">
                                     <input  type="file" name="file" onChange={this.handleFileChange} />
@@ -280,12 +231,16 @@ export default class addItem extends Component {
 
                                 <div className="form-group">
                                     <label>Category </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.category}
-                                            onChange={this.onChangeCategory}
-                                    />
+
+                                    <select
+                                        type="text"
+                                        required
+                                        className="form-control"
+                                        value={this.state.category}
+                                        onChange={this.onChangeCategory}>
+                                        options={this.categoryList()}
+
+                                    </select>
                                 </div>
 
                                 <div className="form-group">
@@ -365,6 +320,8 @@ export default class addItem extends Component {
                         </div>
                     </Container>
                 </section>
+                
+
             </div>
 
 

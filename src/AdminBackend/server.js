@@ -1,5 +1,4 @@
 const express = require('express');
-const session = require('express-session');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
@@ -36,10 +35,6 @@ app.use('/managers',managersRouter);
 app.use('/additem',addItemRouter);
 
 
-
-
-
 app.listen(port, () =>{
     console.log(`Server is running on port:  ${port}`);
 })
-

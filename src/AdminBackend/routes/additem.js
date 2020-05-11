@@ -5,6 +5,8 @@ const AddItem = require('../Models/addItem.model');
 const multer = require('multer');
 const path = require('path');
 let Category = require('../Models/Category.model');
+// import y from './../../../public/uploads';
+
 
 
 
@@ -15,24 +17,21 @@ let Category = require('../Models/Category.model');
 // const ctrlImage = require('../controllers/file.controller');
 
 router.get('/', (req, res)=>{
-    res.status(200).json({
-        message: 'Handling GET requests to /addItem'
-    });
+    AddItem.find()
+        .then(itemlist => res.json(itemlist))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 const storage = multer.diskStorage({
     // destination: '../../../public/uploads/',
     destination: function(req, file, cb) {
-        cb(null, './uploads/');
+        cb(null, '../../public/uploads/');
     },
     filename: function(req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
 
-// const upload = multer({
-//     storage: storage
-//
-// })
+
 const imageFilter = function(req, file, cb) {
     // Accept images only
     if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
@@ -64,15 +63,50 @@ router.post('/add',(req, res, next) => {
         }
     })
 })
+router.route('/:id').get((req, res) => {
+    AddItem.findById(req.params.id)
+        .then(itemlist => res.json(itemlist))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+router.route('/update/:id').post((req, res) => {
+
+            AddItem.findById(req.params.id)
+
+                .then(itemlist => {
+                    // itemlist.img = req.file.filename;
+                    itemlist.category = req.body.category;
+                    itemlist.name = req.body.name;
+                    itemlist.description = req.body.description;
+                    itemlist.price = req.body.price;
+                    itemlist.quantity = req.body.quantity;
+                    itemlist.size = req.body.size;
+                    itemlist.meterial = req.body.meterial;
+                    itemlist.discount = req.body.discount;
+
+
+                    itemlist.save()
+                        .then(() => res.json('Item updated!'))
+                        .catch(err => res.status(400).json('Error: ' + err));
+                    alert("Item Added")
+                })
+                .catch(err => res.status(400).json('Error: ' + err));
+
+});
+
 router.route('getAllCategories').get(function (req,res){
     Category.find(function (err,categories) {
         if (!err){
             res.json(categories);
         }else {
-            res.status(400).send('faild');
+            res.status(400).send('Error');
         }
 
     })
-})
+});
 
+router.route('/:id').delete((req, res) => {
+    AddItem.findByIdAndDelete(req.params.id)
+        .then(() => res.json('Item Deleted.'))
+        .catch(err => res.status(400).json('Error: ' + err));
+})
 module.exports = router;

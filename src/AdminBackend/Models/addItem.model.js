@@ -9,7 +9,11 @@ const addItemSchema =  new mongoose.Schema({
     price: Number,
     quantity:Number,
     size:String,
-    meterial:String
+    meterial:String,
+    discount:{
+        type:Number,
+        default: 0
+    }
 
 
 

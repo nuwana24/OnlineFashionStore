@@ -31,32 +31,39 @@ export default class ManagerHome extends Component{
                 <Container>
                     <Row>
                         <Col>
-                            <Card style={{ width: '18rem' ,height: '18rem'}}>
+                            <Link to={"/addItem"}>
+                            <Card style={{ width: '18rem' ,height: '18rem'}} >
                                 <Card.Img variant="top" src={addIteam} />
                                 <Card.Body>
-                                    {/*<Card.Title><center><a href="#">Add Categories</a></center></Card.Title>*/}
+                                    {/*<a href="http://localhost:3000/addItem"></a>*/}
+                                    {/*<a onClick={"http://localhost:3000/addItem"}></a>*/}
                                 </Card.Body>
                             </Card>
+                            </Link>
                             <br />
 
                         </Col>
                         <Col>
+                            <Link to={"/addDiscount"}>
                             <Card style={{width: '18rem' ,height: '18rem' }}>
                                 <Card.Img variant="top" src={addSale} />
                                 <Card.Body>
                                     {/*<Card.Title><center><Link to={'/CreateLogin'}>Manage Users</Link></center></Card.Title>*/}
                                 </Card.Body>
                             </Card>
+                            </Link>
                             <br />
 
                         </Col>
                         <Col>
+                            <Link to={"/itemList"}>
                             <Card style={{ width: '18rem' ,height: '18rem' }}>
                                 <Card.Img variant="top" src={editItem} />
                                 <Card.Body>
                                     {/*<Card.Title><center><a href="#">View insights</a></center></Card.Title>*/}
                                 </Card.Body>
                             </Card>
+                            </Link>
                             <br />
 
                         </Col>

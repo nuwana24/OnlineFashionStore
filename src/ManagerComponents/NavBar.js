@@ -18,6 +18,10 @@ export default class NavBar extends Component{
                 <Nav className="mr-auto">
                     <Link to="/Manager" className = "nav-link">Home</Link>
                     <Link to="/addItem" className = "nav-link">Add Item</Link>
+                    <Link to="/itemList" className = "nav-link">Item List</Link>
+                    <Link to="/addDiscount" className = "nav-link">Add Discount</Link>
+
+
 
                 </Nav>
                 <Nav>
