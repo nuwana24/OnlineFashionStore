@@ -5,11 +5,17 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {ProductProvider} from "./context";
+import {Provider} from "react-redux";
+import configureStore from "./UserComponents/store/store";
 
+let preloadedState = {};
+const store = configureStore(preloadedState);
 ReactDOM.render(
     <ProductProvider>
             <Router>
+                <Provider store={store}>
                 <App />
+                </Provider>
             </Router>
     </ProductProvider>, document.getElementById('root'));
 
