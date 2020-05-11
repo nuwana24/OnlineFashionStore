@@ -17,9 +17,13 @@ import EditStoreManager from "./AdminComponents/EditStoreManager";
 import ProductList from "./UserComponents/ProductList";
 import ProductDetails from "./UserComponents/ProductDetails";
 import Cart from "./UserComponents/Cart/Cart";
+import CartMain from "./UserComponents/Cart/CartMain";
 import WishListMain from "./UserComponents/WishList/WishListMain";
 import WishListItemsList from "./UserComponents/WishList/WishListItemsList";
 import WishListHome from "./UserComponents/WishList/WishListHome";
+import Modal from "./UserComponents/Modal";
+import login from "./UserComponents/login";
+import register from "./UserComponents/register";
 
 // manager
 import ManagerHome from "./ManagerComponents/ManagerHome";
@@ -59,10 +63,13 @@ function App() {
           {/*<Route path="/UserHome" component={UserHome} />*/}
           <Route exact path="/" exact component={ProductList}/>
           <Route path="/ProductDetails" component={ProductDetails}/>
-          <Route path="/Cart" component={Cart}/>
+          <Route path="/Cart" component={CartMain}/>
           <Route path="/WishListMain"component={WishListMain} />
           <Route path="/WishListItemList" component={WishListItemsList}/>
           <Route path="/WishListHome" component={WishListHome}/>
+          <Route path="/Modal" component={Modal}/>
+          <Route path="/login" component={login}/>
+          <Route path="/register" component={register}/>
 
           {/*Manager*/}
           <Route path="/Manager" exact component={ManagerHome}/>

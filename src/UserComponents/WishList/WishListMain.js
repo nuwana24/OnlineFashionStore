@@ -13,9 +13,9 @@ class WishListMain extends Component{
             <React.Fragment>
                 <NavBar/>
                 <WishListItemsList />
-                <Switch>
-                    <Route path="/WishListHome" component={WishListHome}/>
-                </Switch>
+                {/*<Switch>*/}
+                {/*    <Route path="/WishListHome" component={WishListHome}/>*/}
+                {/*</Switch>*/}
             </React.Fragment>
         );
     }

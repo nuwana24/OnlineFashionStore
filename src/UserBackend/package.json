@@ -1,0 +1,38 @@
+{
+  "name": "UserBackend",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "module": "./src/server.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "connect-mongodb-session": "^2.3.1",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
+    "ejs": "^3.0.1",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-rate-limit": "^5.1.1",
+    "express-session": "^1.17.0",
+    "helmet": "^3.22.0",
+    "joi": "^14.3.1",
+    "mongoose": "^5.9.6",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "description": ""
+}
