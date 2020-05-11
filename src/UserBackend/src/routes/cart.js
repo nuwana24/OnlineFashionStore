@@ -60,4 +60,52 @@ router.get('/getCart', (req, res) => {
     }
 });
 
+router.post('/increment', (req, res) => {
+
+    User.findOne({_id: req.body.userId}
+    ,(err, userInfo) => {
+            User.findOneAndUpdate(
+                {_id: req.body.userId, "Cart.id": req.body.productId},
+                {$inc: {"Cart.$.quantity": 1}},
+                {new: true},
+                () => {
+                    if(err) return res.json({success:false, err});
+                    res.status(200).json(userInfo.Cart)
+                }
+            )
+    })
+});
+
+router.post('/decrement', (req, res) => {
+
+    User.findOne({_id: req.body.userId}
+        ,(err, userInfo) => {
+            User.findOneAndUpdate(
+                {_id: req.body.userId, "Cart.id": req.body.productId},
+                {$inc: {"Cart.$.quantity": -1}},
+                {new: true},
+                () => {
+                    if(err) return res.json({success:false, err});
+                    res.status(200).json(userInfo.Cart)
+                }
+            )
+        })
+});
+
+router.get('/removeItem', (req, res) => {
+
+    User.findOneAndUpdate(
+        {_id: req.query.userId},
+        {
+            "$pull":
+                {"Cart" : {"id" : req.query.productId}}
+        },
+        {new : true},
+        (err, userInfo) => {
+            if(err) return res.json({success:false, err});
+            res.status(200).json(userInfo.Cart)
+    }
+    )
+});
+
 module.exports = router;

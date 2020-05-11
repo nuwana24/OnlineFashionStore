@@ -8,6 +8,7 @@ class WishListItem extends Component {
     render() {
 
         const {id, name,img } = this.props.WishListItem;
+        const removeItem = this.props.removeWishList;
         return (
             <ProductWrapper className = "col-9 mx-auto col-md-6 col-lg-3 my-3">
                 <div className="cardView">
@@ -18,7 +19,7 @@ class WishListItem extends Component {
                                     <img src={img} alt = "product" className="card-img"/>
                                 </Link>
                                 <div>
-                                        <button onClick={() =>  {value.removeFavourites(id)}}>
+                                        <button onClick={() =>  {removeItem(id)}}>
                                             <i className="fas fa-trash"/>
                                         </button>
                                 </div>

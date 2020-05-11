@@ -20,6 +20,7 @@ import ViewCategory from "./AdminComponents/ViewCategories";
 import ProductList from "./UserComponents/ProductList";
 import ProductDetails from "./UserComponents/ProductDetails";
 import Cart from "./UserComponents/Cart/Cart";
+import CartMain from "./UserComponents/Cart/CartMain";
 import WishListMain from "./UserComponents/WishList/WishListMain";
 import WishListItemsList from "./UserComponents/WishList/WishListItemsList";
 import WishListHome from "./UserComponents/WishList/WishListHome";
@@ -61,7 +62,7 @@ function App() {
           {/*<Route path="/UserHome" component={UserHome} />*/}
           <Route exact path="/" exact component={ProductList}/>
           <Route path="/ProductDetails" component={ProductDetails}/>
-          <Route path="/Cart" component={Cart}/>
+          <Route path="/Cart" component={CartMain}/>
           <Route path="/WishListMain"component={WishListMain} />
           <Route path="/WishListItemList" component={WishListItemsList}/>
           <Route path="/WishListHome" component={WishListHome}/>

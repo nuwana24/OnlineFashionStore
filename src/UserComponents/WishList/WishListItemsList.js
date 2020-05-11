@@ -34,7 +34,11 @@ const WishListItemsList = ({session}) => {
         }
 
     }, []);
-    console.log(session.userId)
+
+    const removeWishList = (productId) => {
+        Axios.get('http://localhost:5000/api/WishList/rmoveWishList', {params:{userId: session.userId, productId: productId}})
+    }
+
     if(session.userId !== null) {
         return (
             <React.Fragment>
@@ -46,7 +50,7 @@ const WishListItemsList = ({session}) => {
                         <div className="row">
                             {(WishList.length > 0) ? (
                                 WishList.map(favourite => {
-                                    return <WishListItem key={favourite.id} WishListItem={favourite}/>;
+                                    return <WishListItem key={favourite.id} WishListItem={favourite} removeWishList={removeWishList}/>;
                                 })
                             ) : (
                                 <EmptyWishList/>

@@ -1,9 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {connect} from "react-redux";
 
-export default function CartItem({item,value}) {
+const mapStateToProps = ({ session}) => ({
+    session
+});
 
-    const {id,name, price, quantity} =  item;
-    //const {increment, decrement, removeItem } = value;
+const CartItem = ({session ,...props}) => {
+
+    const {id,name, price, quantity} =  props.item;
+    const {increment, decrement, removeItem} = props;
 
     return (
         <div className="row my-2 text-capitalize text-center">
@@ -19,15 +24,15 @@ export default function CartItem({item,value}) {
             <div className="col-10 mx-auto col-lg-2 my-2 my-lg-0">
                 <div className="d-flex justify-content-center">
                      <div>
-                         <span className="btn btn-black mx-1" >-</span>
+                         <span className="btn btn-black mx-1" onClick={() => decrement(id)}>-</span>
                          <span className="btn btn-black mx-1">{quantity}</span>
-                         <span className="btn btn-black mx-1" >+</span>
+                         <span className="btn btn-black mx-1" onClick={() => increment(id)}>+</span>
                      </div>
                 </div>
             </div>
             <div className="col-10 mx-auto col-lg-2">
-                <div className="cart-icon" >
-                    <i className="fas fa-trash"/>
+                <div className="cart-icon">
+                    <i className="fas fa-trash" onClick={() => removeItem(id)}/>
                 </div>
             </div>
             <div className="col-10 mx-auto col-lg-2">
@@ -35,7 +40,11 @@ export default function CartItem({item,value}) {
             </div>
         </div>
     );
-}
+};
+
+export default connect(
+    mapStateToProps
+)(CartItem);
 
 
 

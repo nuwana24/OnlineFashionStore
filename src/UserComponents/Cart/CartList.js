@@ -1,23 +1,30 @@
 import React, {Component} from 'react';
 
 import CartItem from './CartItem';
+import {connect} from "react-redux";
+import Axios from "axios";
 
-const CartList = (props) => {
+const mapStateToProps = ({ session}) => ({
+    session
+});
+
+const CartList = ({session, ...props}) => {
 
     const cart = props.cart;
-
-
+    const {increment, decrement, removeItem} = props;
     return (
         <div className="container-fluid">
             {cart.map(item => {
-                return <CartItem key = {item.id} item={item} value={cart}/>
+                return <CartItem key = {item.id} item={item} increment={increment} decrement={decrement} removeItem={removeItem}/>
             })}
 
         </div>
     );
-}
+};
 
-export default CartList;
+export default connect(
+    mapStateToProps
+)(CartList);
 
 
 

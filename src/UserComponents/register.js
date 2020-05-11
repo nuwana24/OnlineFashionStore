@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => ({
     signup: user => dispatch(signup(user))
 });
 
-const Signup = ({errors, signup}) => {
+const Signup = ({errors, signup, ...props}) => {
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -25,12 +25,14 @@ const Signup = ({errors, signup}) => {
         };
 
         signup(user);
+
+        props.history.push("/")
     };
 
     return(
         <React.Fragment>
             <NavBar/>
-            <Card>
+            <Card className="bg-light mb-3 text-center w-50 mx-auto my-lg-5">
                 <CardBody>
                     <CardTitle>
                         <h2>
@@ -44,23 +46,26 @@ const Signup = ({errors, signup}) => {
                     <br />
                     <p>{errors}</p>
                         <form onSubmit={handleSubmit}>
-                            <label>
-                                Username:
-                                <input type="text" name="username"/>
-                            </label>
-                            <label>
-                                Email:
-                                <input type="email" name="email"/>
-                            </label>
-                            <label>
-                                Password:
-                                <input type="password" name="password"/>
-                            </label>
+                            <div className="form-group text-left">
+                                <label>Username:</label>
+                                <input type="text" name="username" className="form-control"/>
+                            </div>
 
-                            <input type="submit" value="Submit"/>
+                            <div className="form-group text-left">
+                                <label>Email:</label>
+                                <input type="email" name="email" className="form-control"/>
+
+                            </div>
+
+                            <div className="form-group text-left">
+                                <label>Password:</label>
+                                <input type="password" name="password" className="form-control"/>
+
+                            </div>
+
+                            <input type="submit" value="Register" className="btn btn-success btn-block"/>
                         </form>
                 </CardBody>
-                <Link to="/login">Login</Link>
             </Card>
         </React.Fragment>
     );

@@ -5,8 +5,6 @@ import {Link, Redirect} from 'react-router-dom';
 import {login } from './actions/session';
 import '../style.css';
 import NavBar from "./NavBar";
-import session from "./reducers/session/session";
-
 
 const mapStateToProps = ({errors, session}) => ({
     errors, session
@@ -16,7 +14,7 @@ const mapDispatchToProps = dispatch => ({
     login: user => dispatch(login(user))
 });
 
-const Login = ({errors, login}) => {
+const Login = ({session, login, ...props}) => {
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -28,13 +26,14 @@ const Login = ({errors, login}) => {
 
         login(user);
 
+        props.history.push("/")
     };
 
     return(
         <React.Fragment>
             <NavBar/>
-            <div>
-                <Card>
+            <div className="my-lg-5">
+                <Card className="bg-light mb-3 text-center w-50 mx-auto">
                     <CardBody >
                         <CardTitle> <h2><strong>Login</strong></h2></CardTitle>
                         <CardSubtitle className="text-muted">Don't have an account?
@@ -42,39 +41,21 @@ const Login = ({errors, login}) => {
                         <br/>
 
                         <form onSubmit={handleSubmit}>
-                            <label>
-                                Email:
-                                <input type="email" name="email"/>
-                            </label>
-                            <label>
-                                Password:
-                                <input type="password" name="password"/>
-                            </label>
+                            <div className="form-group text-left">
+                                <label>Email:</label>
+                                <input type="email" name="email" className="form-control"/>
+                            </div>
+                            <div className="form-group text-left">
+                                <label>Password:</label>
+                                <input type="password" name="password" className="form-control"/>
+                            </div>
 
-                            <input type="submit" value="Submit"/>
+                            <input type="submit" value="Login" className="btn btn-primary btn-block"/>
                         </form>
                     </CardBody>
                 </Card>
             </div>
         </React.Fragment>
-        //     <h1>Login</h1>
-        //     <p>{errors}</p>
-        //
-        //     // <form onSubmit={handleSubmit}>
-        //     //     <label>
-        //     //         Email:
-        //     //         <input type="email" name="email"/>
-        //     //     </label>
-        //     //     <label>
-        //     //         Password:
-        //     //         <input type="password" name="password"/>
-        //     //     </label>
-        //     //
-        //     //     <input type="submit" value="Submit"/>
-        //     // </form>
-        //
-        //     <Link to="/register">Signup</Link>
-        // </>
     );
 };
 
