@@ -7,32 +7,46 @@ import color from "@material-ui/core/colors/blueGrey";
 
 const FooterPage = () => {
     return (
-        <div className="Footer" className="p-3 mb-2 bg-dark text-white" >
+        <div >
            <footer>
+               <div  className="Footer" className="p-3 mb-2 bg-dark text-white">
                <Row >
                    <Col></Col>
                    <Col>
-                      Address <br />
+                      <b>Address </b><br />
                       186/4,<br />
                       T.B. Jaya Mawatha,<br />
                       Colombo 05.
                    </Col>
                    <Col>
-                   Customer Service <br />
-                   Contact Us <br />
-                   Delivery <br/>
-                   Size Guide
+                       <b>Contact Us </b><br />
+                   (+94)112233443 <br/>
+                   (+94)113333443 <br/>
+                   (+94)773322112
                    </Col>
                    <Col>
-                    Discover <br />
-                    The Company <br />
-                       Promotions <br />
+                       <b>Discover </b><br />
+                       <b>The Company </b><br />
+                       <b>Promotions</b> <br />
+                       <b>Customer Services</b>
                    </Col>
                    <Col>
-                        Follow us on <br />
+                       <b>Follow us on </b><br />
+                       &nbsp; <i className="fab fa-instagram"></i> &nbsp;
+                       <i className="fab fa-facebook-square "></i> &nbsp;
+                       <i className="fab fa-twitter"></i>
+                       <br/><br />
+
+                       <a href='/AdLog' style={{color:'white'}}>Admin & Manager login</a>
+
+
+                   </Col>
+                   <Col>
+                       <br />
 
                    </Col>
                </Row>
+               </div>
            </footer>
         </div>
     );

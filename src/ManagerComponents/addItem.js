@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
-import {Button, Container} from "react-bootstrap";
+import {Button, Container, Form} from "react-bootstrap";
 import ReactDOM from "react-dom";
 import {Input} from "@material-ui/core";
 import NavBar from "./NavBar";
+import Footer from "../AdminComponents/Footer"
 import background from "../Images/AdminBackgroud.jpg";
-// import axios from 'axios';
+import axios from "axios";
+import Dropzone from "react-dropzone";
+
+
+
 var sectionstyle ={
     backgroundImage: `url(${background})`
 }
+const Category = props => (
+
+
+        <option>{props.category.category}</option>
+)
 
 export default class addItem extends Component {
     constructor(props) {
         super(props);
 
+        this.handleFileChange = this.handleFileChange.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
@@ -20,60 +31,42 @@ export default class addItem extends Component {
         this.onChangeQuantity = this.onChangeQuantity.bind(this);
         this.onChangeSize = this.onChangeSize.bind(this);
         this.onChangeMeterial = this.onChangeMeterial.bind(this);
+        this.onChangeDiscount = this.onChangeDiscount.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
+            file: '',
             category : '',
             description : '',
             name : '',
             price : '',
             quantity : '',
-            size : '',
-            meterial : ''
+            size :'',
+            sizes : ['Small','Medium','Large'],
+            meterial : '',
+            discount : 0,
+            categories : []
 
         }
     }
 
-    // handleSubCategoryNameChange = idx => evt => {
-    //     const newSubCategories = this.state.subCategories.map((subcategory, sidx) => {
-    //         if (idx !== sidx) return subcategory;
-    //         return { ...subcategory, name: evt.target.value };
-    //     });
-    //
-    //     this.setState({ subCategories: newSubCategories });
-    // };
-    //
-    // handleAddSubCategory = () => {
-    //     this.setState({
-    //         subCategories: this.state.subCategories.concat([{category: "" }])
-    //     });
-    // };
-    //
-    // handleRemoveSubCategory = idx => () => {
-    //     this.setState({
-    //         subCategories: this.state.subCategories.filter((s, sidx) => idx !== sidx)
-    //     });
-    // };
-    // onChangeSubs(e){
-    //     this.setState({
-    //         subcats: e.target.value
-    //     })
-    // }
+
+
+
     onChangeCategory(e) {
         this.setState({
             category: e.target.value
         })
     }
 
-    // onChangeSubCategory(e) {
-    //     this.setState({
-    //         category: e.target.value
-    //     })
-    // }
-
     onChangeDescription(e){
         this.setState({
             description: e.target.value
+        })
+    }
+    onChangeDiscount(e){
+        this.setState({
+            discount: e.target.value
         })
     }
 
@@ -108,80 +101,146 @@ export default class addItem extends Component {
     }
 
 
-    // onAddCategory() {
-    //     console.log('clicked');
-    //     const name = `ingrediant-${Object.keys(this.state.subcats).length}`;
-    //     let inputbox = <Input name={name}
-    //                           onChange={this.onChange.bind(this, name)}/>
-    //     const inputs = this.state.inputs;
-    //     inputs.push( inputbox );
-    //     this.setState( { inputs } );
-    //
-    // }
-    onSubmit(e) {
+    onSubmit = (e) => {
         e.preventDefault();
 
-        const user = {
-            category: this.state.category,
-            description: this.state.description,
-            name : this.state.name,
-            price : this.state.price,
-            quantity : this.state.quantity,
-            size : this.state.size,
-            meterial : this.state.meterial
-        }
+        const additem = new FormData();
 
-        const { category } = this.state;
-        console.log(user);
-        alert('Item ${category} added ');
+        additem.append('file', this.state.file)
+        additem.append('category', this.state.category)
+        additem.append('name', this.state.name)
+        additem.append('description', this.state.description)
+        additem.append('price', this.state.price)
+        additem.append('quantity', this.state.quantity)
+        additem.append('size', this.state.size)
+        additem.append('meterial', this.state.meterial)
+        // additem.append('discount', this.state.discount)
 
-        // axios.post('http://localhost:5000/users/add', user)
+
+
+        console.log(additem);
+
+        axios.post('http://localhost:5000/additem/add', additem)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
+            alert('Item Added')
+
+
+
+        // axios.post('http://localhost:5000/users/add', additem)
         //     .then(res => console.log(res.data));
 
         this.setState({
+            file: 'null',
             category: '',
             description:'',
             name : '',
             price : '',
             quantity : '',
             size : '',
-            meterial : ''
+            meterial : '',
+            discount: 0
         })
+        window.location ='/ItemList'
+
+    }
+    state =  {
+        selectedFile: null,
+        imagePreviewUrl: null
+    };
+
+    handleFileChange = event => {
+        this.setState({
+            file: event.target.files[0]
+        })
+
+        let reader = new FileReader();
+
+        reader.onloadend = () => {
+            this.setState({
+                imagePreviewUrl: reader.result
+            });
+        }
+
+        reader.readAsDataURL(event.target.files[0])
 
     }
 
+    componentDidMount() {
+        axios.get('http://localhost:5000/category/')
+            .then(response => {
+                this.setState({
+                    categories: response.data
+                })
+                console.log(response.data);
+
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        axios.get('http://localhost:5000/category/find')
+            .then(res => console.log(res.data))
+
+    }
+    categoryList(){
+        return this.state.categories.map(currentcategory =>{
+            return <Category category={currentcategory} key = {currentcategory._id} />;
+        })
+    }
+
+    // handleFileChange = (e) => {
+    //     let target = e.target;
+    //     let value = target.files[0];
+    //
+    //     this.setState({
+    //         file : value
+    //     })
+    // }
+
     render() {
+        // const onDrop = (files)=>{
+        //
+        //     let formData = new FormData();
+        //     const config = {
+        //         header:{conten}
+        //     }
+        // }
+        let $imagePreview = (<div className="previewText image-container"></div>);
+        if (this.state.imagePreviewUrl) {
+            $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="300" height="400" /> </div>);
+        }
+
         return (
 
             <div>
 
                 <NavBar />
                 <section style={sectionstyle}>
-                    <Container>
+                    <Container >
                         <div className="p-3 mb-2 bg-light text-dark">
                             <center><h3>Add Item</h3></center>
-                            <form onSubmit={this.onSubmit}>
+                            <form onSubmit={this.onSubmit} enctype="multipart/form-data" >
+
+
+                                <div className="form-group">
+                                    <input  type="file" name="file" onChange={this.handleFileChange} />
+                                    {/*<button type="button" onClick={this.submit} > Upload </button>*/}
+                                    { $imagePreview }
+
+                                </div>
 
                                 <div className="form-group">
                                     <label>Category </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.category}
-                                            onChange={this.onChangeCategory}
-                                    />
-                                </div>
 
+                                    <select
+                                        type="text"
+                                        required
+                                        className="form-control"
+                                        value={this.state.category}
+                                        onChange={this.onChangeCategory}>
+                                        options={this.categoryList()}
 
-                                <div className="description">
-                                    <br />
-                                    <label>Description  </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.description}
-                                            onChange={this.onChangeDescription}
-                                    />
+                                    </select>
                                 </div>
 
                                 <div className="form-group">
@@ -193,6 +252,19 @@ export default class addItem extends Component {
                                             onChange={this.onChangeName}
                                     />
                                 </div>
+
+                                <div className="description">
+
+                                    <label>Description  </label>
+                                    <input  type="text"
+                                            required
+                                            className="form-control"
+                                            value={this.state.description}
+                                            onChange={this.onChangeDescription}
+                                    />
+                                </div>
+
+
                                 <div className="form-group">
                                     <label>Price </label>
                                     <input  type="text"
@@ -213,12 +285,21 @@ export default class addItem extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label>Size </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.size}
-                                            onChange={this.onChangeSize}
-                                    />
+                                    <select
+                                        type="text"
+                                        required
+                                        className="form-control"
+                                        value={this.state.size}
+                                        onChange={this.onChangeSize}>
+                                        {
+                                            this.state.sizes.map(function(size) {
+                                                return <option
+                                                    key={size}
+                                                    value={size}>{size}
+                                                </option>;
+                                            })
+                                        }
+                                    </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Meterial </label>
@@ -239,8 +320,10 @@ export default class addItem extends Component {
                         </div>
                     </Container>
                 </section>
+                
+
             </div>
-            
+
 
         )
     }

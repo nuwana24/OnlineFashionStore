@@ -5,8 +5,12 @@ export default class ViewStats extends Component{
     render() {
         return (
             <div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
                 <NavBar />
-                <p>You are on the View Statistics component </p>
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
         );
     }

@@ -115,3 +115,35 @@ body {
   font-size: 1.2rem;
   color: var(--mainYellow);
 }
+
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.adminForm{
+  background: #55acf3;
+  padding: 1.5em;
+  border-radius: 1em;
+}
+.center{
+  display: block;
+  justify-content: center;
+  align-items: center;
+  height:65vh;
+}
+
+.actionLink{
+  /*background-color: #55acf3;*/
+  color: white;
+  width: 100px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-decoration: none;
+}
+.actionLink:hover{
+  text-decoration: none;
+  color:#ffa400;
+}

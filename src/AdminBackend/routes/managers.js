@@ -1,7 +1,14 @@
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const express = require('express');
 const router = require('express').Router();
 let Manager = require('../Models/Manager.model');
 
 
+const app = express();
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 router.route('/').get((req, res) => {
     Manager.find()
@@ -24,11 +31,25 @@ router.route('/add').post((req, res) => {
     const zip = Number(req.body.zip);
 
 
+    // const hashedPWD = bcrypt.hash(password,12);
+    const hashedPWD = bcrypt.hash(password,12).then(
+        function (hashedPwd) {
+            return hashedPwd;
+
+        }
+    )
+
     // const newManager = new Manager({fname,lname,email,gender,password,rePassword,DOB,Address,Address2,city,states,zip});
     const newManager = new Manager({firstName,lastName,email,gender,password,dateOfBirth,Address,Address2,city,zip});
 
     newManager.save()
         .then(() => res.json('Store Manager added!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/:id').get((req, res) => {
+    Manager.findById(req.params.id)
+        .then(managers => res.json(managers))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -47,7 +68,7 @@ router.route('/update/:id').post((req, res) => {
             managers.gender = req.body.gender;
             managers.password = req.body.password;
             // managers.rePassword = req.body.rePassword;
-            managers.dateOfBirth = req.body.dateOfBirth;
+            managers.dateOfBirth = Date.parse(req.body.dateOfBirth);
             managers.Address = req.body.Address;
             managers.Address2 = req.body.Address2;
             managers.city = req.body.city;

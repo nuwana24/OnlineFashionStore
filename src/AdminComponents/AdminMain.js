@@ -35,7 +35,7 @@ export default class AdminMain extends Component{
                             <Card style={{ width: '18rem' ,height: '18rem'}}>
                                 <Card.Img variant="top" src={addCat} />
                                 <Card.Body>
-                                    <Card.Title><center><a href="#">Add Categories</a></center></Card.Title>
+                                    <Card.Title><center><a href="#"><Link to={'/AddCategory'}>Add Categories</Link></a></center></Card.Title>
                                 </Card.Body>
                             </Card>
                             <br />
