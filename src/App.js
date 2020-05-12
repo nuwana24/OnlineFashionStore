@@ -27,7 +27,6 @@ import WishListHome from "./UserComponents/WishList/WishListHome";
 import Modal from "./UserComponents/Modal";
 import login from "./UserComponents/login";
 import register from "./UserComponents/register";
-import DisplayProducts from "./UserComponents/DisplayProducts";
 
 // manager
 import ManagerHome from "./ManagerComponents/ManagerHome";
@@ -60,8 +59,8 @@ function App() {
           <Route path="/ViewCategory" exact component={ViewCategory}/>
 
           {/*User*/}
-          <Route exact path="/" component={UserHome} />
-          <Route exact path="/Por" exact component={ProductList}/>
+          <Route exact path="/v" component={UserHome} />
+          <Route exact path="/" exact component={ProductList}/>
           <Route path="/ProductDetails" component={ProductDetails}/>
           <Route path="/Cart" component={CartMain}/>
           <Route path="/WishListMain"component={WishListMain} />
@@ -84,7 +83,7 @@ function App() {
 
           <br />
       </switch>
-      <FooterPage className='footer'/>
+      <FooterPage />
       </Router>
     );
 }

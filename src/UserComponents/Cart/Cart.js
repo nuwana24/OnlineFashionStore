@@ -18,6 +18,7 @@ const mapStateToProps = ({ session}) => ({
 const Cart = ({session}) => {
 
     const [Cart, setCart] = useState([]);
+    console.log(session.userId);
 
     const increment = (productId) => {
         const item = {
@@ -25,7 +26,7 @@ const Cart = ({session}) => {
             productId: productId
         };
 
-        Axios.post('http://localhost:5000/api/cart/increment', item)
+        Axios.post('http://localhost:8000/api/cart/increment', item)
             .then(res=>{
                 if(res.status === 200){
                     console.log('Incremented');
@@ -49,7 +50,7 @@ const Cart = ({session}) => {
             productId: productId
         };
 
-        Axios.post('http://localhost:5000/api/cart/decrement', item)
+        Axios.post('http://localhost:8000/api/cart/decrement', item)
             .then(res=>{
                 if(res.status === 200){
                     console.log('Decremented');
@@ -59,13 +60,13 @@ const Cart = ({session}) => {
 
     const removeItem = (productId) => {
 
-        Axios.get('http://localhost:5000/api/cart/removeItem', {params:{userId: session.userId, productId: productId}});
+        Axios.get('http://localhost:8000/api/cart/removeItem', {params:{userId: session.userId, productId: productId}});
     }
 
     useEffect(() => {
         if(session.userId !== null){
 
-            Axios.get('http://localhost:5000/api/cart/getCart', {params:{userId: session.userId}})
+            Axios.get('http://localhost:8000/api/cart/getCart', {params:{userId: session.userId}})
                 .then(res => {
                     const cart = res.data;
 

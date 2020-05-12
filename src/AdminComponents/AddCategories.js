@@ -86,6 +86,7 @@ export default class AddCategories extends Component {
             category: '',
             description:''
         })
+        window.location = '/ViewCategory';
 
     }
 

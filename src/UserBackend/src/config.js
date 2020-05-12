@@ -1,5 +1,5 @@
 export const {
-    PORT = 5000,
+    PORT = 8000,
     NODE_ENV = 'development',
 
     MONGO_URI = 'mongodb+srv://root:admin@cluster0-ynman.gcp.mongodb.net/test?retryWrites=true&w=majority',

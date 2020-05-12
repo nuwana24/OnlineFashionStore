@@ -35,7 +35,7 @@ class NavBar2 extends Component {
 
         let links = this.state.itemList.map((link, index) => {
             return (
-                <li className="menu__list-item"><a className="menu__link" href="#">{link.category}</a></li>
+                <li className="menu__list-item"><a className="menu__link"  onClick={() => this.props.onClickChanger(link.category)}>{link.category}</a></li>
 
             )
         })
@@ -43,23 +43,30 @@ class NavBar2 extends Component {
 
         return (
             <nav className='menu'>
+                <Link to='/'>
                 <img src={logo} className="menu__logo"></img>
+                </Link>
             <div className="menu__right">
                 <ul className="menu__list">
                     {links}
-                    <li className="menu__list-item"><a className="menu__link" href="/Cart" style={{position:"absolute",right:250}}>
-                        {/*<Link to='/Cart'>*/}
+                    <li className="menu__list-item"><a className="menu__link"  onClick={() => this.props.onClickChanger("Discounted")}>Discounted items</a></li>
+                    <li className="menu__list-item"><a className="menu__link2"  style={{position:"absolute",right:250}}>
+                        <Link  className="menu__link2" to='/Cart'>
                         <i className="fas fa-cart-plus"></i> &nbsp;
                        Cart
-                        {/*</Link>*/}
+                        </Link>
                     </a></li>
-                    <li className="menu__list-item"><a className="menu__link" href="/WishListMain" style={{position:"absolute",right:120}}>
+                    <li className="menu__list-item"><a className="menu__link2" style={{position:"absolute",right:120}}>
+                        <Link  className="menu__link2" to="/WishListMain">
                         <i className="fas fa-cart-plus"></i> &nbsp;
                        Wishlist
+                        </Link>
                     </a></li>
-                    <li className="menu__list-item"><a className="menu__link" href="/login" style={{position:"absolute",right:20}}>
+                    <li className="menu__list-item"><a className="menu__link2"  style={{position:"absolute",right:20}}>
+                        <Link  className="menu__link2" to="/login">
                         <i className="fas fa-user-circle"></i> &nbsp;
                         Login
+                        </Link>
                     </a></li>
                 </ul>
 

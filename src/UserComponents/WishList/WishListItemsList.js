@@ -19,7 +19,7 @@ const WishListItemsList = ({session}) => {
     useEffect(() => {
         if(session.userId !== null){
 
-            Axios.get('http://localhost:5000/api/WishList/getWishList', {params:{userId: session.userId}})
+            Axios.get('http://localhost:8000/api/WishList/getWishList', {params:{userId: session.userId}})
                 .then(res => {
                     const list = res.data;
 
@@ -36,7 +36,7 @@ const WishListItemsList = ({session}) => {
     }, []);
 
     const removeWishList = (productId) => {
-        Axios.get('http://localhost:5000/api/WishList/rmoveWishList', {params:{userId: session.userId, productId: productId}})
+        Axios.get('http://localhost:8000/api/WishList/rmoveWishList', {params:{userId: session.userId, productId: productId}})
     }
 
     if(session.userId !== null) {

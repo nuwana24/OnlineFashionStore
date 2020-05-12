@@ -10,7 +10,7 @@ const mapStateToProps = ({ session}) => ({
     session
 });
 
-const Product = ({session, ...props}) => {
+const Item = ({session, ...props}) => {
 
     const {_id, name, img, price, description, meterial} = props.products;
 
@@ -38,9 +38,7 @@ const Product = ({session, ...props}) => {
 
         props.addToCart(item)
     };
-
     return (
-
         <div style={{display: "inline-block"}}>
 
             <Card style={{width: '18rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5">
@@ -79,7 +77,6 @@ const Product = ({session, ...props}) => {
         </div>
     );
 }
-
 export default connect(
     mapStateToProps
-)(Product);
+)(Item);
