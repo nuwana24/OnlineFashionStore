@@ -1,5 +1,5 @@
 export const signup = user => (
-    fetch("http://localhost:5000/api/users", {
+    fetch("http://localhost:8000/api/users", {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
@@ -9,7 +9,7 @@ export const signup = user => (
 );
 
 export const login = user => (
-    fetch("http://localhost:5000/api/session", {
+    fetch("http://localhost:8000/api/session", {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
@@ -19,5 +19,5 @@ export const login = user => (
 );
 
 export const logout = () => (
-    fetch("http://localhost:5000/api/session", {method: "DELETE"})
+    fetch("http://localhost:8000/api/session", {method: "DELETE"})
 );

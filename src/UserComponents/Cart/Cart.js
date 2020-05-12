@@ -1,9 +1,8 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 
 import Titles  from "../Titles";
 import CartColumns from './CartColumns';
 import EmptyCart  from "./EmptyCart";
-import {ProductConsumer} from "../../context";
 
 import CartList from "./CartList";
 import CartTotals from "./CartTotals"
@@ -19,11 +18,55 @@ const mapStateToProps = ({ session}) => ({
 const Cart = ({session}) => {
 
     const [Cart, setCart] = useState([]);
+    console.log(session.userId);
+
+    const increment = (productId) => {
+        const item = {
+            userId : session.userId,
+            productId: productId
+        };
+
+        Axios.post('http://localhost:8000/api/cart/increment', item)
+            .then(res=>{
+                if(res.status === 200){
+                    console.log('Incremented');
+
+                    const cart = res.data;
+
+                    let tempProducts = [];
+                    cart.forEach(item => {
+                        const singleItem = {...item};
+                        tempProducts = [...tempProducts, singleItem];
+                    });
+
+                    setCart(tempProducts);
+                }
+            })
+    };
+
+    const decrement = (productId) => {
+        const item = {
+            userId : session.userId,
+            productId: productId
+        };
+
+        Axios.post('http://localhost:8000/api/cart/decrement', item)
+            .then(res=>{
+                if(res.status === 200){
+                    console.log('Decremented');
+                }
+            })
+    };
+
+    const removeItem = (productId) => {
+
+        Axios.get('http://localhost:8000/api/cart/removeItem', {params:{userId: session.userId, productId: productId}});
+    }
 
     useEffect(() => {
         if(session.userId !== null){
 
-            Axios.get('http://localhost:5000/api/cart/getCart', {params:{userId: session.userId}})
+            Axios.get('http://localhost:8000/api/cart/getCart', {params:{userId: session.userId}})
                 .then(res => {
                     const cart = res.data;
 
@@ -40,15 +83,15 @@ const Cart = ({session}) => {
     }, []);
 
         if(session.username !== null){
-            console.log(Cart)
+
             return (
                 <section>
-                    <NavBar />
+                    {/*<NavBar />*/}
                         {(Cart.length > 0) ? (
                                     <React.Fragment>
                                         <Titles name ="Your " title = "Cart">Cart</Titles>
                                         <CartColumns/>
-                                        <CartList cart = {Cart}/>
+                                        <CartList cart = {Cart} increment={increment} decrement={decrement} removeItem={removeItem}/>
                                         <CartTotals value={Cart}/>
                                     </React.Fragment>
                             ) : (

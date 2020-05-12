@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Form} from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import narbarCss from "../UserComponents/UserCss/navbarCss.css";
+import logo from "../Images/logo.jpg";
 
 
 export default class NavBar extends Component{
@@ -10,33 +12,55 @@ export default class NavBar extends Component{
 
 
         return(
+            <nav className='menu'>
+               <a href='/'>
+                <img src={logo} className="menu__logo"></img>
+               </a>
+                <div className="menu__right">
+                    <ul className="menu__list">
+                        <li className="menu__list-item"><a className="menu__link2" href="/Admin">
+                            {/*<Link to='/Cart'>*/}
+                            <i className="fas fa-home"></i> &nbsp;
+                            Home
+                            {/*</Link>*/}
+                        </a></li>
+                        <li className="menu__list-item">
+                            <NavDropdown className='menu__link2' title={<span style={{color:"#3a3e47"}} >
+                                 <i className="fas fa-table"></i>&nbsp;
+                                Manage Categories
+                            </span>} id="categoryManager" >
+                                        <a href="/AddCategory" className = "menu__link2">Add New Category</a>
+                                         <NavDropdown.Divider />
+                                        <a href="/ViewCategory" className = "menu__link2">View Categories</a>
+                        </NavDropdown>
+                        </li>
+                        <li className="menu__list-item">
 
-            <Navbar bg ="dark" variant="dark">
-                <Navbar.Brand>
-                    ShoppyStore
-                </Navbar.Brand>
-                <Nav className="mr-auto">
-                    <Link to="/Admin" className = "nav-link">Home</Link>
-                    {/*<Link to="/AddCategory" className = "nav-link">Add Categories</Link>*/}
-                    <NavDropdown title="Manage Categories" id="categoryManager" className="bg-dark">
-                        <Link to="/AddCategory" className = "nav-item text-bright">Add New Category</Link>
-                        <NavDropdown.Divider />
-                        <Link to="/ViewCategory" className = "nav-item text-bright">View Categories</Link>
-                    </NavDropdown>
-                    <NavDropdown title="Manage Store Managers" id="userManagerDD" className="bg-dark">
-                        <Link to="/CreateLogin" className = "nav-item text-bright">Create Login for Store Manager</Link>
-                        <NavDropdown.Divider />
-                        <Link to="/ViewManager" className = "nav-item text-bright">View Store Managers</Link>
-                    </NavDropdown>
-                </Nav>
-                <Nav>
-                    <form method='post' action='/logout'>
-                        <Nav.Link>Logout</Nav.Link>
-                    </form>
+                            <NavDropdown className='menu__link2' title={<span style={{color:"#3a3e47"}} >
+                            <i className="fas fa-user-edit"></i>&nbsp;
+                                Manage Store Managers</span>} id="userManagerDD" >
+                                           <a href="/CreateLogin" className = "menu__link2">Create Login for Store Manager</a>
+                                            <NavDropdown.Divider />
+                                            <a href="/ViewManager" className = "menu__link2">View Store Managers</a>
+                            </NavDropdown>
+                          </li>
+                        <li className="menu__list-item"><a className="menu__link2" href="/ViewStats">
 
-                </Nav>
+                            <i className="fas fa-chart-bar"></i> &nbsp;
+                            View Insights
 
-              </Navbar>
+                        </a></li>
+                        <li className="menu__list-item"><a className="menu__link2" href="/AdLog" style={{position:"absolute",right:20}}>
+                            <i className="fas fa-user-circle"></i> &nbsp;
+                            Logout
+                        </a></li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+
 
 
 

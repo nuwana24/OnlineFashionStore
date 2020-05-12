@@ -47,4 +47,20 @@ router.get('/getWishList', (req, res) => {
     }
 });
 
+router.get('/rmoveWishList', (req, res) => {
+
+    User.findOneAndUpdate(
+        {_id: req.query.userId},
+        {
+            "$pull":
+                {"WishList" : {"id" : req.query.productId}}
+        },
+        {new : true},
+        (err, userInfo) => {
+            if(err) return res.json({success:false, err});
+            res.status(200).json(userInfo.Cart)
+        }
+    )
+});
+
 module.exports = router;

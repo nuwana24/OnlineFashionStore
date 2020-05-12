@@ -21,6 +21,7 @@ class NavBar extends Component {
                         </Link>
                     </li>
                 </ul>
+                <div className="">
                     <Link to='/WishListMain' className="ml-1">
                         <CartButtonContainer>
                          <span className="mr-2">
@@ -29,14 +30,14 @@ class NavBar extends Component {
                             WishList
                         </CartButtonContainer>
                     </Link>
-                <Link to='/login' className="ml-auto">
-                    <CartButtonContainer>
-                         <span className="mr-2">
-                            <i className="fas fa-cart-plus"/>
-                         </span>
-                        Login
-                    </CartButtonContainer>
-                </Link>
+                    <Link to='/login' className="ml-auto">
+                        <CartButtonContainer>
+                             <span className="mr-2">
+                                <i className="fas fa-cart-plus"/>
+                            </span>
+                            Login
+                        </CartButtonContainer>
+                    </Link>
                     <Link to='/Cart' className="ml-auto">
                         <CartButtonContainer>
                          <span className="mr-2">
@@ -45,8 +46,7 @@ class NavBar extends Component {
                             Cart
                         </CartButtonContainer>
                     </Link>
-
-
+                </div>
             </NavWrapper>
         );
     }
