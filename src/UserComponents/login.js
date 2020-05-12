@@ -4,7 +4,8 @@ import {Card, CardTitle, CardSubtitle, CardBody} from "reactstrap";
 import {Link, Redirect} from 'react-router-dom';
 import {login } from './actions/session';
 import '../style.css';
-import NavBar from "./NavBar";
+// import NavBar from "./NavBar";
+import NavBar2 from "./Navbar2";
 
 const mapStateToProps = ({errors, session}) => ({
     errors, session
@@ -31,7 +32,7 @@ const Login = ({session, login, ...props}) => {
 
     return(
         <React.Fragment>
-            <NavBar/>
+            <NavBar2/>
             <div className="my-lg-5">
                 <Card className="bg-light mb-3 text-center w-50 mx-auto">
                     <CardBody >

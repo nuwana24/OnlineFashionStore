@@ -17,6 +17,9 @@ class AdminAndManagerLogin extends Component {
         if(this.state.username =='admin'){
             window.location = 'Admin';
         }
+        if(this.state.username == 'manager'){
+            window.location = 'Manager'
+        }
     }
     render() {
         return (
