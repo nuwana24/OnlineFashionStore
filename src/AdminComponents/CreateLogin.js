@@ -20,6 +20,7 @@ export default class CreateLogin extends Component {
        this.onChangelastName = this.onChangelastName.bind(this);
        this.onChangeEmail = this.onChangeEmail.bind(this);
        this.onChangePassword = this.onChangePassword.bind(this);
+       this.onChangePassword2 = this.onChangePassword2.bind(this);
        this.onChangeGender = this.onChangeGender.bind(this);
        this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
        this.onChangeAddress = this.onChangeAddress.bind(this);
@@ -35,16 +36,20 @@ export default class CreateLogin extends Component {
            genders: ['Male','Female','Prefer not to say'],
            gender:'',
            password :'',
+           password2: '',
            dateOfBirth : new Date(),
            Address : '',
            Address2 : '',
            city : '',
            zip : 0,
-           // errors :{
-           //     email:'',
-           //     password:'',
-           //
-           // }
+           //validations
+
+           passwordV:'',
+           EmailVal :' ',
+
+           //previously added managers
+           addedManagers:[],
+
        }
    }
 
@@ -61,15 +66,21 @@ export default class CreateLogin extends Component {
     }
 
     onChangeEmail=(e)=>{
-       this.setState({
-           email: e.target.value
-       });
+        this.setState({
+            email: e.target.value
+        });
+
    }
    onChangePassword(e){
        this.setState({
            password: e.target.value
        });
    }
+    onChangePassword2(e){
+        this.setState({
+            password2: e.target.value
+        });
+    }
     onChangeGender(e){
         this.setState({
             gender: e.target.value
@@ -103,43 +114,105 @@ export default class CreateLogin extends Component {
        });
    }
 
+   componentDidMount() {
+       axios.get('http://localhost:5000/managers/')
+           .then(response => {
+               this.setState({
+                   addedManagers: response.data
+               })
+           })
+           .catch((error) => {
+               console.log(error);
+           })
 
 
-   onSubmit(e){
+   }
+
+
+    onSubmit(e) {
        e.preventDefault();
+
 
        const manager = {
            firstName: this.state.firstName,
            lastName: this.state.lastName,
            email: this.state.email,
            gender: this.state.gender,
-           password:this.state.password,
+           password: this.state.password,
            dateOfBirth: this.state.dateOfBirth,
            Address: this.state.Address,
            Address2: this.state.Address2,
            city: this.state.city,
            zip: this.state.zip
        }
-       console.log(manager)
-       axios.post('http://localhost:5000/managers/add', manager)
-           .then(res => console.log(res.data));
 
-       const template_params = {
-           "_semail": manager.email,
-           "_sfirstName": manager.firstName,
-           "_spassword": manager.password
+       const man = {
+           username: this.state.firstName,
+           email: this.state.email,
+           password:this.state.password,
        }
+       console.log(manager);
+        console.log(man);
 
-       const service_id = 'default_service';
-       var template_id = 'manager_added';
-       emailjs.send(service_id, template_id, template_params)
-           .then((response) => {
-               console.log('SUCCESS!', response.status, response.text);
-           }, (err) => {
-               console.log('FAILED...', err);
-           });
+        if(manager.email !== '') {
+            this.state.addedManagers.map(added => {
+                if (manager.email === added.email) {
+                    console.log(added.email);
+                    this.setState({
+                        EmailVal: "There's a store manager with the same email.. Please enter a different email!",
+                    })
+                }
+            })
+        }
+         if (this.state.password2 !== this.state.password){
+             this.setState({
+                passwordV: "Re-entered password do not match the password!"
+             })
+         }
+       else {
+           axios.post('http://localhost:5000/managers/add', manager)
+               .then(res => console.log(res.data));
 
+           const template_params = {
+               "_semail": manager.email,
+               "_sfirstName": manager.firstName,
+               "_spassword": manager.password
+           }
 
+           axios.post('http://localhost:8000/api/users',man).then(res =>console.log(res.data));
+
+           const service_id = 'default_service';
+           var template_id = 'manager_added';
+           emailjs.send(service_id, template_id, template_params)
+               .then((response) => {
+                   console.log('SUCCESS!', response.status, response.text);
+               }, (err) => {
+                   console.log('FAILED...', err);
+               });
+
+           window.alert('Manager Added and email is sent to '+ this.state.email);
+
+           this.setState({
+               firstName:'',
+               lastName:'',
+               email : '',
+               genders: ['Male','Female','Prefer not to say'],
+               gender:'',
+               password :'',
+               password2: '',
+               dateOfBirth : new Date(),
+               Address : '',
+               Address2 : '',
+               city : '',
+               zip : 0,
+               passwordV:'',
+               EmailVal :' ',
+
+           })
+
+            // window.location='/ViewManager'
+
+       }
    }
     render() {
 
@@ -158,13 +231,6 @@ export default class CreateLogin extends Component {
                     <div>
                         <section style={sectionstyle}>
                             <Container>
-
-                                <Col>
-
-                                </Col>
-                                <Col>
-
-                                </Col>
 
                                 <Col>
                                     <div className="FormAddLogin" className="p-4 mb-2 bg-light text-dark">
@@ -186,6 +252,7 @@ export default class CreateLogin extends Component {
                                                 <Form.Group as={Col} controlId="formGridEmail">
                                                     <Form.Label>Email</Form.Label>
                                                     <Form.Control type="email" placeholder="Enter email" onChange = {this.onChangeEmail} value = {this.state.email}/>
+                                                    <p style={{color:"red",fontSize:"smaller"}}>{this.state.EmailVal}</p>
                                                 </Form.Group>
                                             </Form.Row>
                                             <Form.Row>
@@ -194,17 +261,17 @@ export default class CreateLogin extends Component {
                                                     <Form.Control type="password" placeholder="Password" onChange = {this.onChangePassword} value = {this.state.password}/>
                                                 </Form.Group>
 
+
                                                 <Form.Group as={Col} controlId="formGridRePassword">
+
                                                     <Form.Label>Re-enter Password</Form.Label>
-                                                    <Form.Control type="password" placeholder="Re-enter Password" />
+                                                    <Form.Control type="password" placeholder="Re-enter Password" onChange = {this.onChangePassword2} value = {this.state.password2}/>
+                                                    <p style={{color:"red",fontSize:"smaller"}}>{this.state.passwordV}</p>
                                                 </Form.Group>
 
                                             </Form.Row>
                                             <Form.Row>
                                                 <Form.Group as={Col} controlId="fromGridDOB">
-                                                    {/*<Form.Label>Date of Birth</Form.Label>*/}
-                                                    {/*<Form.Control type="date"  onChange = {this.onChangeDateOfBirth} selected = {this.state.dateOfBirth}/>*/}
-
                                                     <label>Date of Birth: </label>
                                                     <div>
                                                         <DatePicker

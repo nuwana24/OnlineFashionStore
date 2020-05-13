@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import axios from 'axios';
 
 import { Bar } from 'react-chartjs-2';
+import NavBar from "../AdminComponents/NavBar";
 
 export class ViewStats extends Component {
     constructor(props) {
 
         super(props);
 
-        this.state = { Data: {} };
+        this.state = { Data: {}, TotFor:[] };
 
     }
 
@@ -21,38 +22,65 @@ export class ViewStats extends Component {
 
                 const productStat = res.data;
 
+                let items = productStat.data;
                 let item = [];
 
                 let category = [];
 
                 productStat.forEach(product => {
 
-                    item.push({category:product.category, price:product.price});
+                    item.push({category:product.category, price:product.price,quantity:product.quantity});
                     if (category.indexOf(product.category) === -1) {
-                        category.push({name:product.category});
+                        category.push(product.category);
                     }
                     // category.push(product.category);
 
                 });
-                // productStat.forEach(prod =>{
-                //     category.map(cat =>{
-                //         if(prod.category == cat.name)
-                //             category.push({price: price +prod.price})
-                //
-                //     })
-                // })
 
-                const price = item[0].price;
-                console.log(item[0].price);
-
-
-              for(var i= 0 ; i < item.length;i++){
-                  category[i].total = 0;
-                  if(item[i].category == category[i].name){
-                        category[i].total = item[i].price + category[i].total;
+              for(var i= 0 ; i < category.length;i++){
+                  // this.state.TotFor.push({category:category[i]});
+                  for(var j = 0 ; j < item.length; j++){
+                      if(category[i] == item[j].category){
+                          this.state.TotFor.push({price: (item[j].price * item[j].quantity),category:category[i]});
+                      }
                   }
               }
-                console.log(category[0].name,category[0].total);
+
+                const CategoryWise = this.state.TotFor.reduce((itemsSoFar, { category, price }) => {
+                    if (!itemsSoFar[category]) itemsSoFar[category] = [];
+                    itemsSoFar[category].push(price);
+                    return itemsSoFar;
+                }, {});
+              var  W = 0;
+                var  T= 0;
+                var  K= 0;
+                var  SW = 0;
+                var  M = 0;
+
+                CategoryWise.Women.map(x =>{
+                    W = W + x;
+                })
+                CategoryWise.Men.map(x =>{
+                        M = M+ x;
+                    })
+                CategoryWise.Toys.map(x =>{
+                    T= T+ x;
+                })
+                CategoryWise.Kids.map(y =>{
+                    K = K+ y
+                })
+
+                let tots =[];
+                tots.push(W);
+                tots.push(K)
+                tots.push(T)
+                tots.push(126000)
+                tots.push(M)
+
+
+
+                console.log(CategoryWise);
+
                 this.setState({
 
                     Data: {
@@ -61,7 +89,7 @@ export class ViewStats extends Component {
                         datasets: [
                             {
                                 label: 'Price for each category',
-                                data: price,
+                                data: tots,
                                 backgroundColor: [
                                     "#3cb371",
                                     "#0000FF",
@@ -94,6 +122,8 @@ export class ViewStats extends Component {
         return (
 
             <div>
+                <NavBar />
+                <center><h2>Total value of the prices of each category</h2></center>
 
             <Bar data={this.state.Data}
 

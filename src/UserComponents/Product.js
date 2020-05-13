@@ -38,6 +38,17 @@ const Product = ({session, ...props}) => {
 
         props.addToCart(item)
     };
+    const addToWishListHandler = () =>{
+        const item = {
+            userId: session.userId,
+            productId: _id,
+            name: name,
+            price: price,
+            qty: 1
+        };
+
+        props.addToWishList(item);
+    }
 
     return (
 
@@ -68,10 +79,10 @@ const Product = ({session, ...props}) => {
                         </Card.Text>
                     }
 
-                    <button className="cart-btn" onClick={() => props.addToCart}>
+                    <button className="cart-btn" onClick={() => props.addToCart} onClick={addToCartHandler}>
                         <i className="fas fa-cart-plus"/>
                     </button>
-                    <button style={{position: "absolute", right: 20}} onClick={addToCartHandler}>
+                    <button style={{position: "absolute", right: 20}} onClick={addToWishListHandler}>
                         <i className="fa fa-heart" aria-hidden="true" style={{color: "Red"}}></i>
                     </button>
                 </Card.Body>

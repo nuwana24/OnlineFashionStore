@@ -14,12 +14,6 @@ class ProductList extends Component {
         this.addToCart = this.addToCart.bind(this)
         this.GetCategory = this.GetCategory.bind(this);
 
-
-        // this.state = {
-        //     currentCat:'All Items'
-        //
-        // }
-
     }
 
     state = {
@@ -51,6 +45,12 @@ class ProductList extends Component {
         console.log('sent')
     };
 
+    addToWishList = (item) => {
+        Axios.post('http://localhost:8000/api/wishlist/addToWishList', item);
+
+        console.log('sent')
+    };
+
     GetCategory(category){
         this.setState({
             currentCat : category
@@ -70,14 +70,14 @@ class ProductList extends Component {
                                 // return <Product key={product.id} products={product} addToCart ={this.addToCart}/>;
 
                                 if (product.category == this.state.currentCat) {
-                                    return <Product key={product.id} products={product} addToCart ={this.addToCart}/>;
+                                    return <Product key={product.id} products={product} addToCart ={this.addToCart} addToWishList = {this.addToWishList}/>;
 
                                 } else if (this.state.currentCat == 'All Items') {
-                                    return<Product key={product.id} products={product} addToCart ={this.addToCart}/>;
+                                    return<Product key={product.id} products={product} addToCart ={this.addToCart} addToWishList = {this.addToWishList}/>;
 
                                 } else if (this.state.currentCat == 'Discounted') {
                                     if (product.discount > 0) {
-                                        return <Product key={product.id} products={product} addToCart ={this.addToCart}/>;
+                                        return <Product key={product.id} products={product} addToCart ={this.addToCart} addToWishList = {this.addToWishList}/>;
                                     }
                                 }
                             })}
@@ -91,28 +91,3 @@ class ProductList extends Component {
 
 export default ProductList;
 
-
-// render() {
-//
-//     console.log(this.state.products.data);
-//
-//     return (
-//         <React.Fragment>
-//             <NavBar />
-//             <div className = "py-5 ">
-//                 <div className = "container">
-//                     <Titles name = "Fashion " title = "Hub"/>
-//                     <div className="row">
-//                         <ProductConsumer>
-//                             {list => {
-//                                 return list.products.map( product =>{
-//                                     return <Product key={product.id} products={product} />;
-//                                 })
-//                             }}
-//                         </ProductConsumer>
-//                     </div>
-//                 </div>
-//             </div>
-//         </React.Fragment>
-//     );
-// }

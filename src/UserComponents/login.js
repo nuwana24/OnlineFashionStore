@@ -6,6 +6,7 @@ import {login } from './actions/session';
 import '../style.css';
 // import NavBar from "./NavBar";
 import NavBar2 from "./Navbar2";
+import LoginNav from "../AdminComponents/LoginNav";
 
 const mapStateToProps = ({errors, session}) => ({
     errors, session
@@ -32,7 +33,7 @@ const Login = ({session, login, ...props}) => {
 
     return(
         <React.Fragment>
-            <NavBar2/>
+            <LoginNav />
             <div className="my-lg-5">
                 <Card className="bg-light mb-3 text-center w-50 mx-auto">
                     <CardBody >

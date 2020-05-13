@@ -7,13 +7,13 @@ const mapStateToProps = ({ session}) => ({
 
 const CartItem = ({session ,...props}) => {
 
-    const {id,name, price, quantity} =  props.item;
+    const {id,name, price, quantity,img} =  props.item;
     const {increment, decrement, removeItem} = props;
 
     return (
         <div className="row my-2 text-capitalize text-center">
             <div className="col-10 mx-auto col-lg-2">
-                <img  style={{width: '5rem', height: '5rem'}} className="img-fluid" alt="product "/>
+                <img  style={{width: '5rem', height: '5rem'}} className="img-fluid" alt="product " src={(`/uploads/${img}`)}/>
             </div>
             <div className="col-10 mx-auto col-lg-2">
                 <span className="d-lg-none">Product: </span>{name}
