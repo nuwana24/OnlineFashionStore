@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import {Link} from "react-router-dom";
+import {Button, Container, Card, CardDeck} from "react-bootstrap";
 import {ProductConsumer} from "../context";
 import {connect} from "react-redux";
 
@@ -25,8 +25,6 @@ const Product = ({session, ...props}) =>  {
 
     const addToCartHandler = () => {
 
-        console.log('Details ' + img);
-
         if(session.userId !== null){
             const item = {
                 userId: session.userId,
@@ -43,38 +41,88 @@ const Product = ({session, ...props}) =>  {
 
     };
 
-        return (
+    const addToWishListHandler = () =>{
+        const item = {
+            userId: session.userId,
+            productId: _id,
+            name: name,
+            price: price,
+            qty: 1
+        };
 
-            <ProductWrapper className = "col-9 mx-auto col-md-6 col-lg-3 my-3">
-                <div className="card">
-                    <ProductConsumer>
-                        {value => (
-                            <div className="img-container p-5 " onClick={() => value.handleDetail(details)}>
-                                <Link to="/ProductDetails">
-                                    <img src={(`/uploads/${img}`)} alt = "product" className="card-img-top"/>
-                                </Link>
+        props.addToWishList(item);
+    }
 
-                                <button className="cart-btn"  onClick={addToCartHandler}>
-                                    <i className="fas fa-cart-plus"/>
-                                </button>
-                            </div>
-                        )}
-                    </ProductConsumer>
+    return (
 
-                    <div className="card-footer d-flex justify-content-between">
-                        <p className="align-self-center mb-0">
-                            {name }
-                        </p>
+        <div style={{display: "inline-block"}}>
 
-                        <h5 className="text-blue font-italic mb-0">
-                            <span className="mr-1">$</span>
-                            {price }
-                        </h5>
-                    </div>
-                </div>
-            </ProductWrapper>
+            <Card style={{width: '18rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5">
+                <ProductConsumer>
+                    {value => (
+                        <div onClick={() => value.handleDetail(details)}>
+                            <Card.Img variant='top' src={(`/uploads/${props.products.img}`)}
+                                      style={{width: "18rem", height: "20rem"}}/>
+                        </div>
+                    )}
 
-        );
+                </ProductConsumer>
+
+                <Card.Body>
+                    <Card.Title style={{fontSize: "20px", fontFamily: "Open-Sans"}}>{props.products.name}</Card.Title>
+                    {props.products.discount == 0 ?
+                        <Card.Text>
+                            <br/>
+                            <span><b><center> Rs. {props.products.price}.00</center></b> </span>
+                        </Card.Text>
+                        :
+                        <Card.Text>
+                            <span style={{textDecoration: "line-through"}}><b><center> Rs. {props.products.price}.00</center></b> </span>
+                            <span style={{color: "red"}}><b><center> Rs. {props.products.price - props.products.discount}.00</center></b> </span>
+                        </Card.Text>
+                    }
+
+                    <button className="cart-btn" onClick={() => props.addToCart} onClick={addToCartHandler}>
+                        <i className="fas fa-cart-plus"/>
+                    </button>
+                    <button style={{position: "absolute", right: 20}} onClick={addToWishListHandler}>
+                        <i className="fa fa-heart" aria-hidden="true" style={{color: "Red"}}></i>
+                    </button>
+                </Card.Body>
+            </Card>
+        </div>
+    );
+
+
+
+        // return (
+        //
+        //     <ProductWrapper className = "col-9 mx-auto col-md-6 col-lg-3 my-3">
+        //         <div className="card">
+        //             <div className="img-container p-5 ">
+        //                 {/*<Link to="/ProductDetails" state={details}>*/}
+        //                 <Link to={{pathname: 'ProductDetails', item:{name, img, price, description, meterial}}}>
+        //                     <img src={(`/uploads/${img}`)} alt = "product" className="card-img-top"/>
+        //                 </Link>
+        //                 <button className="cart-btn"  onClick={addToCartHandler}>
+        //                     <i className="fas fa-cart-plus"/>
+        //                 </button>
+        //             </div>
+        //
+        //             <div className="card-footer d-flex justify-content-between">
+        //                 <p className="align-self-center mb-0">
+        //                     {name }
+        //                 </p>
+        //
+        //                 <h5 className="text-blue font-italic mb-0">
+        //                     <span className="mr-1">$</span>
+        //                     {price }
+        //                 </h5>
+        //             </div>
+        //         </div>
+        //     </ProductWrapper>
+        //
+        // );
 };
 
 const ProductWrapper = styled.div`

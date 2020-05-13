@@ -1,24 +1,17 @@
-import React, {useEffect, Component}from "react";
+import React, { Component}from "react";
 import Axios from "axios";
 
 import Product from "./Product";
 import Titles from "./Titles";
-import NavBar from "./NavBar";
-import Item from "./Item";
 import NavBar2 from "./Navbar2";
 
 class ProductList extends Component {
 
     constructor() {
         super();
-        this.addToCart = this.addToCart.bind(this)
+        this.addToCart = this.addToCart.bind(this);
+        this.addToWishList = this.addToWishList.bind(this);
         this.GetCategory = this.GetCategory.bind(this);
-
-
-        // this.state = {
-        //     currentCat:'All Items'
-        //
-        // }
 
     }
 
@@ -47,6 +40,12 @@ class ProductList extends Component {
 
     addToCart = (item) => {
         Axios.post('http://localhost:8000/api/cart/addToCart', item);
+
+        console.log('sent')
+    };
+
+    addToWishList = (item) => {
+        Axios.post('http://localhost:8000/api/wishlist/addToWishList', item);
 
         console.log('sent')
     };
