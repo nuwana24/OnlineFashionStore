@@ -51,22 +51,51 @@ class Cart extends Component {
                     Cart : tempProducts
                 });
 
-                this.updateStates();
+                 this.updateStates();
             })
     };
 
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //
+    //     if(prevState.Cart !== this.state.Cart){
+    //
+    //         this.setState({total: 0, discount: 0});
+    //         this.state.Cart.forEach(({discount, price, quantity}) => {
+    //             this.setState(prevState => ({
+    //                 total: prevState.total + (price * quantity),
+    //                 discount: prevState.discount + (discount * quantity)
+    //             }));
+    //         })
+    //     }
+    // }
+
     updateStates = () => {
-        this.setState({
-            total : 0,
-            discount : 0
-        });
+
+        let total = 0;
+        let discount = 0;
 
         this.state.Cart.forEach(item => {
-            this.setState({
-                total : this.state.total + (item.price * item.quantity),
-                discount : this.state.discount + (item.discount * item.quantity)
-            })
-        })
+            total = total + (item.price * item.quantity);
+            discount = discount + (item.discount * item.quantity);
+        });
+
+        this.setState({
+            total : total,
+            discount : discount
+        });
+
+        this.forceUpdate();
+        // this.setState({
+        //     total : 0,
+        //     discount : 0
+        // });
+
+        // this.state.Cart.forEach(item => {
+        //     this.setState({
+        //         total : this.state.total + (item.price * item.quantity),
+        //         discount : this.state.discount + (item.discount * item.quantity)
+        //     })
+        // })
 
     };
 
@@ -76,11 +105,13 @@ class Cart extends Component {
             productId: productId
         };
 
+        let price = this.state.Cart.find(item => item.id === productId ).price;
+        let discount = this.state.Cart.find(item => item.id === productId ).discount;
+
         Axios.post('http://localhost:8000/api/cart/increment', item)
             .then(res=>{
                 if(res.status === 200){
                     console.log('Incremented');
-
                     const cart = res.data;
 
                     let tempProducts = [];
@@ -90,10 +121,12 @@ class Cart extends Component {
                     });
 
                     this.setState({
-                        Cart : tempProducts
+                        Cart : tempProducts,
+                        total : this.state.total + Number(price),
+                        discount: this.state.discount + Number(discount)
                     });
 
-                    this.updateStates();
+                    //this.updateStates();
                 }
             });
     };
@@ -102,12 +135,15 @@ class Cart extends Component {
 
         const product = this.state.Cart.find(item => item.id === productId );
 
-        if(Number(product.quantity) > 1){
+        // if(Number(product.quantity) > 1){
 
             const item = {
                 userId : this.props.session.userId,
                 productId: productId
             };
+
+            let price = this.state.Cart.find(item => item.id === productId ).price;
+            let discount = this.state.Cart.find(item => item.id === productId ).discount;
 
             Axios.post('http://localhost:8000/api/cart/decrement', item)
                 .then(res=>{
@@ -123,13 +159,15 @@ class Cart extends Component {
                         });
 
                         this.setState({
-                            Cart : tempProducts
-                        })
+                            Cart : tempProducts,
+                            total : this.state.total - Number(price),
+                            discount: this.state.discount - Number(discount)
+                        });
 
                         //this.updateStates();
                     }
                 });
-        }
+        //}
 
     };
 
@@ -142,6 +180,8 @@ class Cart extends Component {
     };
 
     render() {
+        let total = this.state.total;
+        let discount = this.state.discount;
 
         if(this.props.session.username !== null){
             return (
@@ -158,15 +198,15 @@ class Cart extends Component {
                                                 <div className="col-10 mt-2 ml-sm-5 ml-md-auto col-sm-8 text-capitalize text-right">
                                                     <h5>
                                                         <span className="text-title">Sub Total: </span>
-                                                        <strong>$ {this.state.total}</strong>
+                                                        <strong>$ {total}</strong>
                                                     </h5>
                                                     <h5>
                                                         <span className="text-title">Discount: </span>
-                                                        <strong>$ {this.state.discount}</strong>
+                                                        <strong>$ {discount}</strong>
                                                     </h5>
                                                     <h5>
                                                         <span className="text-title">Total: </span>
-                                                        <strong>$ {this.state.total - this.state.discount}</strong>
+                                                        <strong>$ {total - discount}</strong>
                                                     </h5>
 
                                                     <Link to='/'>

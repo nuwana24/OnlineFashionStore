@@ -27,16 +27,19 @@ const Product = ({session, ...props}) =>  {
 
     const addToCartHandler = () => {
 
-        const item = {
-            userId: session.userId,
-            productId: _id,
-            name: name,
-            price: price,
-            qty: 1,
-            discount: discount
-        };
+        if(session.userId !== null){
+            const item = {
+                userId: session.userId,
+                productId: _id,
+                name: name,
+                price: price,
+                qty: 1,
+                discount: discount
+            };
 
-        props.addToCart(item)
+            props.addToCart(item)
+        }
+
     };
 
         return (
