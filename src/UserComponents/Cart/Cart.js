@@ -37,7 +37,7 @@ class Cart extends Component {
     }
 
     getItems = () => {
-        Axios.get('http://localhost:5000/api/cart/getCart', {params:{userId: this.props.session.userId}})
+        Axios.get('http://localhost:8000/api/cart/getCart', {params:{userId: this.props.session.userId}})
             .then(res => {
                 const cart = res.data;
 
@@ -76,7 +76,7 @@ class Cart extends Component {
             productId: productId
         };
 
-        Axios.post('http://localhost:5000/api/cart/increment', item)
+        Axios.post('http://localhost:8000/api/cart/increment', item)
             .then(res=>{
                 if(res.status === 200){
                     console.log('Incremented');
@@ -109,7 +109,7 @@ class Cart extends Component {
                 productId: productId
             };
 
-            Axios.post('http://localhost:5000/api/cart/decrement', item)
+            Axios.post('http://localhost:8000/api/cart/decrement', item)
                 .then(res=>{
                     if(res.status === 200){
                         console.log('Decremented');
@@ -135,7 +135,7 @@ class Cart extends Component {
 
     removeItem = (productId) => {
 
-        Axios.get('http://localhost:5000/api/cart/removeItem', {params:{userId: this.props.session.userId, productId: productId}});
+        Axios.get('http://localhost:8000/api/cart/removeItem', {params:{userId: this.props.session.userId, productId: productId}});
 
         this.getItems()
 
@@ -146,7 +146,7 @@ class Cart extends Component {
         if(this.props.session.username !== null){
             return (
                 <section>
-                    <NavBar />
+                    {/*<NavBar />*/}
                     {(this.state.Cart.length > 0) ? (
                                     <React.Fragment>
                                         <Titles name ="Your " title = "Cart">Cart</Titles>
