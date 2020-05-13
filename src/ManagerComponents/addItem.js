@@ -6,8 +6,6 @@ import NavBar from "./NavBar";
 import Footer from "../AdminComponents/Footer"
 import background from "../Images/AdminBackgroud.jpg";
 import axios from "axios";
-import Dropzone from "react-dropzone";
-
 
 
 var sectionstyle ={

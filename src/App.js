@@ -60,8 +60,8 @@ function App() {
           <Route path="/ViewCategory" exact component={ViewCategory}/>
 
           {/*User*/}
-          <Route exact path="/" component={UserHome} />
-          <Route exact path="/Por" exact component={ProductList}/>
+          {/*<Route exact path="/" component={UserHome} />*/}
+          <Route exact path="/" exact component={ProductList}/>
           <Route path="/ProductDetails" component={ProductDetails}/>
           <Route path="/Cart" component={CartMain}/>
           <Route path="/WishListMain"component={WishListMain} />

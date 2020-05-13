@@ -11,7 +11,11 @@ const AddItemsSchema = new Schema({
     price: {type:String, required: true},
     quantity: {type:String, required: true},
     size: {type:String, required: true},
-    meterial: {type:String, required: true}
+    meterial: {type:String, required: true},
+    discount:{
+        type:Number,
+        default: 0
+    }
 });
 
 const Products = mongoose.model('additems', AddItemsSchema);

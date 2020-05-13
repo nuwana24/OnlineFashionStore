@@ -11,7 +11,7 @@ const mapStateToProps = ({ session}) => ({
 
 const Product = ({session, ...props}) =>  {
 
-    const {_id, name,img, price, description, meterial } = props.products;
+    const {_id, name,img, price, description, meterial, discount } = props.products;
 
     const details = {
         userId: session.userId,
@@ -32,7 +32,8 @@ const Product = ({session, ...props}) =>  {
             productId: _id,
             name: name,
             price: price,
-            qty: 1
+            qty: 1,
+            discount: discount
         };
 
         props.addToCart(item)

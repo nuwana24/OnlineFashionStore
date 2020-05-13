@@ -5,7 +5,6 @@ import {Input} from "@material-ui/core";
 import NavBar from "./NavBar";
 import background from "../Images/AdminBackgroud.jpg";
 import axios from "axios";
-import Dropzone from "react-dropzone";
 
 
 var sectionstyle ={

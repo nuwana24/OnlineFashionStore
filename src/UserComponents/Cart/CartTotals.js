@@ -2,9 +2,16 @@ import React, {Component} from 'react';
 
 import {Link} from "react-router-dom";
 
-export default function CartTotals({value}) {
+export default function CartTotals({...props}) {
 
-    //const {cartSubTotal, cartTax, cartTotal, clearCart } = value;
+    const {cart } = props;
+    var total = 0;
+    var discount = 0;
+
+    cart.map(item => {
+        total = total + ((Number(item.price) - Number(item.discount)) * Number(item.quantity));
+        discount = discount + (Number(item.quantity) * Number(item.discount));
+    })
 
     return (
         <React.Fragment>
@@ -13,15 +20,15 @@ export default function CartTotals({value}) {
                     <div className="col-10 mt-2 ml-sm-5 ml-md-auto col-sm-8 text-capitalize text-right">
                         <h5>
                             <span className="text-title">Sub Total: </span>
-                            <strong>$ {50}</strong>
+                            <strong>$ {total}</strong>
                         </h5>
                         <h5>
-                            <span className="text-title">Tax: </span>
-                            <strong>$ {10}</strong>
+                            <span className="text-title">Discount: </span>
+                            <strong>$ {discount}</strong>
                         </h5>
                         <h5>
                             <span className="text-title">Total: </span>
-                            <strong>$ {40}</strong>
+                            <strong>$ {total - discount}</strong>
                         </h5>
 
                         <Link to='/'>
