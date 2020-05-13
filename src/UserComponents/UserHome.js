@@ -12,7 +12,6 @@ import Modal from "./Modal";
 // import store from './LoginHandler/store';
 // import { isAuth } from './LoginHandler/actions/authActions'
 import PropTypes from "prop-types";
-import DisplayProjects from "./DisplayProducts";
 import {Carousel} from "react-bootstrap";
 import Caro1 from "../Images/caro1.jpeg";
 import Caro2 from "../Images/caro2.jpg";
@@ -67,7 +66,7 @@ class UserHome extends Component{
                  </Carousel>
              </Carousel>
 
-                <DisplayProjects />
+
          </div>
 
         );

@@ -8,6 +8,8 @@ import background from "../Images/AdminBackgroud.jpg";
 import axios from "axios";
 
 
+
+
 var sectionstyle ={
     backgroundImage: `url(${background})`
 }

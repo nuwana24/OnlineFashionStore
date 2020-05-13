@@ -33,6 +33,7 @@ export const signup = user => async dispatch => {
     }
 
     return dispatch(receiveErrors(data));
+
 };
 
 export const logout = () => async dispatch => {

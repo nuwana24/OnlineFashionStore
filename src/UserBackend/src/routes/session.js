@@ -9,7 +9,8 @@ const sessionRouter = express.Router();
 
 sessionRouter.post("", async (req, res) => {
     try{
-        const {email, password} = req.body;
+        const {email, password} = req.body
+        console.log(email,password);
         await Joi.validate({email, password}, singIn);
 
         const user = await User.findOne({email});
