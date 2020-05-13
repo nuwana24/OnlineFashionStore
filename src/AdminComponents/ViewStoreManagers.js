@@ -12,7 +12,7 @@ const Manager = props => (
         <td>{props.manager.lastName}</td>
         <td>{props.manager.email}</td>
         <td>{props.manager.gender}</td>
-        <td>{props.manager.password}</td>
+        {/*<td>{props.manager.password}</td>*/}
         <td>{props.manager.dateOfBirth}</td>
         <td>{props.manager.Address}</td>
         <td>{props.manager.Address2}</td>
@@ -79,7 +79,7 @@ export default class ViewManager extends Component{
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Gender</th>
-                            <th>Password</th>
+                            {/*<th>Password</th>*/}
                             <th>Date of birth</th>
                             <th>Address</th>
                             <th>Adress 2</th>

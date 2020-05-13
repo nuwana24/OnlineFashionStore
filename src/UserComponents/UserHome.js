@@ -66,7 +66,7 @@ class UserHome extends Component{
                  </Carousel>
              </Carousel>
 
-
+        <ProductList/>
          </div>
 
         );
