@@ -36,6 +36,7 @@ router.post("/addToCart", (req, res) => {
                             id: req.body.productId,
                             name : req.body.name,
                             price: req.body.price,
+                            img: req.body.img,
                             quantity: 1,
                             discount: req.body.discount
                         }

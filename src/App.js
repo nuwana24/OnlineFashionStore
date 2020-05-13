@@ -59,7 +59,7 @@ function App() {
           <Route path="/ViewCategory" exact component={ViewCategory}/>
 
           {/*User*/}
-          <Route exact path="/v" component={UserHome} />
+          <Route exact path="/" component={UserHome} />
           <Route exact path="/" exact component={ProductList}/>
           <Route path="/ProductDetails" component={ProductDetails}/>
           <Route path="/Cart" component={CartMain}/>

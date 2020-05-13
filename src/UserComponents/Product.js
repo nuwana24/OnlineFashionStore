@@ -23,15 +23,16 @@ const Product = ({session, ...props}) =>  {
         material : meterial
     };
 
-    console.log('Details ' + details);
-
     const addToCartHandler = () => {
+
+        console.log('Details ' + img);
 
         if(session.userId !== null){
             const item = {
                 userId: session.userId,
                 productId: _id,
                 name: name,
+                img: img,
                 price: price,
                 qty: 1,
                 discount: discount
@@ -50,7 +51,7 @@ const Product = ({session, ...props}) =>  {
                         {value => (
                             <div className="img-container p-5 " onClick={() => value.handleDetail(details)}>
                                 <Link to="/ProductDetails">
-                                    <img src={img} alt = "product" className="card-img-top"/>
+                                    <img src={(`/uploads/${img}`)} alt = "product" className="card-img-top"/>
                                 </Link>
 
                                 <button className="cart-btn"  onClick={addToCartHandler}>
