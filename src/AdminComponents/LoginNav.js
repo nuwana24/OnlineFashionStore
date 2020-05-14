@@ -13,9 +13,9 @@ export default class NavBar extends Component{
 
         return(
             <nav className='menu'>
-                <a href='/'>
+                <Link to='/'>
                     <img src={logo} className="menu__logo"></img>
-                </a>
+                </Link>
                 <div className="menu__right">
                     <ul className="menu__list">
 

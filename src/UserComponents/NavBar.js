@@ -1,64 +1,97 @@
-import React, {Component} from 'react';
 
-import {Link} from 'react-router-dom';
-import logo2 from '../logo2.svg';
-import styled from 'styled-components';
-import {CartButtonContainer} from './Buttons';
+import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Form} from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import narbarCss from "../UserComponents/UserCss/navbarCss.css";
+import logo from "../Images/logo.jpg";
+import PropTypes from "prop-types";
+import NavBar2 from "./Navbar2";
+import axios from "axios";
 
-class NavBar extends Component {
+
+class NavBar extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            itemList: []
+        }
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:5000/category')
+            .then(response => {
+                this.setState({
+                    itemList: response.data
+                })
+            })
+
+            .catch((error) => {
+                console.log(error);
+            })
+
+    }
+
+
     render() {
 
-        return (
-            <NavWrapper className="navbar navbar-expand-sm navbar-darkv px-sm-5">
-                <Link to="/">
-                    <img src={logo2} alt="store" className="navbar-brand "/>
-                </Link>
+        let links = this.state.itemList.map((link, index) => {
+            return (
+                // <li className="menu__list-item"><a className="menu__link"  onClick={() => this.props.onClickChanger(link.category)}>{link.category}</a></li>
+                <Nav.Link> <Link className=" nav-link "  onClick={()=>this.props.onClickChanger(link.category)}>{link.category}</Link></Nav.Link>
 
-                <ul className="navbar-nav align-items-center">
-                    <li className="nav-item ml-5">
-                        <Link to="/" className="nav-link ">
-                            products
+
+            )
+        })
+
+
+
+        return(
+
+            <Navbar bg="light" expand="lg">
+                <Navbar.Brand >
+                    <Link to='/'>
+                        <img src={logo} className="menu__logo navbar-brand"></img>
+                    </Link>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        {links}
+                        <Nav.Link>
+                            <Link className=" nav-link " onClick={() => this.props.onClickChanger("Discounted")}>Discounted items</Link>
+                        </Nav.Link>
+                    </Nav>
+                    <Nav>
+                        <Nav.Link> <Link  className="nav-link" to="/WishListMain">
+                            <i className="fas fa-cart-plus"></i> &nbsp;
+                            Wishlist
                         </Link>
-                    </li>
-                </ul>
-                <div className="">
-                    <Link to='/WishListMain' className="ml-1">
-                        <CartButtonContainer>
-                         <span className="mr-2">
-                             <i className=" fas fa-heart"></i>
-                         </span>
-                            WishList
-                        </CartButtonContainer>
-                    </Link>
-                    <Link to='/login' className="ml-auto">
-                        <CartButtonContainer>
-                             <span className="mr-2">
-                                <i className="fas fa-cart-plus"/>
-                            </span>
-                            Login
-                        </CartButtonContainer>
-                    </Link>
-                    <Link to='/Cart' className="ml-auto">
-                        <CartButtonContainer>
-                         <span className="mr-2">
-                            <i className="fas fa-cart-plus"/>
-                         </span>
+                        </Nav.Link>
+                        <Nav.Link> <Link  className="nav-link" to='/Cart'>
+                            <i className="fas fa-cart-plus"></i> &nbsp;
                             Cart
-                        </CartButtonContainer>
-                    </Link>
-                </div>
-            </NavWrapper>
+                        </Link>
+                        </Nav.Link>
+                        <Nav.Link> <Link  className="nav-link" to="/login">
+                            <i className="fas fa-user-circle"></i> &nbsp;
+                            Login
+                        </Link>
+                        </Nav.Link>
+
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+
+
+
+
+
+
         );
     }
 }
-
-const NavWrapper = styled.nav`
-    background: var(--mainBlue);
-    .nav-link {
-      color: var(--mainWhite) !important;
-      font-size: 1.3rem;
-      text-transform: capitalize;
-    }
-`
-
+NavBar.propTypes = {
+    onClickChanger : PropTypes.func,
+}
 export default NavBar;

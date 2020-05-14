@@ -6,11 +6,16 @@ import logo from '../Images/plusLogo.png'
 import NavBar from "./NavBar";
 import background from "../Images/AdminBackgroud.jpg";
 import axios from 'axios';
+import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
 var sectionstyle ={
     backgroundImage: `url(${background})`
 }
 
-export default class EditCategories extends Component {
+const mapStateToProps = ({ session}) => ({
+    session
+});
+ class EditCategories extends Component {
     constructor(props) {
         super(props);
 
@@ -119,9 +124,10 @@ export default class EditCategories extends Component {
     }
 
     render() {
+        if (this.props.session.username !== null) {
         return (
 
-            <div>
+            <div id="page-container">
 
                 <NavBar />
                 <section style={sectionstyle}>
@@ -196,7 +202,14 @@ export default class EditCategories extends Component {
             </div>
 
         )
-    }
+    } else {
+     return (
+        <Redirect to="/AdLog"/>
+ );
+ }}
 }
+export default connect(
+    mapStateToProps
+)(EditCategories);
 // const rootElement = document.getElementById("root");
 // ReactDOM.render(<AddCategories/>, rootElement);

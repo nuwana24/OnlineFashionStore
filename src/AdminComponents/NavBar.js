@@ -12,53 +12,56 @@ export default class NavBar extends Component{
 
 
         return(
-            <nav className='menu'>
-               <a href='/'>
-                <img src={logo} className="menu__logo"></img>
-               </a>
-                <div className="menu__right">
-                    <ul className="menu__list">
-                        <li className="menu__list-item"><a className="menu__link2" href="/Admin">
-                            {/*<Link to='/Cart'>*/}
-                            <i className="fas fa-home"></i> &nbsp;
-                            Home
-                            {/*</Link>*/}
-                        </a></li>
-                        <li className="menu__list-item">
-                            <NavDropdown className='menu__link2' title={<span style={{color:"#3a3e47"}} >
-                                 <i className="fas fa-table"></i>&nbsp;
-                                Manage Categories
-                            </span>} id="categoryManager" >
-                                        <a href="/AddCategory" className = "menu__link2">Add New Category</a>
-                                         <NavDropdown.Divider />
-                                        <a href="/ViewCategory" className = "menu__link2">View Categories</a>
-                        </NavDropdown>
-                        </li>
-                        <li className="menu__list-item">
 
-                            <NavDropdown className='menu__link2' title={<span style={{color:"#3a3e47"}} >
-                            <i className="fas fa-user-edit"></i>&nbsp;
-                                Manage Store Managers</span>} id="userManagerDD" >
-                                           <a href="/CreateLogin" className = "menu__link2">Create Login for Store Manager</a>
-                                            <NavDropdown.Divider />
-                                            <a href="/ViewManager" className = "menu__link2">View Store Managers</a>
+            <Navbar bg="light" expand="lg">
+                <Navbar.Brand >
+                    <Link to='/'>
+                        <img src={logo} className="menu__logo navbar-brand"></img>
+                    </Link>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link>
+                            <Link className=" nav-link "  to="/Admin">
+                                <i className="fas fa-home "></i> &nbsp;
+                                Home
+                            </Link>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <NavDropdown title={<span>
+                        <i className="fas fa-user-edit"></i>&nbsp;
+                                Manage Categories</span>} id="userManagerDD" >
+                                <NavDropdown.Item ><Link to="/AddCategory" className=" nav-link " >Add New Category</Link></NavDropdown.Item>
+                                <NavDropdown.Item ><Link to="/ViewCategory" className=" nav-link " >View Categories</Link></NavDropdown.Item>
                             </NavDropdown>
-                          </li>
-                        <li className="menu__list-item"><a className="menu__link2" href="/ViewStats">
-
-                            <i className="fas fa-chart-bar"></i> &nbsp;
-                            View Insights
-
-                        </a></li>
-                        <li className="menu__list-item"><a className="menu__link2" href="/AdLog" style={{position:"absolute",right:20}}>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <NavDropdown title={<span>
+                        <i className="fas fa-user-edit"></i>&nbsp;
+                                Manage Store Managers</span>} id="userManagerDD" >
+                                <NavDropdown.Item ><Link to="/CreateLogin" className=" nav-link " >Create Login for Store Manager</Link></NavDropdown.Item>
+                                <NavDropdown.Item ><Link to="/ViewManager" className=" nav-link " >View Store Managers</Link></NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <Link className="nav-link" to="/ViewStats">
+                                <i className="fas fa-chart-bar"></i> &nbsp;
+                                View Insights
+                            </Link>
+                        </Nav.Link>
+                    </Nav>
+                    <Nav>
+                        <Nav.Link><Link className=" nav-link mr-sm-2" to="/AdLog" >
                             <i className="fas fa-user-circle"></i> &nbsp;
                             Logout
-                        </a></li>
+                        </Link>
+                        </Nav.Link>
 
-                    </ul>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
 
-                </div>
-            </nav>
 
 
 

@@ -82,7 +82,7 @@ const Product = ({session, ...props}) =>  {
                         </Card.Text>
                     }
 
-                    <button className="cart-btn" onClick={() => props.addToCart} onClick={addToCartHandler}>
+                    <button className="cart-btn ml-1" onClick={() => props.addToCart} onClick={addToCartHandler}>
                         <i className="fas fa-cart-plus"/>
                     </button>
                     <button style={{position: "absolute", right: 20}} onClick={addToWishListHandler}>
