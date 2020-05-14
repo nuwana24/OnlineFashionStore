@@ -44,6 +44,7 @@ const cors = require('cors');
 
         app.use(cors(corsOptions));
 
+
         const apiRouter = express.Router();
         app.use('/api', apiRouter);
         app.use('/api/products', require('./routes/products'));

@@ -1,9 +1,14 @@
 import React,{Component} from "react";
 import NavBar from "./NavBar";
-import {Link} from 'react-router-dom';
-import {Button, Container} from "react-bootstrap";
+import {Link, Redirect} from 'react-router-dom';
+import {Button, Container, Spinner, Table} from "react-bootstrap";
 import axios from 'axios';
+import {connect} from "react-redux";
 
+
+const mapStateToProps = ({ session}) => ({
+    session
+});
 
 const Category = props => (
 
@@ -19,71 +24,89 @@ const Category = props => (
 )
 
 
-export default class ViewCategory extends Component{
-    constructor(props) {
-        super(props);
+ class ViewCategory extends Component {
+     constructor(props) {
+         super(props);
 
-        this.RemoveCategory = this.RemoveCategory.bind(this);
+         this.RemoveCategory = this.RemoveCategory.bind(this);
 
-        this.state = {
-            categories : [],
-        };
+         this.state = {
+             categories: [],
+             loading: true,
+         };
 
-    }
+     }
 
-    componentDidMount() {
-        axios.get('http://localhost:5000/category/')
-            .then(response => {
-                this.setState({
-                    categories: response.data
-                })
-                console.log(response.data);
+     componentDidMount() {
+         axios.get('http://localhost:5000/category/')
+             .then(response => {
+                 this.setState({
+                     categories: response.data,
+                     loading:false
+                 })
+                 console.log(response.data);
 
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-        axios.get('http://localhost:5000/category/find')
-            .then(res => console.log(res.data))
+             })
+             .catch((error) => {
+                 console.log(error);
+             })
+         axios.get('http://localhost:5000/category/find')
+             .then(res => console.log(res.data))
 
-    }
+     }
 
-    RemoveCategory(id){
-        axios.delete('http://localhost:5000/category/'+id)
-            .then(res => console.log(res.data));
+     RemoveCategory(id) {
+         axios.delete('http://localhost:5000/category/' + id)
+             .then(res => console.log(res.data));
 
-        this.setState({
-            categories: this.state.categories.filter(el => el._id != id)
-        })
-    }
+         this.setState({
+             categories: this.state.categories.filter(el => el._id != id)
+         })
+     }
 
-    categoryList(){
-        return this.state.categories.map(currentcategory =>{
-            return <Category category={currentcategory} RemoveCategory={this.RemoveCategory} key = {currentcategory._id} />;
-        })
-    }
+     categoryList() {
+         return this.state.categories.map(currentcategory => {
+             return <Category category={currentcategory} RemoveCategory={this.RemoveCategory}
+                              key={currentcategory._id}/>;
+         })
+     }
 
-    render() {
-        return (
-            <div>
-                <NavBar />
-                <Container>
+     render() {
+         if (this.props.session.username !== null) {
+             return (
+                 <div id="page-container">
+                     <NavBar/>
 
-                    <h3 className="text-center text-bright">Categories</h3>
-                    <table className="table">
-                        <thead className="thead-light">
-                        <tr>
-                            <th>Categories</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {this.categoryList()}
-                        </tbody>
-                    </table>
-                </Container>
-            </div>
-        );
-    }
-}
+                         <Container>
+
+                             <h3 className="text-center text-bright">Categories</h3>
+                             <Table responsive>
+                                 <thead className="thead-light">
+                                 {this.state.loading ? <center><Spinner animation="border" /></center> :
+                                     <tr>
+                                         <th>Categories</th>
+                                         <th>Description</th>
+                                         <th>Action</th>
+                                     </tr>
+                                 }
+                                 </thead>
+                                 <tbody>
+                                 {this.categoryList()}
+                                 </tbody>
+                             </Table>
+                         </Container>
+
+
+
+                 </div>
+             );
+         } else {
+             return (
+                 <Redirect to="/AdLog"/>
+             );
+         }
+     }
+ }
+export default connect(
+    mapStateToProps
+)(ViewCategory);

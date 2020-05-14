@@ -1,4 +1,5 @@
 import User from "../models/user";
+import Products from "../models/products"
 const router = require('express').Router();
 
 //adding item to the cart
@@ -35,7 +36,9 @@ router.post("/addToCart", (req, res) => {
                             id: req.body.productId,
                             name : req.body.name,
                             price: req.body.price,
-                            quantity: 1
+                            img: req.body.img,
+                            quantity: 1,
+                            discount: req.body.discount
                         }
                     }
                 },
@@ -106,6 +109,20 @@ router.get('/removeItem', (req, res) => {
             res.status(200).json(userInfo.Cart)
     }
     )
+});
+
+router.put('/clearCart', (req, res) => {
+
+    console.log(req.body.userId)
+    User.findOneAndUpdate(
+        {_id: req.body.userId},
+        {
+            $set: {
+                Cart: []
+            }
+        })
+
+    res.status(200);
 });
 
 module.exports = router;

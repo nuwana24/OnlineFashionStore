@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import {Button, Container} from "react-bootstrap";
+import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import ReactDOM from "react-dom";
 import {Input} from "@material-ui/core";
 import logo from '../Images/plusLogo.png'
 import NavBar from "./NavBar";
 import background from "../Images/AdminBackgroud.jpg";
 import axios from 'axios';
+import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
 var sectionstyle ={
     backgroundImage: `url(${background})`
 }
 
-export default class AddCategories extends Component {
+const mapStateToProps = ({session}) => ({
+    session
+})
+
+class AddCategories extends Component {
     constructor(props) {
         super(props);
 
@@ -91,29 +97,31 @@ export default class AddCategories extends Component {
     }
 
     render() {
+        if (this.props.session.username !== null) {
         return (
-
+            <div id="page-container">
             <div style={sectionstyle}>
 
                 <NavBar />
                 <section style={sectionstyle}>
                 <Container>
+                    <Row xs={1} md={2}>
+                        <Col className="bg-light " style={{minHeight: '40rem',minWidth:'40px'}}>
+                            <Card  style={{minWidth:'40px',minHeight:'42rem',marginTop:'3.5rem'}}>
 
-                <div className="p-5 mb-2 mt-3 bg-light text-dark">
-
-                    <center><h3>Add New Category</h3></center>
+                    <center><h3 style={{marginTop:'5rem'}}>Add New Category</h3></center>
                 <form onSubmit={this.onSubmit} className=' center'>
 
-                    <div className="form-group">
+                    <div className="form-group ml-5 mr-5">
                         <label>Category </label>
                         <input  type="text"
                                 required
-                                className="form-control"
+                                className="form-control "
                                 value={this.state.category}
                                 onChange={this.onChangeCategory}
                         />
                         </div>
-                    <div>
+                    <div className="form-group ml-5 mr-5">
 
                         <p>Sub categories {" "}
 
@@ -166,13 +174,27 @@ export default class AddCategories extends Component {
                         </center>
                     </div>
                 </form>
-                </div>
+                        </Card>
+
+                        </Col>
+                    </Row>
                 </Container>
             </section>
             </div>
 
+            </div>
+
         )
     }
+     else {
+            return (
+            <Redirect to="/AdLog"/>
+            );
+        }
+    }
 }
+export default connect(
+    mapStateToProps
+)(AddCategories);
 // const rootElement = document.getElementById("root");
 // ReactDOM.render(<AddCategories/>, rootElement);
