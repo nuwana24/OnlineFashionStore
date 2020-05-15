@@ -164,7 +164,6 @@ class Cart extends Component {
             ]
         })
     };
-    //https://stackoverflow.com/a/50645395/13353216
 
     checkout= () => {
         const user = {
@@ -172,13 +171,10 @@ class Cart extends Component {
             username : this.props.session.username,
             Cart : this.state.Cart
         };
-        // Axios.post('http://localhost:8000/api/cart/checkout', user);
-        //
-        // this.clearCart();
 
         confirmAlert({
-            title: 'Clear Cart',
-            message: 'Are you sure to clear the Cart?',
+            title: 'Checkout',
+            message: 'Place the Order?',
             buttons: [
                 {
                     label: 'Yes',
