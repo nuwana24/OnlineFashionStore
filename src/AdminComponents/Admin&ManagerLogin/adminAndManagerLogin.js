@@ -67,20 +67,23 @@ const AdminLogin = ({session, login, ...props}) => {
                     <Col className="bg-light " style={{minHeight: '40rem',minWidth:'30px'}}>
                         <Card  style={{minWidth:'40px',minHeight:'42rem',marginTop:'3.5rem'}}>
                             <h4 style={{marginTop:'5rem'}} className='text-info font-weight-bold'>Admin and Manager Login</h4>
-                        <TextField
-                            variant="outlined"
-                            hintText="Enter your Email"
-                            floatingLabelText="Email"
-                            style={{marginTop:'5rem'}}
-                        />
-                        <br/>
-                        <TextField
-                            type="password"
-                            hintText="Enter your Password"
-                            floatingLabelText="Password"
-                        />
-                        <br/>
-                        <input type="submit" value="Login" className="btn btn-info btn-block" style={{width:'200px'}}></input>
+                        <div align='center'>
+                            <TextField
+                                variant="outlined"
+                                hintText="Enter your Email"
+                                floatingLabelText="Email"
+                                style={{marginTop:'5rem'}}
+                            />
+                            <br/>
+                            <TextField
+                                type="password"
+                                hintText="Enter your Password"
+                                floatingLabelText="Password"
+                            />
+                            <br/>
+                            <input type="submit" value="Login" className="btn btn-info btn-block" style={{width:'200px'}}></input>
+                        </div>
+
                            <Link to={'/'} className='text-dark mt-3' > Not an admin or a store manager?</Link>
                         </Card>
                     </Col>
