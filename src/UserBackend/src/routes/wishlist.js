@@ -20,7 +20,11 @@ router.post("/addToWishList", (req, res) => {
                         WishList: {
                             id : req.body.productId,
                             name : req.body.name,
-                            img : req.body.img
+                            img : req.body.img,
+                            price : req.body.price,
+                            description : req.body.description,
+                            discount : req.body.discount,
+                            material : req.body.material
                         }
                     }
                 },
@@ -40,9 +44,7 @@ router.get('/getWishList', (req, res) => {
     if(req.query.userId !== undefined){
         User.findOne({_id: req.query.userId}
             ,(err, user) => {
-
                 res.json(user.WishList);
-
             })
     }
 });
@@ -58,7 +60,7 @@ router.get('/rmoveWishList', (req, res) => {
         {new : true},
         (err, userInfo) => {
             if(err) return res.json({success:false, err});
-            res.status(200).json(userInfo.Cart)
+            res.status(200).json(userInfo.WishList)
         }
     )
 });

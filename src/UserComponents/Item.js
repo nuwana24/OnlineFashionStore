@@ -42,15 +42,15 @@ const Item = ({session, ...props}) => {
         <div style={{display: "inline-block"}}>
 
             <Card style={{width: '18rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5">
-                <ProductConsumer>
-                    {value => (
+                {/*<ProductConsumer>*/}
+                {/*    {value => (*/}
                         <div onClick={() => value.handleDetail(details)}>
                             <Card.Img variant='top' src={(`/uploads/${props.products.img}`)}
                                       style={{width: "18rem", height: "20rem"}}/>
                         </div>
-                    )}
+                {/*    )}*/}
 
-                </ProductConsumer>
+                {/*</ProductConsumer>*/}
 
                 <Card.Body>
                     <Card.Title style={{fontSize: "20px", fontFamily: "Open-Sans"}}>{props.products.name}</Card.Title>

@@ -1,5 +1,5 @@
 import User from "../models/user";
-import Products from "../models/products"
+import Order from "../models/orders";
 const router = require('express').Router();
 
 //adding item to the cart
@@ -111,18 +111,43 @@ router.get('/removeItem', (req, res) => {
     )
 });
 
-router.put('/clearCart', (req, res) => {
+router.get('/clearCart', (req, res) => {
 
-    console.log(req.body.userId)
     User.findOneAndUpdate(
-        {_id: req.body.userId},
+        {_id: req.query.userId},
         {
-            $set: {
-                Cart: []
-            }
-        })
+            "$set": {
+                "Cart": []
+            },
+        },
+        {new : true},
+        (err, userInfo) => {
+            if(err) return res.json({success:false, err});
+            res.status(200).json(userInfo.Cart)
+        });
+});
 
-    res.status(200);
+router.post('/checkout', (req, res) => {
+    const userId = req.body.userId;
+    const userName = req.body.username;
+    const orders = req.body.Cart;
+
+    const newOrder = Order({userId, userName, orders});
+    newOrder.save();
+
+    User.findOneAndUpdate(
+        {_id: userId},
+        {
+            "$set": {
+                "Cart": []
+            },
+        },
+        {new : true},
+        (err, userInfo) => {
+            if(err) return res.json({success:false, err});
+            res.status(200).json(userInfo.Cart)
+        });
+
 });
 
 module.exports = router;
