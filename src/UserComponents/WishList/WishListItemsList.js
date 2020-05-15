@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import WishListItem from "./WishListItem";
 import Titles from "../../UserComponents/Titles";
 import EmptyWishList from "./EmptyWishList";
@@ -16,6 +15,7 @@ class WishListItemsList extends Component{
     constructor() {
         super();
         this.removeWishList = this.removeWishList.bind(this);
+        this.addToCart = this.addToCart.bind(this);
     }
 
     state = {
@@ -59,6 +59,12 @@ class WishListItemsList extends Component{
             })
     };
 
+    addToCart = (item) => {
+        Axios.post('http://localhost:8000/api/cart/addToCart', item);
+    };
+
+
+
     render() {
         if(this.props.session.userId !== null) {
             return (
@@ -70,7 +76,7 @@ class WishListItemsList extends Component{
                             <div className="row">
                                 {(this.state.WishList.length > 0) ? (
                                     this.state.WishList.map(favourite => {
-                                        return <WishListItem key={favourite.id} WishListItem={favourite} removeWishList={this.removeWishList}/>;
+                                        return <WishListItem key={favourite.id} WishListItem={favourite} removeWishList={this.removeWishList} addToCart={this.addToCart}/>;
                                     })
                                 ) : (
                                     <EmptyWishList/>
@@ -89,41 +95,4 @@ class WishListItemsList extends Component{
     }
 }
 
-export default connect(
-    mapStateToProps
-)(WishListItemsList);
-
-
-
-
-
-
-
-
-
-// class WishListItemsList extends Component {
-//
-//
-//     render() {
-//         return (
-//             <React.Fragment>
-//                 <div className = "py-4 ">
-//                     <div className = "container">
-//                         <i className=" fas fa-heart">
-//                             <Titles name = "WishList" title = ""/>
-//                         </i>
-//                         <div className="row">
-//                             <ProductConsumer>
-//                                 {list => {
-//                                     return list.WishList.map( favourite =>{
-//                                         return <WishListItem key={favourite.id} WishListItem={favourite} />;
-//                                     })
-//                                 }}
-//                             </ProductConsumer>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </React.Fragment>
-//         );
-//     }
-// }
+export default connect(mapStateToProps)(WishListItemsList);

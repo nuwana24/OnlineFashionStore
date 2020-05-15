@@ -2,11 +2,36 @@ import React, {Component} from 'react';
 
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+
+const mapStateToProps = ({ session}) => ({
+    session
+});
 
 class WishListItem extends Component {
+
+    addToCartHandler = (id, name, img, price, discount) => {
+
+        if(this.props.session.userId !== null){
+            const item = {
+                userId: this.props.session.userId,
+                productId: id,
+                name: name,
+                img: img,
+                price: price,
+                qty: 1,
+                discount: discount
+            };
+
+            this.props.addToCart(item)
+        }
+
+    };
+
     render() {
 
-        const {id, name,img, price, description, material } = this.props.WishListItem;
+        const {id, name,img, price, description, material, discount } = this.props.WishListItem;
+
         const removeItem = this.props.removeWishList;
 
         return (
@@ -17,8 +42,13 @@ class WishListItem extends Component {
                         <Link to={{pathname: 'ProductDetails', item:{id, name, img, price, description, material}}}>
                             <img src={(`/uploads/${img}`)} alt = "product" className="card-img"/>
                         </Link>
-                        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '8vh'}}>
-                            <button onClick={() =>  {removeItem(id)}}>
+                        <div style={{display: 'flex', justifyContent: 'left', alignItems: 'center', height: '8vh'}}>
+                            <button style={{position: "absolute", right: 40}} onClick={ this.addToCartHandler(id, name, img, price, discount)}>
+                                <i className="fas fa-cart-plus"/>
+                            </button>
+                            <button style={{position: "absolute", right: 20}} onClick={() => {
+                                removeItem(id)
+                            }} style={{color: "red"}}>
                                 <i className="fas fa-trash"/>
                             </button>
                         </div>
@@ -89,4 +119,5 @@ const ProductWrapper = styled.div`
     }
 `
 
-export default WishListItem;
+export default connect(mapStateToProps)(WishListItem);
+
