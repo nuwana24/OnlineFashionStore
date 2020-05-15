@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserHome from "./UserComponents/UserHome";
@@ -23,7 +23,7 @@ import Cart from "./UserComponents/Cart/Cart";
 import CartMain from "./UserComponents/Cart/CartMain";
 import WishListMain from "./UserComponents/WishList/WishListMain";
 import WishListItemsList from "./UserComponents/WishList/WishListItemsList";
-import WishListHome from "./UserComponents/WishList/WishListHome";
+
 import Modal from "./UserComponents/Modal";
 import login from "./UserComponents/login";
 import register from "./UserComponents/register";
@@ -65,7 +65,6 @@ function App() {
           <Route path="/Cart" component={CartMain}/>
           <Route path="/WishListMain"component={WishListMain} />
           <Route path="/WishListItemList" component={WishListItemsList}/>
-          <Route path="/WishListHome" component={WishListHome}/>
           <Route path="/Modal" component={Modal}/>
           <Route path="/login" component={login}/>
           <Route path="/register" component={register}/>

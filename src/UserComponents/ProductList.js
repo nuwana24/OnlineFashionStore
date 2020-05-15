@@ -57,7 +57,7 @@ class ProductList extends Component {
     }
     render() {
         const {products} = this.state;
-        console.log(products)
+
         return (
             <React.Fragment>
                 <NavBar2 onClickChanger={this.GetCategory}/>

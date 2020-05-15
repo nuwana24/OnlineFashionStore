@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {Component} from 'react';
 
-import {ProductConsumer} from "../../context";
 import WishListItem from "./WishListItem";
 import Titles from "../../UserComponents/Titles";
 import EmptyWishList from "./EmptyWishList";
@@ -12,14 +11,21 @@ const mapStateToProps = ({ session}) => ({
     session
 });
 
-const WishListItemsList = ({session}) => {
+class WishListItemsList extends Component{
 
-    const [WishList, setWishList] = useState([]);
+    constructor() {
+        super();
+        this.removeWishList = this.removeWishList.bind(this);
+    }
 
-    useEffect(() => {
-        if(session.userId !== null){
+    state = {
+        WishList : []
+    };
 
-            Axios.get('http://localhost:8000/api/WishList/getWishList', {params:{userId: session.userId}})
+    componentDidMount() {
+        if(this.props.session.userId !== null){
+
+            Axios.get('http://localhost:8000/api/WishList/getWishList', {params:{userId: this.props.session.userId}})
                 .then(res => {
                     const list = res.data;
 
@@ -29,42 +35,57 @@ const WishListItemsList = ({session}) => {
                         tempList = [...tempList, singleItem];
                     });
 
-                    setWishList(tempList);
+                    this.setState({
+                        WishList : tempList
+                    })
                 })
         }
-
-    }, []);
-
-    const removeWishList = (productId) => {
-        Axios.get('http://localhost:8000/api/WishList/rmoveWishList', {params:{userId: session.userId, productId: productId}})
     }
 
-    if(session.userId !== null) {
-        return (
-            <React.Fragment>
-                <div className="py-4 ">
-                    <div className="container">
-                        <i className=" fas fa-heart">
-                            <Titles name="WishList" title=""/>
-                        </i>
-                        <div className="row">
-                            {(WishList.length > 0) ? (
-                                WishList.map(favourite => {
-                                    return <WishListItem key={favourite.id} WishListItem={favourite} removeWishList={removeWishList}/>;
-                                })
-                            ) : (
-                                <EmptyWishList/>
-                            )}
+    removeWishList = (productId) => {
+        Axios.get('http://localhost:8000/api/WishList/rmoveWishList', {params:{userId: this.props.session.userId, productId: productId}})
+            .then(res => {
+                const list = res.data;
 
+                let tempList = [];
+                list.forEach(item => {
+                    const singleItem = {...item};
+                    tempList = [...tempList, singleItem];
+                });
+
+                this.setState({
+                    WishList : tempList
+                })
+            })
+    };
+
+    render() {
+        if(this.props.session.userId !== null) {
+            return (
+                <React.Fragment>
+                    <div className="py-4 ">
+                        <div className="container">
+                            <Titles name="Wish" title="List"/>
+
+                            <div className="row">
+                                {(this.state.WishList.length > 0) ? (
+                                    this.state.WishList.map(favourite => {
+                                        return <WishListItem key={favourite.id} WishListItem={favourite} removeWishList={this.removeWishList}/>;
+                                    })
+                                ) : (
+                                    <EmptyWishList/>
+                                )}
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </React.Fragment>
-        );
-    } else {
-        return (
-            <Redirect to="/login" />
-        )
+                </React.Fragment>
+            );
+        } else {
+            return (
+                <Redirect to="/login" />
+            )
+        }
     }
 }
 

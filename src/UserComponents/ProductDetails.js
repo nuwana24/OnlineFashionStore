@@ -42,8 +42,8 @@ class ProductDetails extends Component {
 
     render() {
         const { rating } = this.state;
-        console.log(this.props.location.item.price);
-        const {name, img, price, description, meterial} = this.props.location.item;
+        const {id, name, img, price, description, material} = this.props.location.item;
+
 
         return (
             <div>
@@ -64,7 +64,7 @@ class ProductDetails extends Component {
                                 <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
                                     <h2>Item : {name}</h2>
                                     <h4 className="text-title text-uppercase text-muted mt-3 mb-2">
-                                        Material : <span className="text-uppercase "> {meterial} </span>
+                                        Material : <span className="text-uppercase "> {material} </span>
                                     </h4>
                                     <h4 className="text-blue">
                                         <strong>

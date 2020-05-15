@@ -13,13 +13,13 @@ let preloadedState = {};
 const store = configureStore(preloadedState);
 
 ReactDOM.render(
-    <ProductProvider>
+    // <ProductProvider>
             <Router>
                 <Provider store={store}>
                     <App />
                 </Provider>
-            </Router>
-    </ProductProvider>, document.getElementById('root'));
+            </Router>, document.getElementById('root'));
+    // </ProductProvider>
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 

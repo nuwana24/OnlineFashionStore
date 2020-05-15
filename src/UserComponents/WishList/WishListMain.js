@@ -1,10 +1,7 @@
 import React, {Component} from "react";
 
-import {Switch, Route} from 'react-router-dom';
-
-import WishListHome from "./WishListHome";
 import WishListItemsList from "./WishListItemsList";
-import NavBar from "../NavBar";
+import NavBar from "../Navbar2";
 
 class WishListMain extends Component{
 
@@ -13,9 +10,6 @@ class WishListMain extends Component{
             <React.Fragment>
                 <NavBar/>
                 <WishListItemsList />
-                {/*<Switch>*/}
-                {/*    <Route path="/WishListHome" component={WishListHome}/>*/}
-                {/*</Switch>*/}
             </React.Fragment>
         );
     }

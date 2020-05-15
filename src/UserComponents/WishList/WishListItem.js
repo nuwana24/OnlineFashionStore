@@ -2,31 +2,27 @@ import React, {Component} from 'react';
 
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
-import {ProductConsumer} from "../../context";
 
 class WishListItem extends Component {
     render() {
 
-        const {id, name,img } = this.props.WishListItem;
+        const {id, name,img, price, description, material } = this.props.WishListItem;
         const removeItem = this.props.removeWishList;
+
         return (
             <ProductWrapper className = "col-9 mx-auto col-md-6 col-lg-3 my-3">
                 <div className="cardView">
-                    <ProductConsumer>
-                        {value => (
-                            <div className="img-container p-5 " onClick={() => value.handleFavourites(id )}>
-                                <Link to="/ProductDetails">
-                                    <img src={img} alt = "product" className="card-img"/>
-                                </Link>
-                                <div>
-                                        <button onClick={() =>  {removeItem(id)}}>
-                                            <i className="fas fa-trash"/>
-                                        </button>
-                                </div>
 
-                            </div>
-                        )}
-                    </ProductConsumer>
+                    <div className="img-container p-5 " >
+                        <Link to={{pathname: 'ProductDetails', item:{id, name, img, price, description, material}}}>
+                            <img src={(`/uploads/${img}`)} alt = "product" className="card-img"/>
+                        </Link>
+                        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '8vh'}}>
+                            <button onClick={() =>  {removeItem(id)}}>
+                                <i className="fas fa-trash"/>
+                            </button>
+                        </div>
+                    </div>
 
                     <div className="card-footer d-flex justify-content-between">
                         <p className="align-self-center mb-0">
@@ -94,55 +90,3 @@ const ProductWrapper = styled.div`
 `
 
 export default WishListItem;
-
-
-
-
-
-
-
-
-
-// class WishListItem extends Component {
-//     render() {
-//
-//         const {id, title,img, price } = this.props.WishListItem;
-//         return (
-//             <ProductWrapper className = "col-9 mx-auto col-md-6 col-lg-3 my-3">
-//                 <div className="cardView">
-//                     <ProductConsumer>
-//                         {value => (
-//                             <div className="img-container p-5 " onClick={() => value.handleFavourites(id )}>
-//                                 <Link to="/ProductDetails">
-//                                     <img src={img} alt = "product" className="card-img"/>
-//                                 </Link>
-//                                 <div>
-//                                     <button onClick={() =>  {value.removeFavourites(id)}}>
-//                                         <i className="fas fa-trash"/>
-//                                     </button>
-//                                 </div>
-//
-//                             </div>
-//                         )}
-//                     </ProductConsumer>
-//
-//                     <div className="card-footer d-flex justify-content-between">
-//                         <p className="align-self-center mb-0">
-//                             {title }
-//                         </p>
-//
-//                         <h5 className="text-blue font-italic mb-0">
-//                             <span className="mr-1">$</span>
-//                             {price }
-//                         </h5>
-//
-//
-//                     </div>
-//                 </div>
-//             </ProductWrapper>
-//
-//         );
-//     }
-//
-//
-// }

@@ -1,13 +1,9 @@
 import React,{Component} from "react";
-import ReactDOM from 'react-dom';
-import { Router, Route } from 'react-router'
-import NavBar from "./NavBar";
 
-import {Button, Container, Card, CardDeck} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import axios from 'axios';
-import {connect} from "react-redux";
 import NavBar2 from "./Navbar2";
-import {ProductConsumer} from "../context";
+
 // import {Card} from "material-ui";
 import {products} from "./DisplayProducts.js";
 import Item from "./Item";
@@ -187,10 +183,6 @@ class DisplayProducts extends Component {
                         })
                         }
                     </div>
-
-
-
-
                 </Container>
             </div>
 

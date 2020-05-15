@@ -4,7 +4,6 @@ import {Card, CardTitle, CardSubtitle, CardBody} from "reactstrap";
 import {Link, Redirect} from 'react-router-dom';
 import {login } from './actions/session';
 import '../style.css';
-// import NavBar from "./NavBar";
 import NavBar2 from "./Navbar2";
 import LoginNav from "../AdminComponents/LoginNav";
 
@@ -16,7 +15,17 @@ const mapDispatchToProps = dispatch => ({
     login: user => dispatch(login(user))
 });
 
-const Login = ({session, login, ...props}) => {
+const delay = (milliSeconds) => {
+
+    const date = Date.now();
+    let currentDate = null;
+    do {
+        currentDate = Date.now();
+    } while (currentDate - date < milliSeconds);
+
+};
+
+const Login = ({session, login, errors, ...props}) => {
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -27,8 +36,9 @@ const Login = ({session, login, ...props}) => {
         };
 
         login(user);
-
+        delay(1000);
         props.history.push("/")
+
     };
 
     return(
