@@ -11,24 +11,27 @@ const FooterPage = () => {
            <footer>
                <div  className="Footer" className="p-3 mb-2 bg-dark text-white">
                <Row >
-                   <Col></Col>
+
                    <Col>
                       <b>Address </b><br />
                       186/4,<br />
                       T.B. Jaya Mawatha,<br />
                       Colombo 05.
+                       <br/>
                    </Col>
                    <Col>
                        <b>Contact Us </b><br />
                    (+94)112233443 <br/>
                    (+94)113333443 <br/>
                    (+94)773322112
+                       <br/>
                    </Col>
                    <Col>
                        <b>Discover </b><br />
                        <b>The Company </b><br />
                        <b>Promotions</b> <br />
                        <b>Customer Services</b>
+                       <br/>
                    </Col>
                    <Col>
                        <b>Follow us on </b><br />
@@ -39,12 +42,8 @@ const FooterPage = () => {
 
                        <a href='/AdLog' style={{color:'white'}}>Admin & Manager login</a>
 
-
                    </Col>
-                   <Col>
-                       <br />
 
-                   </Col>
                </Row>
                </div>
            </footer>

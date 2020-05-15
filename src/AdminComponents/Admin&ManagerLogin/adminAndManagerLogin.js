@@ -2,7 +2,7 @@ import React,{Component} from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import {Jumbotron} from "react-bootstrap";
+import {Card, Col, Jumbotron, Row} from "react-bootstrap";
 import {Route} from "react-router";
 import {login} from "../../UserComponents/actions/session";
 import {connect} from "react-redux";
@@ -54,49 +54,41 @@ const AdminLogin = ({session, login, ...props}) => {
 
 
 
-
-
-
-
-        // console.log(login(user));
-        //
-        // console.log(session.username);
-        //
-
-
     }
     return (
         <div align='center'>
+            <div id="page-container">
             <MuiThemeProvider>
                 <LoginNav/>
-                <div className="container-fluid align-items-center">
 
-                    <Jumbotron className="bg-info text-light ">
-                        <h1>Admin and Manager Login</h1>
-                    </Jumbotron>
+
                     <form onSubmit={handleSubmit}>
-                        <p>{incorrectLogin}</p>
-                    <div className="bg-light" style={{height: '100%', width: 'wrap-content'}}>
+                        <Row xs={1} md={2}>
+                    <Col className="bg-light " style={{minHeight: '40rem',minWidth:'30px'}}>
+                        <Card  style={{minWidth:'40px',minHeight:'42rem',marginTop:'3.5rem'}}>
+                            <h4 style={{marginTop:'5rem'}} className='text-info font-weight-bold'>Admin and Manager Login</h4>
                         <TextField
                             variant="outlined"
-                            hintText="Enter your Username"
-                            floatingLabelText="Username"
-                            // onChange={(event, newValue) => this.setState({username: newValue})}
+                            hintText="Enter your Email"
+                            floatingLabelText="Email"
+                            style={{marginTop:'5rem'}}
                         />
                         <br/>
                         <TextField
                             type="password"
                             hintText="Enter your Password"
                             floatingLabelText="Password"
-                            // onChange={(event, newValue) => this.setState({password: newValue})}
                         />
                         <br/>
                         <input type="submit" value="Login" className="btn btn-info btn-block" style={{width:'200px'}}></input>
-                        {/*<RaisedButton label="Submit" primary={true} style={style} type="submit"/>*/}
-                    </div>
+                           <Link to={'/'} className='text-dark mt-3' > Not an admin or a store manager?</Link>
+                        </Card>
+                    </Col>
+                        </Row>
                     </form>
-                </div>
+
             </MuiThemeProvider>
+        </div>
         </div>
     )
 

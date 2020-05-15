@@ -23,4 +23,18 @@ userRoutes.post("", async (req, res) => {
     }
 });
 
+userRoutes.get('/getUsers', (req, res, next) => {
+    User.find({}, (err, result) => {
+        if (err) return next(err);
+
+        let data = {
+            status: 'success',
+            code: 200,
+            data : result
+        };
+
+        res.json(data);
+    })
+});
+
 export default userRoutes;

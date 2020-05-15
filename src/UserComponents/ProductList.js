@@ -3,6 +3,7 @@ import Axios from "axios";
 
 import Product from "./Product";
 import Titles from "./Titles";
+import NavBar from "./NavBar";
 import NavBar2 from "./Navbar2";
 
 class ProductList extends Component {
@@ -60,8 +61,10 @@ class ProductList extends Component {
 
         return (
             <React.Fragment>
-                <NavBar2 onClickChanger={this.GetCategory}/>
+                <NavBar onClickChanger={this.GetCategory}/>
+
                 <div className = "py-5 ">
+                    <center>
                     <div className = "container">
                         <Titles title={this.state.currentCat}/>
                         <div className="row ">
@@ -82,7 +85,9 @@ class ProductList extends Component {
                             })}
                         </div>
                     </div>
+                    </center>
                 </div>
+
             </React.Fragment>
         );
     }

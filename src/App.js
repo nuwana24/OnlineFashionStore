@@ -82,7 +82,7 @@ function App() {
 
           <br />
       </switch>
-      <FooterPage />
+      <FooterPage id='footer' />
       </Router>
     );
 }

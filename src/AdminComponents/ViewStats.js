@@ -3,6 +3,12 @@ import axios from 'axios';
 
 import { Bar } from 'react-chartjs-2';
 import NavBar from "../AdminComponents/NavBar";
+import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
+
+const mapStateToProps = ({ session}) => ({
+    session
+});
 
 export class ViewStats extends Component {
     constructor(props) {
@@ -96,13 +102,7 @@ export class ViewStats extends Component {
                                     "#9966FF",
                                     "#4C4CFF",
                                     "#00FFFF",
-                                    "#f990a7",
-                                    "#aad2ed",
-                                    "#FF00FF",
 
-                                    "Blue",
-
-                                    "Red"
                                 ]
 
                             }
@@ -118,11 +118,12 @@ export class ViewStats extends Component {
     }
 
     render() {
-
+        if (this.props.session.username !== null) {
         return (
 
-            <div>
+            <div >
                 <NavBar />
+
                 <center><h2>Total value of the prices of each category</h2></center>
 
             <Bar data={this.state.Data}
@@ -134,7 +135,16 @@ export class ViewStats extends Component {
     )
 
     }
-
+        else {
+            return (
+                <Redirect to="/AdLog"/>
+            );
+        }
+    }
 }
 
-export default ViewStats;
+
+
+export default connect(
+    mapStateToProps
+)(ViewStats);
