@@ -154,7 +154,7 @@ class ProductDetails extends Component {
                                         </form>
                                         <form>
                                             <div className="border col-auto mx-auto col-auto mx-auto mt-auto  bg-transparent">
-                                                <h3 className='comment text-center' style={{color: "red"}}> Reviews.....</h3>
+                                                <h3 className='comment text-center' style={{color: "red"}}>Reviews.....</h3>
                                                 <div className='mx-4 mb-4'>
                                                     {comments.map(cmt =>{
                                                         return <li>{cmt}</li>
