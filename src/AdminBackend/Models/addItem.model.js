@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const comments = new mongoose.Schema({comment:String})
 const addItemSchema =  new mongoose.Schema({
 
     img: String,
@@ -10,6 +10,7 @@ const addItemSchema =  new mongoose.Schema({
     quantity:Number,
     size:String,
     meterial:String,
+    comment:Array,
     discount:{
         type:Number,
         default: 0

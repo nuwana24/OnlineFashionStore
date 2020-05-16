@@ -114,6 +114,7 @@ export default class addItem extends Component {
         additem.append('quantity', this.state.quantity)
         additem.append('size', this.state.size)
         additem.append('meterial', this.state.meterial)
+        additem.append('comment',[])
         // additem.append('discount', this.state.discount)
 
 

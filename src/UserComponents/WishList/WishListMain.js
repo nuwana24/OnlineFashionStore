@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 
 import WishListItemsList from "./WishListItemsList";
-import NavBar from "../Navbar2";
+import NavBar from "../NavBar";
 
 class WishListMain extends Component{
 

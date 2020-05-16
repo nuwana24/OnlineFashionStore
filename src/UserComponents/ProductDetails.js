@@ -1,33 +1,56 @@
 import React, {Component} from 'react';
 import {ReviewButtonContainer} from "./Buttons";
 import StarRatingComponent from './StarRatingComponent';
-import NavBar2 from "./Navbar2";
-
+import NavBar2 from "./NavBar";
+import {connect} from "react-redux";
 import Axios from "axios";
+
+const mapStateToProps = ({ session}) => ({
+    session
+});
 
 class ProductDetails extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            value: 'Please write review about this product.'
-        };
+    constructor(props){
+        super(props);
+
+        this.onChangeContent = this.onChangeContent.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            rating: 1
-        };
+            comments: [],
+            items:[],
+            commentNew:''
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        }
     }
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
+    onChangeContent(e){
+
+        this.setState({
+            commentNew : e.target.value,
+        });
     }
 
-    handleSubmit(event) {
-            alert('An Review was submitted');
-            event.preventDefault();
+    onSubmit(e) {
+        e.preventDefault();
+        const {_id, name, img, category,price, description,quantity,size,meterial,discount} = this.props.location.item;
+        this.state.items.map(item =>{
+            if(item._id == _id){
+                this.setState({
+                    comments:item.comment
+                })
+            }
+        })
+        this.setState({
+            comments:this.state.comments.push(this.state.commentNew)
+        })
+
+        alert('Your comment is submitted');
+        const comm  = {_id: _id, comment: this.state.commentNew}
+        Axios.post('http://localhost:5000/additem/pushComment/',comm)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
     }
 
     onStarClick(nextValue, prevValue, name) {
@@ -40,10 +63,34 @@ class ProductDetails extends Component {
         console.log('Added to wishlist');
     };
 
+    componentDidMount() {
+        Axios.get('http://localhost:5000/additem/')
+            .then(response => {
+                this.setState({
+                   items: response.data
+                })
+            })
+
+            .catch((error) => {
+                console.log(error);
+            })
+        console.log(this.state.items.comment)
+
+    }
+
     render() {
         const { rating } = this.state;
-        const {id, name, img, price, description, material} = this.props.location.item;
+        const {_id, name, img, price, description, meterial} = this.props.location.item;
 
+        const comments = [];
+        {this.state.items.map(item => {
+            if(item._id == _id) {
+                var x = item.comment.length;
+                for (var i = 0; i < x; i++) {
+                    comments.push(item.comment[i]);
+                }
+            }
+        })}
 
         return (
             <div>
@@ -64,11 +111,11 @@ class ProductDetails extends Component {
                                 <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
                                     <h2>Item : {name}</h2>
                                     <h4 className="text-title text-uppercase text-muted mt-3 mb-2">
-                                        Material : <span className="text-uppercase "> {material} </span>
+                                        Material : <span className="text-uppercase "> {meterial} </span>
                                     </h4>
                                     <h4 className="text-blue">
                                         <strong>
-                                            Price : <span>$</span> {price}
+                                            Price : <span>Rs:</span> {price}/=
                                         </strong>
                                     </h4>
                                     <p className="text-capitalize font-weight-bold mt-3 mb-0">
@@ -85,157 +132,44 @@ class ProductDetails extends Component {
                                             value={rating}
                                             onStarClick={this.onStarClick.bind(this)}
                                         />
-                                        <form onSubmit={this.handleSubmit}>
-                                            <label>
-                                                <h5>Summary of Review</h5>
-                                                <textarea value={this.state.value} onChange={this.handleChange} />
-                                            </label>
-                                            <div>
-                                                <ReviewButtonContainer type="submit">Submit Review</ReviewButtonContainer>
+                                    </div>
+                                    <div>
+                                        <h5>Add a Comment</h5>
+                                        <form onSubmit={this.onSubmit} >
+                                            <div className="form-group">
+                                                <textarea rows="5"
+                                                          required
+                                                          className="form-control"
+                                                          value={this.state.content}
+                                                          placeholder="Type a comment"
+                                                          onChange={this.onChangeContent}>
+                                                </textarea>
+                                            </div>
+                                            <div className="form-group" align="right">
+                                                <input type="submit"
+                                                       className="btn btn-dark"
+                                                       value="Post Comment">
+                                                </input>
                                             </div>
                                         </form>
+                                        <form>
+                                            <div className="border col-auto mx-auto col-auto mx-auto mt-auto  bg-transparent">
+                                                <h3 className='comment text-center' style={{color: "red"}}> Reviews.....</h3>
+                                                <div className='mx-4 mb-4'>
+                                                    {comments.map(cmt =>{
+                                                        return <li>{cmt}</li>
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                         </div>
                     );
-            //     }}
-            //
-            // </ProductConsumer>
-        // );
     }
 }
 
-export default ProductDetails;
-
-
-
-
-
-
-
-// class ProductDetails extends Component {
-//
-//     constructor() {
-//         super();
-//         this.state = {
-//             value: 'Please write review about this product.'
-//         };
-//
-//         this.state = {
-//             rating: 1
-//         };
-//
-//         this.handleChange = this.handleChange.bind(this);
-//         this.handleSubmit = this.handleSubmit.bind(this);
-//     }
-//
-//     handleChange(event) {
-//         this.setState({value: event.target.value});
-//     }
-//
-//     handleSubmit(event) {
-//         alert('An Review was submitted');
-//         event.preventDefault();
-//     }
-//
-//     onStarClick(nextValue, prevValue, name) {
-//         this.setState({rating: nextValue});
-//     }
-//
-//     render() {
-//         const { rating } = this.state;
-//
-//         return (
-//             <ProductConsumer>
-//                 {value => {
-//                     const {id, img, description, price, name, material} = value.details;
-// //                    const {id, company, img, info, price, title, inCart} = value.detailProduct;
-//
-//                     //const {inWishList} = value.favouritesProduct;
-//
-//                     return (
-//                         <div>
-//                             <NavBar />
-//                             <div className="container py-5">
-//
-//                                 <div className="row">
-//                                     <div className="col-10 mx-auto text-center text-slanted text-blue my-5">
-//                                         <h1>{name}</h1>
-//                                     </div>
-//                                 </div>
-//
-//                                 <div className="row">
-//                                     <div className="col-10 mx-auto col-md-6 my-3">
-//                                         <img src ={img} className="img-fluid" alt="product"/>
-//                                         <ReviewButtonContainer
-//                                             WishList
-//                                             onClick={() => {
-//                                                 value.HandleWishList(id);
-//                                                 // value.changned();
-//                                             }}>
-//                                         <span className="mr1">
-//                                             <i className=" fas fa-heart" ></i>
-//                                         </span>
-//                                             Add to WishList
-//                                         </ReviewButtonContainer>
-//                                     </div>
-//                                     <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
-//                                         <h2>Item : {name}</h2>
-//                                         <h4 className="text-title text-uppercase text-muted mt-3 mb-2">
-//                                             Material : <span className="text-uppercase "> {material} </span>
-//                                         </h4>
-//                                         <h4 className="text-blue">
-//                                             <strong>
-//                                                 Price : <span>$</span> {price}
-//                                             </strong>
-//                                         </h4>
-//                                         <p className="text-capitalize font-weight-bold mt-3 mb-0">
-//                                             About Product
-//                                         </p>
-//                                         <p className="text-muted lead">
-//                                             {description}
-//                                         </p>
-//                                         <div>
-//                                             <h5>Ratings: {rating}</h5>
-//                                             <StarRatingComponent
-//                                                 name="rate1"
-//                                                 starCount={5}
-//                                                 value={rating}
-//                                                 onStarClick={this.onStarClick.bind(this)}
-//                                             />
-//                                             <form onSubmit={this.handleSubmit}>
-//                                                 <label>
-//                                                     <h5>Summary of Review</h5>
-//                                                     <textarea value={this.state.value} onChange={this.handleChange} />
-//                                                 </label>
-//                                                 <div>
-//                                                     <ReviewButtonContainer type="submit">Submit Review</ReviewButtonContainer>
-//                                                 </div>
-//                                             </form>
-//                                         </div>
-//                                         <div>
-//                                             <Link to='/'>
-//                                                 <CartButtonContainer> Back to Home</CartButtonContainer>
-//                                             </Link>
-//                                             <CartButtonContainer
-//                                                 Cart
-//                                                 onClick={() => {
-//                                                     value.addToCart(id);
-//                                                     value.openModal(id);
-//                                                 }}>
-//                                                 {"Add to Cart"}
-//                                             </CartButtonContainer>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     );
-//                 }}
-//
-//             </ProductConsumer>
-//         );
-//     }
-// }
+export default connect (mapStateToProps)(ProductDetails) ;
