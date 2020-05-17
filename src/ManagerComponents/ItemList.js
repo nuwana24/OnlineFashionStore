@@ -1,9 +1,15 @@
 import React,{Component} from "react";
 import NavBar from "./NavBar";
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {Button, Container} from "react-bootstrap";
 import axios from 'axios';
 import editItem from "./editItem";
+import {connect} from "react-redux";
+
+
+const mapStateToProps = ({session}) => ({
+    session
+})
 
 const Item = props => (
 
@@ -27,7 +33,7 @@ const Item = props => (
     </tr>
 )
 
-export default class ItemList extends Component {
+class ItemList extends Component {
     constructor(props) {
         super(props);
 
@@ -68,33 +74,46 @@ export default class ItemList extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <NavBar />
-                <Container>
+        if (this.props.session.username !== null) {
 
-                    <h3 style={{marginTop:"3%",marginBottom:"2%"}} className="text-center text-bright">Item List</h3>
-                    <table className="table">
-                        <thead style={{marginBottom:"3%"}} className="thead-dark" >
-                        <tr>
-                            <th>Image</th>
-                            {/*<th>URL</th>*/}
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Size</th>
-                            <th>Meterial</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {this.itemList()}
-                        </tbody>
-                    </table>
-                </Container>
-            </div>
-        );
+            return (
+                <div>
+                    <NavBar/>
+                    <Container>
+
+                        <h3 style={{marginTop: "3%", marginBottom: "2%"}} className="text-center text-bright">Item
+                            List</h3>
+                        <table className="table">
+                            <thead style={{marginBottom: "3%"}} className="thead-dark">
+                            <tr>
+                                <th>Image</th>
+                                {/*<th>URL</th>*/}
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Size</th>
+                                <th>Meterial</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.itemList()}
+                            </tbody>
+                        </table>
+                    </Container>
+                </div>
+            );
+        }
+        else {
+            return (
+                <Redirect to="/AdLog"/>
+            );
+        }
     }
 }
+export default connect(
+    mapStateToProps
+)(ItemList);
+

@@ -2,12 +2,18 @@ import React,{Component} from "react";
 import {Modal, Button, Row, Col, Form} from 'react-bootstrap';
 import NavBar from "./NavBar";
 import {Alert, Card, CardBody, CardSubtitle, CardTitle, FormGroup, Input, Label, Spinner} from "reactstrap";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {toNumber} from "reactstrap/es/utils";
 import axios from "axios";
+import {connect} from "react-redux";
 
 
-export default class discountPopUp extends Component{
+const mapStateToProps = ({session}) => ({
+    session
+})
+
+
+class discountPopUp extends Component{
     constructor(props) {
         super(props);
         // this.handleFileChange = this.handleFileChange.bind(this);
@@ -101,39 +107,58 @@ export default class discountPopUp extends Component{
 
     }
     render() {
-        return (
-            <div>
-                <React.Fragment>
-                    <NavBar/>
-                    <div style={{width:"50%", marginTop:"3%", marginLeft:"25%"}}>
+        if (this.props.session.username !== null) {
 
-                        <Card >
-                            <CardBody >
-                                <CardTitle > <h2><strong><center>Discount</center></strong></h2></CardTitle>
-                                <CardSubtitle className="text-muted"><center>Add Discount Amount LKR.
-                                    </center></CardSubtitle>
-                                <br/>
+            return (
+                <div>
+                    <React.Fragment>
+                        <NavBar/>
+                        <div style={{width: "50%", marginTop: "3%", marginLeft: "25%"}}>
 
-                                <Form onSubmit={this.onSubmit}>
-                                    <FormGroup>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>
+                                        <h2><strong>
+                                            <center>Discount</center>
+                                        </strong></h2>
+                                    </CardTitle>
+                                    <CardSubtitle className="text-muted">
+                                        <center>Add Discount Amount LKR.
+                                        </center>
+                                    </CardSubtitle>
+                                    <br/>
 
-                                        {/*<Label for="email">E-mail</Label>*/}
-                                        <input  type="text"
-                                                required
-                                                className="form-control"
-                                                value={this.state.discount}
-                                                onChange={this.onChangeDiscount}
-                                        />
-                                        <input style={{marginTop:"3%",marginLeft:"40%"}} type="submit" value="Add Discount" className="btn btn-success" />
+                                    <Form onSubmit={this.onSubmit}>
+                                        <FormGroup>
 
-                                    </FormGroup>
-                                </Form>
-                            </CardBody>
-                        </Card>
+                                            {/*<Label for="email">E-mail</Label>*/}
+                                            <input type="text"
+                                                   required
+                                                   className="form-control"
+                                                   value={this.state.discount}
+                                                   onChange={this.onChangeDiscount}
+                                            />
+                                            <input style={{marginTop: "3%", marginLeft: "40%"}} type="submit"
+                                                   value="Add Discount" className="btn btn-success"/>
 
-                    </div>
-                </React.Fragment>
-            </div>
-        );
+                                        </FormGroup>
+                                    </Form>
+                                </CardBody>
+                            </Card>
+
+                        </div>
+                    </React.Fragment>
+                </div>
+            );
+        }
+        else {
+            return (
+                <Redirect to="/AdLog"/>
+            );
+        }
     }
 }
+export default connect(
+    mapStateToProps
+)(discountPopUp);
+

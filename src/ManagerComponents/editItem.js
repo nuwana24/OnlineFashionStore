@@ -5,8 +5,15 @@ import {Input} from "@material-ui/core";
 import NavBar from "./NavBar";
 import background from "../Images/AdminBackgroud.jpg";
 import axios from "axios";
+import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
 // import Dropzone from "react-dropzone";
 
+
+
+const mapStateToProps = ({session}) => ({
+    session
+})
 
 var sectionstyle ={
     backgroundImage: `url(${background})`
@@ -17,7 +24,7 @@ const Category = props => (
     <option>{props.category.category}</option>
 )
 
-export default class addItem extends Component {
+class addItem extends Component {
     constructor(props) {
         super(props);
 
@@ -230,150 +237,160 @@ export default class addItem extends Component {
         if (this.state.imagePreviewUrl) {
             $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="300" height="400" /> </div>);
         }
+        if (this.props.session.username !== null) {
 
-        return (
+            return (
 
-            <div>
+                <div>
 
-                <NavBar />
-                <section style={sectionstyle}>
-                    <Container>
-                        <div className="p-3 mb-2 bg-light text-dark">
-                            <center><h3>Update Item</h3></center>
-                            <form onSubmit={this.onSubmit} enctype="multipart/form-data" >
-                                {/*<div style={{display: 'flex', justifyContent:'space-between'}}>*/}
-                                {/*    <Dropzone*/}
-                                {/*        onDrop={onDrop}*/}
-                                {/*        multiple*/}
-                                {/*        maxSize*/}
-                                {/*    >*/}
-                                {/*        {({getRootProps, getInputProps}) =>(*/}
-                                {/*            <div style={{width:'300px', height:'240px', border:'1px solid lightgrey', display:'flex',alignItems:'center', justifyContent:'center'}}*/}
-                                {/*                 {...getRootProps()}*/}
-                                {/*            >*/}
-                                {/*                <input{...getInputProps()}/>*/}
-                                {/*                <Icon type="plus" style={{fontSize:'3rem',color:'#949494'}}/>*/}
+                    <NavBar/>
+                    <section style={sectionstyle}>
+                        <Container>
+                            <div className="p-3 mb-2 bg-light text-dark">
+                                <center><h3>Update Item</h3></center>
+                                <form onSubmit={this.onSubmit} enctype="multipart/form-data">
+                                    {/*<div style={{display: 'flex', justifyContent:'space-between'}}>*/}
+                                    {/*    <Dropzone*/}
+                                    {/*        onDrop={onDrop}*/}
+                                    {/*        multiple*/}
+                                    {/*        maxSize*/}
+                                    {/*    >*/}
+                                    {/*        {({getRootProps, getInputProps}) =>(*/}
+                                    {/*            <div style={{width:'300px', height:'240px', border:'1px solid lightgrey', display:'flex',alignItems:'center', justifyContent:'center'}}*/}
+                                    {/*                 {...getRootProps()}*/}
+                                    {/*            >*/}
+                                    {/*                <input{...getInputProps()}/>*/}
+                                    {/*                <Icon type="plus" style={{fontSize:'3rem',color:'#949494'}}/>*/}
 
-                                {/*            </div>*/}
-                                {/*        )}*/}
+                                    {/*            </div>*/}
+                                    {/*        )}*/}
 
-                                {/*    </Dropzone>*/}
+                                    {/*    </Dropzone>*/}
 
-                                {/*    <div style={{  width:'300px', height:'240px', border:'1px solid lightgrey', display:'flex',overflowX:'scroll'}}>*/}
+                                    {/*    <div style={{  width:'300px', height:'240px', border:'1px solid lightgrey', display:'flex',overflowX:'scroll'}}>*/}
 
-                                {/*        <div>*/}
-                                {/*            <img/>*/}
-                                {/*        </div>*/}
-
-
-
-                                {/*    </div>*/}
+                                    {/*        <div>*/}
+                                    {/*            <img/>*/}
+                                    {/*        </div>*/}
 
 
-                                {/*</div>*/}
-                                {/*<p>Upload a new Image</p>*/}
-                                {/*<div className="form-group">*/}
-                                {/*    <input  type="file" name="file" onChange={this.handleFileChange} />*/}
-                                {/*    /!*<button type="button" onClick={this.submit} > Upload </button>*!/*/}
-                                {/*    { $imagePreview }*/}
+                                    {/*    </div>*/}
 
-                                {/*</div>*/}
 
-                                <div className="form-group">
-                                    <label>Category </label>
-                                    <select
-                                        type="text"
-                                        required
-                                        className="form-control"
-                                        value={this.state.category}
-                                        onChange={this.onChangeCategory}>
-                                        options={this.categoryList()}
+                                    {/*</div>*/}
+                                    {/*<p>Upload a new Image</p>*/}
+                                    {/*<div className="form-group">*/}
+                                    {/*    <input  type="file" name="file" onChange={this.handleFileChange} />*/}
+                                    {/*    /!*<button type="button" onClick={this.submit} > Upload </button>*!/*/}
+                                    {/*    { $imagePreview }*/}
 
-                                    </select>
-                                </div>
+                                    {/*</div>*/}
 
-                                <div className="form-group">
-                                    <label>Name </label>
-                                    <input  type="text"
+                                    <div className="form-group">
+                                        <label>Category </label>
+                                        <select
+                                            type="text"
                                             required
                                             className="form-control"
-                                            value={this.state.name}
-                                            onChange={this.onChangeName}
-                                    />
-                                </div>
+                                            value={this.state.category}
+                                            onChange={this.onChangeCategory}>
+                                            options={this.categoryList()}
 
-                                <div className="description">
+                                        </select>
+                                    </div>
 
-                                    <label>Description  </label>
-                                    <input  type="text"
+                                    <div className="form-group">
+                                        <label>Name </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.name}
+                                               onChange={this.onChangeName}
+                                        />
+                                    </div>
+
+                                    <div className="description">
+
+                                        <label>Description </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.description}
+                                               onChange={this.onChangeDescription}
+                                        />
+                                    </div>
+
+
+                                    <div className="form-group">
+                                        <label>Price </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.price}
+                                               onChange={this.onChangePrice}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Quantity </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.quantity}
+                                               onChange={this.onChangeQuantity}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Size </label>
+                                        <select
+                                            type="text"
                                             required
                                             className="form-control"
-                                            value={this.state.description}
-                                            onChange={this.onChangeDescription}
-                                    />
-                                </div>
+                                            value={this.state.size}
+                                            onChange={this.onChangeSize}>
+                                            {
+                                                this.state.sizes.map(function (size) {
+                                                    return <option
+                                                        key={size}
+                                                        value={size}>{size}
+                                                    </option>;
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Meterial </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.meterial}
+                                               onChange={this.onChangeMeterial}
+                                        />
+                                    </div>
 
 
-                                <div className="form-group">
-                                    <label>Price </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.price}
-                                            onChange={this.onChangePrice}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Quantity </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.quantity}
-                                            onChange={this.onChangeQuantity}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Size </label>
-                                    <select
-                                        type="text"
-                                        required
-                                        className="form-control"
-                                        value={this.state.size}
-                                        onChange={this.onChangeSize}>
-                                        {
-                                            this.state.sizes.map(function(size) {
-                                                return <option
-                                                    key={size}
-                                                    value={size}>{size}
-                                                </option>;
-                                            })
-                                        }
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label>Meterial </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.meterial}
-                                            onChange={this.onChangeMeterial}
-                                    />
-                                </div>
+                                    <br/>
+                                    <div className="form-group">
+                                        <input type="submit" value="Update" className="btn btn-info"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </Container>
+                    </section>
+                </div>
 
 
-                                <br />
-                                <div className="form-group">
-                                    <input type="submit" value="Update" className="btn btn-info" />
-                                </div>
-                            </form>
-                        </div>
-                    </Container>
-                </section>
-            </div>
-
-
-        )
+            )
+        }
+        else {
+            return (
+                <Redirect to="/AdLog"/>
+            );
+        }
     }
 }
+export default connect(
+    mapStateToProps
+)(addItem);
+
 // const rootElement = document.getElementById("root");
 // ReactDOM.render(<AddCategories/>, rootElement);

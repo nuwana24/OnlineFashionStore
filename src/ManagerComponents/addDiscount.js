@@ -1,9 +1,15 @@
 import React,{Component} from "react";
 import NavBar from "./NavBar";
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {Button, ButtonToolbar, Container} from "react-bootstrap";
 import {discountPopUp} from "./discountPopUp";
 import axios from 'axios';
+import {connect} from "react-redux";
+
+
+const mapStateToProps = ({session}) => ({
+    session
+})
 
 const Item = props => (
 
@@ -37,7 +43,7 @@ const Item = props => (
     </tr>
 )
 
-export default class ItemList extends Component {
+class ItemList extends Component {
     constructor(props) {
         super(props);
 
@@ -80,34 +86,44 @@ export default class ItemList extends Component {
 
     render() {
 
-    // let addModalClose =() =>this.setState({addModalShow:false});
-        return (
-            <div>
-                <NavBar />
-                <Container>
+        if (this.props.session.username !== null) {
+            return (
+                <div>
+                    <NavBar/>
+                    <Container>
 
-                    <h3 style={{marginTop:"3%"}} className="text-center text-bright">Item List</h3>
-                    <table className="table" style={{marginLeft: "2%"}}>
-                        <thead className="thead-dark" >
-                        <tr>
-                            {/*<th>Image</th>*/}
-                            {/*<th>URL</th>*/}
-                            <th>Item Name</th>
-                            <th>Category</th>
-                            {/*<th>Description</th>*/}
-                            <th>Price</th>
-                            <th>Discount</th>
+                        <h3 style={{marginTop: "3%"}} className="text-center text-bright">Item List</h3>
+                        <table className="table" style={{marginLeft: "2%"}}>
+                            <thead className="thead-dark">
+                            <tr>
+                                {/*<th>Image</th>*/}
+                                {/*<th>URL</th>*/}
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                {/*<th>Description</th>*/}
+                                <th>Price</th>
+                                <th>Discount</th>
 
-                            <th></th>
-                            {/*<th>Meterial</th>*/}
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {this.itemList()}
-                        </tbody>
-                    </table>
-                </Container>
-            </div>
-        );
+                                <th></th>
+                                {/*<th>Meterial</th>*/}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.itemList()}
+                            </tbody>
+                        </table>
+                    </Container>
+                </div>
+            );
+        }
+        else {
+                return (
+                    <Redirect to="/AdLog"/>
+                );
+            }
     }
 }
+export default connect(
+    mapStateToProps
+)(ItemList);
+

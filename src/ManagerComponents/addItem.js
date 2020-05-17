@@ -6,8 +6,13 @@ import NavBar from "./NavBar";
 import Footer from "../AdminComponents/Footer"
 import background from "../Images/AdminBackgroud.jpg";
 import axios from "axios";
+import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
 
 
+const mapStateToProps = ({session}) => ({
+    session
+})
 
 
 var sectionstyle ={
@@ -19,7 +24,7 @@ const Category = props => (
         <option>{props.category.category}</option>
 )
 
-export default class addItem extends Component {
+class addItem extends Component {
     constructor(props) {
         super(props);
 
@@ -209,124 +214,135 @@ export default class addItem extends Component {
         if (this.state.imagePreviewUrl) {
             $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="300" height="400" /> </div>);
         }
+        if (this.props.session.username !== null) {
 
-        return (
+            return (
 
-            <div>
+                <div>
 
-                <NavBar />
-                <section style={sectionstyle}>
-                    <Container >
-                        <div className="p-3 mb-2 bg-light text-dark">
-                            <center><h3>Add Item</h3></center>
-                            <form onSubmit={this.onSubmit} enctype="multipart/form-data" >
+                    <NavBar/>
+                    <section style={sectionstyle}>
+                        <Container>
+                            <div className="p-3 mb-2 bg-light text-dark">
+                                <center><h3>Add Item</h3></center>
+                                <form onSubmit={this.onSubmit} enctype="multipart/form-data">
 
 
-                                <div className="form-group">
-                                    <input  type="file" name="file" onChange={this.handleFileChange} />
-                                    {/*<button type="button" onClick={this.submit} > Upload </button>*/}
-                                    { $imagePreview }
+                                    <div className="form-group">
+                                        <input type="file" name="file" onChange={this.handleFileChange}/>
+                                        {/*<button type="button" onClick={this.submit} > Upload </button>*/}
+                                        {$imagePreview}
 
-                                </div>
+                                    </div>
 
-                                <div className="form-group">
-                                    <label>Category </label>
+                                    <div className="form-group">
+                                        <label>Category </label>
 
-                                    <select
-                                        type="text"
-                                        required
-                                        className="form-control"
-                                        value={this.state.category}
-                                        onChange={this.onChangeCategory}>
-                                        options={this.categoryList()}
-
-                                    </select>
-                                </div>
-
-                                <div className="form-group">
-                                    <label>Name </label>
-                                    <input  type="text"
+                                        <select
+                                            type="text"
                                             required
                                             className="form-control"
-                                            value={this.state.name}
-                                            onChange={this.onChangeName}
-                                    />
-                                </div>
+                                            value={this.state.category}
+                                            onChange={this.onChangeCategory}>
+                                            options={this.categoryList()}
 
-                                <div className="description">
+                                        </select>
+                                    </div>
 
-                                    <label>Description  </label>
-                                    <input  type="text"
+                                    <div className="form-group">
+                                        <label>Name </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.name}
+                                               onChange={this.onChangeName}
+                                        />
+                                    </div>
+
+                                    <div className="description">
+
+                                        <label>Description </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.description}
+                                               onChange={this.onChangeDescription}
+                                        />
+                                    </div>
+
+
+                                    <div className="form-group">
+                                        <label>Price </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.price}
+                                               onChange={this.onChangePrice}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Quantity </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.quantity}
+                                               onChange={this.onChangeQuantity}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Size </label>
+                                        <select
+                                            type="text"
                                             required
                                             className="form-control"
-                                            value={this.state.description}
-                                            onChange={this.onChangeDescription}
-                                    />
-                                </div>
+                                            value={this.state.size}
+                                            onChange={this.onChangeSize}>
+                                            {
+                                                this.state.sizes.map(function (size) {
+                                                    return <option
+                                                        key={size}
+                                                        value={size}>{size}
+                                                    </option>;
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Meterial </label>
+                                        <input type="text"
+                                               required
+                                               className="form-control"
+                                               value={this.state.meterial}
+                                               onChange={this.onChangeMeterial}
+                                        />
+                                    </div>
 
 
-                                <div className="form-group">
-                                    <label>Price </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.price}
-                                            onChange={this.onChangePrice}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Quantity </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.quantity}
-                                            onChange={this.onChangeQuantity}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Size </label>
-                                    <select
-                                        type="text"
-                                        required
-                                        className="form-control"
-                                        value={this.state.size}
-                                        onChange={this.onChangeSize}>
-                                        {
-                                            this.state.sizes.map(function(size) {
-                                                return <option
-                                                    key={size}
-                                                    value={size}>{size}
-                                                </option>;
-                                            })
-                                        }
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label>Meterial </label>
-                                    <input  type="text"
-                                            required
-                                            className="form-control"
-                                            value={this.state.meterial}
-                                            onChange={this.onChangeMeterial}
-                                    />
-                                </div>
+                                    <br/>
+                                    <div className="form-group">
+                                        <input type="submit" value="Add Item" className="btn btn-info"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </Container>
+                    </section>
 
 
-                                <br />
-                                <div className="form-group">
-                                    <input type="submit" value="Add Item" className="btn btn-info" />
-                                </div>
-                            </form>
-                        </div>
-                    </Container>
-                </section>
-                
-
-            </div>
+                </div>
 
 
-        )
+            )
+        }
+        else {
+            return (
+                <Redirect to="/AdLog"/>
+            );
+        }
     }
 }
+export default connect(
+    mapStateToProps
+)(addItem);
+
 // const rootElement = document.getElementById("root");
 // ReactDOM.render(<AddCategories/>, rootElement);
