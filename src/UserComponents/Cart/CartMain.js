@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import Navbar2 from "../../UserComponents/Navbar2";
+import Navbar2 from "../../UserComponents/NavBar";
 import Cart from "./Cart";
 
 class CartMain extends Component{

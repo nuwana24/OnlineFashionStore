@@ -82,6 +82,8 @@ router.route('/update/:id').post((req, res) => {
                     itemlist.size = req.body.size;
                     itemlist.meterial = req.body.meterial;
                     itemlist.discount = req.body.discount;
+                    itemlist.comment = req.body.comment;
+                    itemlist.rate = req.body.rate;
 
 
                     itemlist.save()
@@ -91,6 +93,42 @@ router.route('/update/:id').post((req, res) => {
                 })
                 .catch(err => res.status(400).json('Error: ' + err));
 
+});
+
+router.route('/pushComment').post(function (req,res){
+
+    AddItem.findOneAndUpdate(
+        { _id: req.body._id },
+        {
+            $push: {
+                comment: req.body.comment
+            },
+        }
+    )
+        .then(doc => {
+            res.send(doc);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+});
+
+router.route('/pushRates').post(function (req,res){
+
+    AddItem.findOneAndUpdate(
+        { _id: req.body._id },
+        {
+            $push: {
+                rating: req.body.rating
+            },
+        }
+    )
+        .then(doc => {
+            res.send(doc);
+        })
+        .catch(err => {
+            console.error(err);
+        });
 });
 
 router.route('getAllCategories').get(function (req,res){

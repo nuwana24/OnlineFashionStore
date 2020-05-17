@@ -11,7 +11,7 @@ const mapStateToProps = ({ session}) => ({
 
 const Product = ({session, ...props}) =>  {
 
-    const {_id, name,img, price, description, meterial, discount } = props.products;
+    const {_id, name, img, category,price, description,quantity,size,meterial,discount} = props.products;
     const material = meterial;
     const details = {
         userId: session.userId,
@@ -20,7 +20,7 @@ const Product = ({session, ...props}) =>  {
         img : img,
         price : price,
         description : description,
-        material : meterial
+        meterial : meterial
     };
 
     const addToCartHandler = () => {
@@ -63,7 +63,7 @@ const Product = ({session, ...props}) =>  {
             <Card style={{width: '18rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5">
 
                 <div >
-                    <Link to={{pathname: 'ProductDetails', item:{_id, name, img, price, description, material}}}>
+                    <Link to={{pathname: '/ProductDetails', item:{_id, name, img, category,price, description,quantity,size,meterial,discount}}}>
                         <Card.Img variant='top' src={(`/uploads/${props.products.img}`)}
                                   style={{width: "18rem", height: "20rem"}}/>
                     </Link>
