@@ -55,28 +55,17 @@ class ProductDetails extends Component {
     }
 
     onStarClick(nextValue) {
-        // const { rating } = this.state;
-        // this.setState({rating: nextValue});
-        // console.log(rating)
+        const { rating } = this.state;
+        this.setState({rating: nextValue});
+        console.log(rating);
         const {_id} = this.props.location.item;
-        this.state.items.map(item =>{
-            if(item._id == _id){
-                this.setState({
-                    ratings:item.rating
-                })
-            }
-        })
-        this.setState({
-            ratings:this.state.ratings.push(nextValue)
-        })
         alert('Thank You for your rating');
 
-        const rate = {_id: _id, rating:this.state.ratings};
+        const rate = {_id: _id, rating:nextValue};
         Axios.post('http://localhost:5000/additem/pushRates/',rate)
             .then(res => console.log(res.data))
             .catch(err => console.log(err))
     }
-
 
     addToWishList = (item) => {
         Axios.post('http://localhost:5000/api/WishList/addToWishList', item);
@@ -151,7 +140,7 @@ class ProductDetails extends Component {
                                             name="rate1"
                                             starCount={5}
                                             value={rating}
-                                            onStarClick={this.onStarClick(rating)}
+                                            onStarClick={this.onStarClick}
                                         />
                                     </div>
                                     <div>
