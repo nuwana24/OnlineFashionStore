@@ -112,45 +112,45 @@ class StarRatingComponent extends Component {
         };
 
         // populate stars
-        let starNodes = [];
+        let star = [];
 
         for (let i = starCount; i > 0; i--) {
-            const id = `${name}_${i}`;
-            const starNodeInput = (
+            const _id = `${name}_${i}`;
+            const starInput = (
                 <input
-                    key={`input_${id}`}
+                    key={`input_${_id}`}
                     style={radioStyles}
                     className="dv-star-rating-input"
                     type="radio"
                     name={name}
-                    id={id}
+                    _id={_id}
                     value={i}
                     checked={value === i}
                     onChange={this.onChange.bind(this, i, name)}
                 />
             );
-            const starNodeLabel = (
+            const starLabel = (
                 <label
-                    key={`label_${id}`}
+                    key={`label_${_id}`}
                     style={starStyles(i, value)}
                     className={'dv-star-rating-star ' + (value >= i ? 'dv-star-rating-full-star' : 'dv-star-rating-empty-star')}
-                    htmlFor={id}
+                    htmlFor={_id}
                     onClick={e => this.onStarClick(i, value, name, e)}
                     onMouseOver={e => this.onStarHover(i, value, name, e)}
                     onMouseLeave={e => this.onStarHoverOut(i, value, name, e)}
                 >
-                    {this.renderIcon(i, value, name, id)}
+                    {this.renderIcon(i, value, name, _id)}
                 </label>
             );
 
-            starNodes.push(starNodeInput);
-            starNodes.push(starNodeLabel);
+            star.push(starInput);
+            star.push(starLabel);
         }
 
-        return starNodes.length ? starNodes : null;
+        return star.length ? star : null;
     }
 
-    renderIcon(index, value, name, id) {
+    renderIcon(index, value, name, _id) {
         const { renderStarIcon, renderStarIconHalf } = this.props;
 
         if (
@@ -158,14 +158,14 @@ class StarRatingComponent extends Component {
             Math.ceil(value) === index &&
             value % 1 !== 0
         ) {
-            return renderStarIconHalf(index, value, name, id);
+            return renderStarIconHalf(index, value, name, _id);
         }
 
         if (typeof renderStarIcon === 'function') {
-            return renderStarIcon(index, value, name, id);
+            return renderStarIcon(index, value, name, _id);
         }
 
-        return <i key={`icon_${id}`} style={{fontStyle: 'normal'}}>&#9733;</i>;
+        return <i key={`icon_${_id}`} style={{fontStyle: 'normal'}}>&#9733;</i>;
     }
 
     render() {

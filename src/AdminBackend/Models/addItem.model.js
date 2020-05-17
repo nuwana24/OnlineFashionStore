@@ -11,6 +11,7 @@ const addItemSchema =  new mongoose.Schema({
     size:String,
     meterial:String,
     comment:Array,
+    rating:Array,
     discount:{
         type:Number,
         default: 0

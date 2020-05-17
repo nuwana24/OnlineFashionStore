@@ -16,12 +16,13 @@ class ProductDetails extends Component {
 
         this.onChangeContent = this.onChangeContent.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onStarClick = this.onStarClick.bind(this);
 
         this.state = {
             comments: [],
             items:[],
-            commentNew:''
-
+            commentNew:'',
+            ratings:[]
         }
     }
 
@@ -34,7 +35,7 @@ class ProductDetails extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        const {_id, name, img, category,price, description,quantity,size,meterial,discount} = this.props.location.item;
+        const {_id} = this.props.location.item;
         this.state.items.map(item =>{
             if(item._id == _id){
                 this.setState({
@@ -53,9 +54,29 @@ class ProductDetails extends Component {
             .catch(err => console.log(err))
     }
 
-    onStarClick(nextValue, prevValue, name) {
-        this.setState({rating: nextValue});
+    onStarClick(nextValue) {
+        // const { rating } = this.state;
+        // this.setState({rating: nextValue});
+        // console.log(rating)
+        const {_id} = this.props.location.item;
+        this.state.items.map(item =>{
+            if(item._id == _id){
+                this.setState({
+                    ratings:item.rating
+                })
+            }
+        })
+        this.setState({
+            ratings:this.state.ratings.push(nextValue)
+        })
+        alert('Thank You for your rating');
+
+        const rate = {_id: _id, rating:this.state.ratings};
+        Axios.post('http://localhost:5000/additem/pushRates/',rate)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
     }
+
 
     addToWishList = (item) => {
         Axios.post('http://localhost:5000/api/WishList/addToWishList', item);
@@ -130,7 +151,7 @@ class ProductDetails extends Component {
                                             name="rate1"
                                             starCount={5}
                                             value={rating}
-                                            onStarClick={this.onStarClick.bind(this)}
+                                            onStarClick={this.onStarClick(rating)}
                                         />
                                     </div>
                                     <div>
@@ -140,7 +161,7 @@ class ProductDetails extends Component {
                                                 <textarea rows="5"
                                                           required
                                                           className="form-control"
-                                                          value={this.state.content}
+                                                          value={this.state.comment}
                                                           placeholder="Type a comment"
                                                           onChange={this.onChangeContent}>
                                                 </textarea>

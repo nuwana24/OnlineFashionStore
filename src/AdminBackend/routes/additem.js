@@ -83,6 +83,7 @@ router.route('/update/:id').post((req, res) => {
                     itemlist.meterial = req.body.meterial;
                     itemlist.discount = req.body.discount;
                     itemlist.comment = req.body.comment;
+                    itemlist.rate = req.body.rate;
 
 
                     itemlist.save()
@@ -101,6 +102,24 @@ router.route('/pushComment').post(function (req,res){
         {
             $push: {
                 comment: req.body.comment
+            },
+        }
+    )
+        .then(doc => {
+            res.send(doc);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+});
+
+router.route('/pushRates').post(function (req,res){
+
+    AddItem.findOneAndUpdate(
+        { _id: req.body._id },
+        {
+            $push: {
+                rating: req.body.rating
             },
         }
     )
