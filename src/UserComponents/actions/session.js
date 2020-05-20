@@ -23,16 +23,6 @@ console.log(data)
 
     return dispatch(receiveErrors(data));
 };
-export const Mlogin = user => async dispatch => {
-    const response = await apiUtil.Mlogin(user);
-    const data = await response.json();
-    console.log(data)
-    if(response.ok){
-        return dispatch(receiveCurrentUser(data));
-    }
-
-    return dispatch(receiveErrors(data));
-};
 
 export const signup = user => async dispatch => {
     const response = await apiUtil.signup(user);
@@ -48,6 +38,7 @@ export const signup = user => async dispatch => {
 
 export const logout = () => async dispatch => {
     const response = await apiUtil.logout();
+    console.log(response);
     const data = await response.json();
 
     if(response.ok){

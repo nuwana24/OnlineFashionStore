@@ -23,7 +23,7 @@ export default class NavBar extends Component{
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link>
-                            <Link className=" nav-link "  to="/Admin">
+                            <Link className=" nav-link "  to="/Manager">
                                 <i className="fas fa-home "></i> &nbsp;
                                 Home
                             </Link>

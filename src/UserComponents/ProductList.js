@@ -4,7 +4,7 @@ import Axios from "axios";
 import Product from "./Product";
 import Titles from "./Titles";
 import NavBar from "./NavBar";
-import NavBar2 from "./Navbar2";
+
 
 class ProductList extends Component {
 

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {ReviewButtonContainer} from "./Buttons";
 import StarRatingComponent from './StarRatingComponent';
-import NavBar2 from "./NavBar";
+import NavBar from "./NavBar";
+import LoginNav from "../AdminComponents/LoginNav";
 import {connect} from "react-redux";
 import Axios from "axios";
 
@@ -51,7 +52,11 @@ class ProductDetails extends Component {
         const comm  = {_id: _id, comment: this.state.commentNew}
         Axios.post('http://localhost:5000/additem/pushComment/',comm)
             .then(res => console.log(res.data))
-            .catch(err => console.log(err))
+
+
+        this.setState({
+            commentNew:'',
+        })
     }
 
     onStarClick(nextValue) {
@@ -93,18 +98,33 @@ class ProductDetails extends Component {
         const {_id, name, img, price, description, meterial} = this.props.location.item;
 
         const comments = [];
+        const ratings = [];
+        var totRate = 0;
+        var R = 0;
         {this.state.items.map(item => {
             if(item._id == _id) {
                 var x = item.comment.length;
                 for (var i = 0; i < x; i++) {
                     comments.push(item.comment[i]);
                 }
+                R = item.rating.length;
+                for (var y = 0; y < R;y++) {
+                    ratings.push(item.rating[y]);
+                    totRate = totRate+ item.rating[y];
+                }
             }
         })}
 
+        console.log(totRate,R);
+        var averageRate = 0;
+
+        if(R>0)
+            averageRate = totRate/R;
+
+
         return (
             <div>
-                <NavBar2 />
+                <LoginNav />
                 <div className="container py-5">
 
                     <div className="row">
@@ -135,6 +155,7 @@ class ProductDetails extends Component {
                                         {description}
                                     </p>
                                     <div>
+                                        <p>Current Ratings: <span style={{color:"red"}} >{averageRate}</span></p>
                                         <h5>Ratings: {rating}</h5>
                                         <StarRatingComponent
                                             name="rate1"
@@ -163,6 +184,7 @@ class ProductDetails extends Component {
                                             </div>
                                         </form>
                                         <form>
+
                                             <div className="border col-auto mx-auto col-auto mx-auto mt-auto  bg-transparent">
                                                 <h3 className='comment text-center' style={{color: "red"}}>Reviews.....</h3>
                                                 <div className='mx-4 mb-4'>

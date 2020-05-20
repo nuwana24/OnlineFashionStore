@@ -3,7 +3,6 @@ import React, {Component} from "react";
 import {Switch, Route} from 'react-router-dom';
 
 import NavBar from "./NavBar";
-import NavBar2 from "./Navbar2";
 import ProductList from "./ProductList";
 import Product from "./Product";
 import ProductDetails from "./ProductDetails";

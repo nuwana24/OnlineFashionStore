@@ -49,7 +49,8 @@ function App() {
           {/*Admin*/}
 
           <Route path="/AdLog" exact component={AdminAndManagerLogin} />
-          <Route path="/Admin" exact component={AdminMain}/>
+          <Route path="/Admin" component={AdminMain} />
+          {/*<Route path="/Admin" exact component={AdminMain}/>*/}
           <Route path="/CreateLogin" exact component={CreateLogin}/>
           <Route path="/ViewManager" exact component={ViewManager}/>
           <Route path="/EditManager/:id" exact component={EditStoreManager}/>

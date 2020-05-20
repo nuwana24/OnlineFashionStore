@@ -27,19 +27,24 @@ class AddCategories extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
+            CategoryDetails: [],
             category: '',
             subCategories: [{ name: "" }],
-            description : ''
+            description : '',
+            categoryValidation:''
         }
     }
 
     handleSubCategoryNameChange = idx => evt => {
         const newSubCategories = this.state.subCategories.map((subcategory, sidx) => {
-            if (idx !== sidx) return subcategory;
+            if (idx !== sidx)
+                return subcategory;
             return { ...subcategory, name: evt.target.value };
         });
 
         this.setState({ subCategories: newSubCategories });
+
+
     };
 
     handleAddSubCategory = () => {
@@ -71,28 +76,61 @@ class AddCategories extends Component {
             description: e.target.value
         })
     }
+    componentDidMount() {
+        axios.get('http://localhost:5000/category/')
+            .then(res => {
+                this.setState({
+                    CategoryDetails: res.data,
+                })
+            });
+    }
+
+    handleValidation(){
+        let valid = true;
+        if(this.state.category !== '') {
+            this.state.CategoryDetails.map(category => {
+                if (category.category === this.state.category) {
+                    valid = false;
+                    this.setState({
+                        categoryValidation: "This Category already exists",
+
+                    })
+
+                }
+            })
+        }
+        return valid;
+    }
     onSubmit(e) {
         e.preventDefault();
 
-        const categories = {
-            category: this.state.category,
-            subCategories: this.state.subCategories,
-            description: this.state.description
+            const categories = {
+                category: this.state.category,
+                subCategories: this.state.subCategories,
+                description: this.state.description
+            }
+
+            // console.log(categories.subCategories);
+        if(this.handleValidation()) {
+            console.log(categories);
+            // alert(`${category} added with ${subCategories.length} Sub Categories`);
+
+            axios.post('http://localhost:5000/category/add', categories)
+                .then(res => console.log(res.data));
+
+            this.setState({
+                category: '',
+                description: '',
+                categoryValidation:'',
+                subCategories: [{ name: "" }]
+
+            })
+            alert('Category added');
+            // window.location = '/ViewCategory';
         }
-
-        // console.log(categories.subCategories);
-
-        console.log(categories);
-        // alert(`${category} added with ${subCategories.length} Sub Categories`);
-
-        axios.post('http://localhost:5000/category/add', categories)
-            .then(res => console.log(res.data));
-
-        this.setState({
-            category: '',
-            description:''
-        })
-        window.location = '/ViewCategory';
+        else{
+            alert('Category not added!');
+        }
 
     }
 
@@ -120,6 +158,7 @@ class AddCategories extends Component {
                                 value={this.state.category}
                                 onChange={this.onChangeCategory}
                         />
+                        <p className='text-danger small'>{this.state.categoryValidation}</p>
                         </div>
                     <div className="form-group ml-5 mr-5">
 

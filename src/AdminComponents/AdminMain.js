@@ -26,6 +26,8 @@ class AdminMain extends Component{
             ItemCount:0,
             TotalItemCost:0,
             items:[],
+            orders:[],
+            loading:true
 
 
         }
@@ -33,16 +35,15 @@ class AdminMain extends Component{
 
 
     componentDidMount() {
-        this.setState({
-            date: new Date()
-        })
+
 
         axios.get('http://localhost:5000/managers/')
             .then(response => {
                 this.setState({
                     ManagerCount : response.data.length,
+                    loading:false
                 })
-                console.log(response.data);
+
             })
             .catch((error) => {
                 console.log(error);
@@ -59,6 +60,16 @@ class AdminMain extends Component{
             .catch((error) => {
                 console.log(error);
             })
+        axios.get('http://localhost:8000/api/cart/getOrder')
+            .then(response => {
+                this.setState({
+                    orders:response.data.data,
+                })
+            })
+
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
 
@@ -67,12 +78,19 @@ class AdminMain extends Component{
       var Mcount = this.state.ManagerCount;
       var ItemCount = this.state.ItemCount;
       var totPrice = 0;
+      var totSales = 0;
 
       this.state.items.map(item =>
       {
           totPrice = totPrice + (item.price * item.quantity);
       })
 
+        this.state.orders.map(order =>{
+            order.orders.map(orderD => {
+                totSales = totSales + (parseInt(orderD.price)* orderD.quantity);
+            })
+
+        })
 
 
         if (this.props.session.userId !== null) {
@@ -80,21 +98,21 @@ class AdminMain extends Component{
                 <div id="page-container">
                     <header className="Admin">
                         <NavBar/>
-
+                        <center>
                         {/*Body-Main*/}
                         <Jumbotron fluid>
                             <Container>
-                                <center>
-                                    <h1>Hi {this.props.session.username}!, WELCOME TO THE ADMIN PAGE</h1>
 
-                                </center>
+                                    <h1>Hello {this.props.session.username}!, WELCOME TO THE ADMIN PAGE</h1>
+
+
                             </Container>
                         </Jumbotron>
 
                         <center>
-                            <div style={{display: "inline-block",}}>
+                            <div style={{display: "inline-block"}} className='ml-3'>
 
-                                <Card style={{width: '20rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5" bg='warning'>
+                                <Card style={{width: '20rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5" bg='warning' text='light'>
 
                                     <Card.Body>
                                         <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}} >{Mcount}</Card.Title>
@@ -115,6 +133,13 @@ class AdminMain extends Component{
                                         <Card.Text >Total value of the products available</Card.Text>
                                     </Card.Body>
                                 </Card>
+                                <Card style={{width: '20rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5" bg='primary' text='light'>
+
+                                    <Card.Body>
+                                        <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}}>Rs.{totSales}</Card.Title>
+                                        <Card.Text >Sales upto date</Card.Text>
+                                    </Card.Body>
+                                </Card>
 
 
 
@@ -122,7 +147,9 @@ class AdminMain extends Component{
                         </center>
 
 
-                        <br/> <br/></header>
+                        <br/> <br/>
+                        </center>
+                    </header>
                 </div>
 
             )

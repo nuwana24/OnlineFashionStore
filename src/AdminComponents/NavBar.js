@@ -1,14 +1,25 @@
-
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Form} from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import narbarCss from "../UserComponents/UserCss/navbarCss.css";
 import logo from "../Images/logo.jpg";
+import {login} from "../UserComponents/actions/session";
+import {logout} from "../UserComponents/actions/session";
+import {connect} from "react-redux";
 
 
-export default class NavBar extends Component{
-    render() {
+const mapStateToProps = ({session}) => ({
+     session
+});
+
+const mapDispatchToProps = dispatch => ({
+    logout :()  => dispatch(logout())
+});
+
+
+const NavBar  = ({session, logout}) =>{
+
 
 
         return(
@@ -52,7 +63,7 @@ export default class NavBar extends Component{
                         </Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link><Link className=" nav-link mr-sm-2" to="/AdLog" >
+                        <Nav.Link ><Link className=" nav-link mr-sm-2"  onClick={logout}>
                             <i className="fas fa-user-circle"></i> &nbsp;
                             Logout
                         </Link>
@@ -69,4 +80,8 @@ export default class NavBar extends Component{
 
         );
     }
-}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NavBar);

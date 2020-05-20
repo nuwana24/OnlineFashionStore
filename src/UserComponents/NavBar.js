@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import narbarCss from "../UserComponents/UserCss/navbarCss.css";
 import logo from "../Images/logo.jpg";
 import PropTypes from "prop-types";
-import NavBar2 from "./Navbar2";
 import axios from "axios";
 
 
@@ -37,7 +36,6 @@ class NavBar extends Component{
 
         let links = this.state.itemList.map((link, index) => {
             return (
-                // <li className="menu__list-item"><a className="menu__link"  onClick={() => this.props.onClickChanger(link.category)}>{link.category}</a></li>
                 <Nav.Link> <Link className=" nav-link "  onClick={()=>this.props.onClickChanger(link.category)}>{link.category}</Link></Nav.Link>
 
 

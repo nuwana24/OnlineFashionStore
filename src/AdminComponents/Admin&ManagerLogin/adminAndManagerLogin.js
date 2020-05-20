@@ -19,15 +19,10 @@ const mapDispatchToProps = dispatch => ({
     login: user => dispatch(login(user))
 });
 
-// const style = {
-//     margin: 15,
-// };
 
 const AdminLogin = ({session, login, ...props}) => {
 
-   let logged = false;
-    let incorrectLogin='';
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const user = {
@@ -35,26 +30,22 @@ const AdminLogin = ({session, login, ...props}) => {
             password: e.target[1].value
         };
 
+        let loginToken = await login(user);
+        // console.log(loginToken.user.username);
 
-        login(user);
-
-
-
-
-
-             if (session.username === null) {
-               alert('Re-submit or Enter username and password again');
-            }
-             else if (session.username === 'Admin') {
-                props.history.push('/Admin');
-            }
-             else if (session.username.indexOf('Store') >= 0) {
-                 props.history.push('/Manager');
-             }
-
-
+        if (loginToken.user.username == 'Admin')
+            props.history.push('/Admin');
+        else if (loginToken.user.username.indexOf('Store') >= 0)
+            props.history.push('/Manager');
+        else{
+            alert('Invalid Credentials please try again');
+        }
 
     }
+
+
+
+
     return (
         <div align='center'>
             <div id="page-container">

@@ -150,4 +150,19 @@ router.post('/checkout', (req, res) => {
 
 });
 
+router.get('/getOrder', (req, res,next) => {
+    Order.find({}, (err, result) => {
+        if (err) return next(err);
+
+        let data = {
+            status: 'success',
+            code: 200,
+            data : result
+        };
+
+        res.json(data);
+    })
+
+});
+
 module.exports = router;

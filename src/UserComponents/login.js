@@ -4,7 +4,6 @@ import {Card, CardTitle, CardSubtitle, CardBody} from "reactstrap";
 import {Link, Redirect} from 'react-router-dom';
 import {login } from './actions/session';
 import '../style.css';
-import NavBar2 from "./Navbar2";
 import LoginNav from "../AdminComponents/LoginNav";
 
 const mapStateToProps = ({errors, session}) => ({
