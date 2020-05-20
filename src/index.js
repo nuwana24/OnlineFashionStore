@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {ProductProvider} from "./context";
 
-import configureStore from './UserComponents/store/store';
+import configureStore from '../src/FrontEnd/UserComponents/store/store';
 import { Provider } from 'react-redux';
 
 let preloadedState = {};
@@ -14,12 +14,12 @@ const store = configureStore(preloadedState);
 
 ReactDOM.render(
     // <ProductProvider>
-            <Router>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </Router>, document.getElementById('root'));
-    // </ProductProvider>
+    <Router>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </Router>, document.getElementById('root'));
+// </ProductProvider>
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 

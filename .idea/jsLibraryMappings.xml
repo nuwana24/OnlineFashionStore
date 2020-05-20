@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$" libraries="{OnlineFashionStoreF/node_modules}" />
+    <file url="file://$PROJECT_DIR$/src/Backend" libraries="{OnlineFashionStoreF/src/Backend/node_modules}" />
+    <file url="PROJECT" libraries="{@types/mongoose, OnlineFashionStoreF/node_modules, OnlineFashionStoreF/src/Backend/node_modules}" />
+    <includedPredefinedLibrary name="HTTP Response Handler" />
+  </component>
+</project>
