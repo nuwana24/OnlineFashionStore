@@ -38,7 +38,7 @@
   },
   "scripts": {
     "backend": "cd src/Backend && npm run dev",
-    "frontend": "react-scripts start",
+    "frontend": "PORT=5000 react-scripts start",
     "start": "concurrently \"npm run frontend\" \"npm run backend\" ",
     "build": "react-scripts build",
     "test": "react-scripts test",
