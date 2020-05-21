@@ -11,6 +11,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
+    "concurrently": "^5.2.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
@@ -61,7 +62,6 @@
   },
   "devDependencies": {
     "bcrypt": "^4.0.1",
-    "concurrently": "^5.2.0",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.2",
     "prop-types": "^15.7.2",
