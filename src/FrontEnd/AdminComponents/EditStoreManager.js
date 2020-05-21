@@ -52,7 +52,7 @@ const mapStateToProps = ({ session}) => ({
 
 
      componentDidMount() {
-         axios.get('http://localhost:5000/managers/' + this.props.match.params.id)
+         axios.get('http://localhost:8000/managers/' + this.props.match.params.id)
              .then(response => {
                  this.setState({
                      firstName: response.data.firstName,
@@ -71,7 +71,7 @@ const mapStateToProps = ({ session}) => ({
              .catch(function (error) {
                  console.log(error);
              })
-         axios.get('http://localhost:5000/managers/')
+         axios.get('http://localhost:8000/managers/')
              .then(response => {
                  if (response.data.length > 0) {
                      this.setState({
@@ -159,12 +159,12 @@ const mapStateToProps = ({ session}) => ({
          }
 
          console.log(manager)
-         axios.post('http://localhost:5000/managers/update/' + this.props.match.params.id, manager)
+         axios.post('http://localhost:8000/managers/update/' + this.props.match.params.id, manager)
              .then(res => console.log(res.data));
 
          this.props.history.push({
              pathname: '/ViewManager',
-             details: axios.get('http://localhost:5000/managers/')
+             details: axios.get('http://localhost:8000/managers/')
                  .then(response => {
                      if(response.data.length > 0){
                          this.setState({

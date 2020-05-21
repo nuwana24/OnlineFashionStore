@@ -108,7 +108,7 @@ class addItem extends Component {
 
 
     componentDidMount() {
-        axios.get('http://localhost:5000/additem/' +this.props.match.params.id)
+        axios.get('http://localhost:8000/additem/' +this.props.match.params.id)
             .then(response => {
                 this.setState({
                     file :response.data.filename,
@@ -127,7 +127,7 @@ class addItem extends Component {
             .catch(function (error) {
                 console.log(error);
             })
-        axios.get('http://localhost:5000/additem/')
+        axios.get('http://localhost:8000/additem/')
             .then(response => {
                 if(response.data.length > 0){
                     this.setState({
@@ -136,7 +136,7 @@ class addItem extends Component {
                 }
             })
 
-        axios.get('http://localhost:5000/category/')
+        axios.get('http://localhost:8000/category/')
             .then(response => {
                 this.setState({
                     categories: response.data
@@ -147,7 +147,7 @@ class addItem extends Component {
             .catch((error) => {
                 console.log(error);
             })
-        axios.get('http://localhost:5000/category/find')
+        axios.get('http://localhost:8000/category/find')
             .then(res => console.log(res.data))
     }
     onSubmit = (e) => {
@@ -173,14 +173,14 @@ class addItem extends Component {
         // axios.post('http://localhost:5000/additem/add', additem)
         //     .then(res => console.log(res.data))
         //     .catch(err => console.log(err))
-        axios.post('http://localhost:5000/additem/update/'+this.props.match.params.id,item)
+        axios.post('http://localhost:8000/additem/update/'+this.props.match.params.id,item)
             .then(res => console.log(res.data))
             .catch(err => console.log(err))
             alert('Item Updated')
 
         this.props.history.push({
             pathname: '/ItemList',
-            details: axios.get('http://localhost:5000/additem/')
+            details: axios.get('http://localhost:8000/additem/')
                 .then(response => {
                     if(response.data.length > 0){
                         this.setState({

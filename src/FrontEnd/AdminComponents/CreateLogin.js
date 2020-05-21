@@ -129,7 +129,7 @@ const mapStateToProps = ({ session}) => ({
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/managers/')
+        axios.get('http://localhost:8000/managers/')
             .then(response => {
                 this.setState({
                     addedManagers: response.data

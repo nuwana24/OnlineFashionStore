@@ -127,7 +127,7 @@ class addItem extends Component {
 
         console.log(additem);
 
-        axios.post('http://localhost:5000/additem/add', additem)
+        axios.post('http://localhost:8000/additem/add', additem)
             .then(res => console.log(res.data))
             .catch(err => console.log(err))
             alert('Item Added')
@@ -174,7 +174,7 @@ class addItem extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/category/')
+        axios.get('http://localhost:8000/category/')
             .then(response => {
                 this.setState({
                     categories: response.data
@@ -185,7 +185,7 @@ class addItem extends Component {
             .catch((error) => {
                 console.log(error);
             })
-        axios.get('http://localhost:5000/category/find')
+        axios.get('http://localhost:8000/category/find')
             .then(res => console.log(res.data))
 
     }

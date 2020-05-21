@@ -25,7 +25,7 @@ class WishListItemsList extends Component{
     componentDidMount() {
         if(this.props.session.userId !== null){
 
-            Axios.get('http://localhost:5000/api/WishList/getWishList', {params:{userId: this.props.session.userId}})
+            Axios.get('http://localhost:8000/api/WishList/getWishList', {params:{userId: this.props.session.userId}})
                 .then(res => {
                     const list = res.data;
 
@@ -43,7 +43,7 @@ class WishListItemsList extends Component{
     }
 
     removeWishList = (productId) => {
-        Axios.get('http://localhost:5000/api/WishList/rmoveWishList', {params:{userId: this.props.session.userId, productId: productId}})
+        Axios.get('http://localhost:8000/api/WishList/rmoveWishList', {params:{userId: this.props.session.userId, productId: productId}})
             .then(res => {
                 const list = res.data;
 
@@ -60,7 +60,7 @@ class WishListItemsList extends Component{
     };
 
     addToCart = (item) => {
-        Axios.post('http://localhost:5000/api/cart/addToCart', item);
+        Axios.post('http://localhost:8000/api/cart/addToCart', item);
     };
 
 

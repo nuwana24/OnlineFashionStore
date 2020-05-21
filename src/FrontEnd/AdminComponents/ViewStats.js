@@ -20,7 +20,7 @@ export class ViewStats extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:5000/additem/`)
+        axios.get(`http://localhost:8000/additem/`)
 
             .then(res => {
 

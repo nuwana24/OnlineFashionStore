@@ -57,7 +57,7 @@ class ItemList extends Component {
 
     }
     componentDidMount() {
-        axios.get('http://localhost:5000/additem/')
+        axios.get('http://localhost:8000/additem/')
             .then(response => {
                 this.setState({
                     itemlist: response.data
@@ -70,7 +70,7 @@ class ItemList extends Component {
 
     }
     deleteItem(id){
-        axios.delete('http://localhost:5000/additem/'+id)
+        axios.delete('http://localhost:8000/additem/'+id)
             .then(res => console.log(res.data));
 
         this.setState({

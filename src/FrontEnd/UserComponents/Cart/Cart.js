@@ -38,7 +38,7 @@ class Cart extends Component {
     }
 
     getItems = () => {
-        Axios.get('http://localhost:5000/api/cart/getCart', {params:{userId: this.props.session.userId}})
+        Axios.get('http://localhost:8000/api/cart/getCart', {params:{userId: this.props.session.userId}})
             .then(res => {
                 const cart = res.data;
 
@@ -82,7 +82,7 @@ class Cart extends Component {
         let price = this.state.Cart.find(item => item.id === productId ).price;
         let discount = this.state.Cart.find(item => item.id === productId ).discount;
 
-        Axios.post('http://localhost:5000/api/cart/increment', item)
+        Axios.post('http://localhost:8000/api/cart/increment', item)
             .then(res=>{
                 if(res.status === 200){
                     console.log('Incremented');
@@ -113,7 +113,7 @@ class Cart extends Component {
             let price = this.state.Cart.find(item => item.id === productId ).price;
             let discount = this.state.Cart.find(item => item.id === productId ).discount;
 
-            Axios.post('http://localhost:5000/api/cart/decrement', item)
+            Axios.post('http://localhost:8000/api/cart/decrement', item)
                 .then(res=>{
                     if(res.status === 200){
                         console.log('Decremented');
@@ -139,7 +139,7 @@ class Cart extends Component {
 
     removeItem = (productId) => {
 
-        Axios.get('http://localhost:5000/api/cart/removeItem', {params:{userId: this.props.session.userId, productId: productId}});
+        Axios.get('http://localhost:8000/api/cart/removeItem', {params:{userId: this.props.session.userId, productId: productId}});
 
         this.getItems()
 
@@ -153,7 +153,7 @@ class Cart extends Component {
             buttons: [
                 {
                     label: 'Yes',
-                    onClick: () => {Axios.get('http://localhost:5000/api/cart/clearCart', {params:{userId: this.props.session.userId}});
+                    onClick: () => {Axios.get('http://localhost:8000/api/cart/clearCart', {params:{userId: this.props.session.userId}});
                                     this.setState({
                                         redirect : true
                                     })}
@@ -178,7 +178,7 @@ class Cart extends Component {
             buttons: [
                 {
                     label: 'Yes',
-                    onClick: () => {Axios.post('http://localhost:5000/api/cart/checkout', user);
+                    onClick: () => {Axios.post('http://localhost:8000/api/cart/checkout', user);
                         this.setState({
                             redirect : true
                         })}

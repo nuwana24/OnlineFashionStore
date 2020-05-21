@@ -37,7 +37,7 @@ class AdminMain extends Component{
     componentDidMount() {
 
 
-        axios.get('http://localhost:5000/managers/')
+        axios.get('http://localhost:8000/managers/')
             .then(response => {
                 this.setState({
                     ManagerCount : response.data.length,
@@ -49,7 +49,7 @@ class AdminMain extends Component{
                 console.log(error);
             })
 
-        axios.get('http://localhost:5000/additem/')
+        axios.get('http://localhost:8000/additem/')
             .then(response => {
                 this.setState({
                     items:response.data,
@@ -60,7 +60,7 @@ class AdminMain extends Component{
             .catch((error) => {
                 console.log(error);
             })
-        axios.get('http://localhost:5000/api/cart/getOrder')
+        axios.get('http://localhost:8000/api/cart/getOrder')
             .then(response => {
                 this.setState({
                     orders:response.data.data,

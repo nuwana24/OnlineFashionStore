@@ -48,7 +48,7 @@ class discountPopUp extends Component{
         })
     }
     componentDidMount() {
-        axios.get('http://localhost:5000/additem/' +this.props.match.params.id)
+        axios.get('http://localhost:8000/additem/' +this.props.match.params.id)
             .then(response => {
                 this.setState({
                     category:response.data.category,
@@ -66,7 +66,7 @@ class discountPopUp extends Component{
             .catch(function (error) {
                 console.log(error);
             })
-        axios.get('http://localhost:5000/additem/')
+        axios.get('http://localhost:8000/additem/')
             .then(response => {
                 if(response.data.length > 0){
                     this.setState({
@@ -96,7 +96,7 @@ class discountPopUp extends Component{
         // axios.post('http://localhost:5000/additem/add', additem)
         //     .then(res => console.log(res.data))
         //     .catch(err => console.log(err))
-        axios.post('http://localhost:5000/additem/update/'+this.props.match.params.id,item)
+        axios.post('http://localhost:8000/additem/update/'+this.props.match.params.id,item)
             .then(res => console.log(res.data))
             .catch(err => console.log(err))
              alert('Discount Added')
@@ -104,7 +104,7 @@ class discountPopUp extends Component{
 
         this.props.history.push({
             pathname: '/addDiscount',
-            details: axios.get('http://localhost:5000/additem/')
+            details: axios.get('http://localhost:8000/additem/')
                 .then(response => {
                     if(response.data.length > 0){
                         this.setState({

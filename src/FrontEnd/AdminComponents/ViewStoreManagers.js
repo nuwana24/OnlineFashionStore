@@ -43,7 +43,7 @@ const Manager = props => (
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/managers/')
+        axios.get('http://localhost:8000/managers/')
             .then(response => {
                 this.setState({
                     managers: response.data,
@@ -57,7 +57,7 @@ const Manager = props => (
         }
 
     RemoveManager(id){
-        axios.delete('http://localhost:5000/managers/'+id)
+        axios.delete('http://localhost:8000/managers/'+id)
             .then(res => console.log(res.data));
 
         this.setState({

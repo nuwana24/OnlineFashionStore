@@ -34,7 +34,7 @@ const mapStateToProps = ({ session}) => ({
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/category/' +this.props.match.params.id)
+        axios.get('http://localhost:8000/category/' +this.props.match.params.id)
             .then(response => {
                 this.setState({
                     category:response.data.category,
@@ -48,7 +48,7 @@ const mapStateToProps = ({ session}) => ({
                 console.log(error);
             })
 
-        axios.get('http://localhost:5000/category/')
+        axios.get('http://localhost:8000/category/')
             .then(response => {
                 if(response.data.length > 0){
                     this.setState({
@@ -110,7 +110,7 @@ const mapStateToProps = ({ session}) => ({
         console.log(categories);
         // alert(`${category} added with ${subCategories.length} Sub Categories`);
 
-        axios.post('http://localhost:5000/category/update/'+this.props.match.params.id, categories)
+        axios.post('http://localhost:8000/category/update/'+this.props.match.params.id, categories)
             .then(res => console.log(res.data));
 
         this.setState({

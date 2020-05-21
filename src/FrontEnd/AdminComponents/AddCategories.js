@@ -77,7 +77,7 @@ class AddCategories extends Component {
         })
     }
     componentDidMount() {
-        axios.get('http://localhost:5000/category/')
+        axios.get('http://localhost:8000/category/')
             .then(res => {
                 this.setState({
                     CategoryDetails: res.data,
@@ -115,7 +115,7 @@ class AddCategories extends Component {
             console.log(categories);
             // alert(`${category} added with ${subCategories.length} Sub Categories`);
 
-            axios.post('http://localhost:5000/category/add', categories)
+            axios.post('http://localhost:8000/category/add', categories)
                 .then(res => console.log(res.data));
 
             this.setState({

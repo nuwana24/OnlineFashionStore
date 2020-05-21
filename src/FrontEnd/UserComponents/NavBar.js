@@ -18,7 +18,7 @@ class NavBar extends Component{
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/category')
+        axios.get('http://localhost:8000/category')
             .then(response => {
                 this.setState({
                     itemList: response.data

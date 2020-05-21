@@ -22,7 +22,7 @@ class ProductList extends Component {
     };
 
     componentDidMount() {
-        Axios.get('http://localhost:5000/api/products/getProducts')
+        Axios.get('http://localhost:8000/api/products/getProducts')
             .then(res => {
                 const products = res.data;
 
@@ -40,13 +40,13 @@ class ProductList extends Component {
     }
 
     addToCart = (item) => {
-        Axios.post('http://localhost:5000/api/cart/addToCart', item);
+        Axios.post('http://localhost:8000/api/cart/addToCart', item);
 
         console.log('sent')
     };
 
     addToWishList = (item) => {
-        Axios.post('http://localhost:5000/api/wishlist/addToWishList', item);
+        Axios.post('http://localhost:8000/api/wishlist/addToWishList', item);
 
         console.log('sent')
     };

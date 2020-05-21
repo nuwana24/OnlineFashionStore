@@ -38,7 +38,7 @@ const Category = props => (
      }
 
      componentDidMount() {
-         axios.get('http://localhost:5000/category/')
+         axios.get('http://localhost:8000/category/')
              .then(response => {
                  this.setState({
                      categories: response.data,
@@ -56,7 +56,7 @@ const Category = props => (
      }
 
      RemoveCategory(id) {
-         axios.delete('http://localhost:5000/category/' + id)
+         axios.delete('http://localhost:8000/category/' + id)
              .then(res => console.log(res.data));
 
          this.setState({

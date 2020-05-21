@@ -50,7 +50,7 @@ class ProductDetails extends Component {
 
         alert('Your comment is submitted');
         const comm  = {_id: _id, comment: this.state.commentNew}
-        Axios.post('http://localhost:5000/additem/pushComment/',comm)
+        Axios.post('http://localhost:8000/additem/pushComment/',comm)
             .then(res => console.log(res.data))
 
 
@@ -67,19 +67,19 @@ class ProductDetails extends Component {
         alert('Thank You for your rating');
 
         const rate = {_id: _id, rating:nextValue};
-        Axios.post('http://localhost:5000/additem/pushRates/',rate)
+        Axios.post('http://localhost:8000/additem/pushRates/',rate)
             .then(res => console.log(res.data))
             .catch(err => console.log(err))
     }
 
     addToWishList = (item) => {
-        Axios.post('http://localhost:5000/api/WishList/addToWishList', item);
+        Axios.post('http://localhost:8000/api/WishList/addToWishList', item);
 
         console.log('Added to wishlist');
     };
 
     componentDidMount() {
-        Axios.get('http://localhost:5000/additem/')
+        Axios.get('http://localhost:8000/additem/')
             .then(response => {
                 this.setState({
                    items: response.data
