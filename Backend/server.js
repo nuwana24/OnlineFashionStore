@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 require('dotenv').config();
+
 (async () => {
 
     const app = express();
@@ -68,29 +69,25 @@ require('dotenv').config();
     const managersRouter = require('../Backend/AdminBackend/routes/managers');
     const addItemRouter = require('../Backend/AdminBackend/routes/additem');
 
-    app.use('/category', categoriesRouter);
-    app.use('/managers', managersRouter);
-    app.use('/additem', addItemRouter);
-
     const apiRouter = express.Router();
     app.use('/api', apiRouter);
+    //user
     app.use('/api/products', require('../Backend/UserBackend/src/routes/products'));
     app.use('/api/cart', require('../Backend/UserBackend/src/routes/cart'));
     app.use('/api/WishList', require('../Backend/UserBackend/src/routes/wishlist'));
+
+    //Admin
+    app.use('/category', categoriesRouter);
+    app.use('/managers', managersRouter);
+
+    //Manager
+    app.use('/additem', addItemRouter);
+
+    //sessions
     apiRouter.use('/users', userRoutes);
     apiRouter.use('/session', sessionRouter);
-    //
-    // if (process.env.NODE_ENV === 'production') {
-    //     // Exprees will serve up production assets
-    //     app.use(express.static('front-end/build'));
-    //
-    //     // Express serve up index.html file if it doesn't recognize route
-    //     const path = require('path');
-    //     app.get('*', (req, res) => {
-    //         res.sendFile(path.resolve(__dirname, 'front-end', 'build', 'index.html'));
-    //     });
-    // }
 
+    //Setting file path
     if (process.env.NODE_ENV === 'production') {
         app.use(express.static(__dirname + "/../FrontEnd/build"))
     }
@@ -101,6 +98,8 @@ require('dotenv').config();
         )
     })
 
+
+    //listening to port
     app.listen(port, () => {
         console.log(`Server is running on port:  ${port}`);
     })

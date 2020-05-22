@@ -37,7 +37,6 @@ export const signup = user => async dispatch => {
 };
 
 export const logout = () => async dispatch => {
-    console.log('AAWA');
     const response = await apiUtil.logout();
     console.log(response);
     const data = await response.json();
