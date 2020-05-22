@@ -33,13 +33,16 @@ const AdminLogin = ({session, login, ...props}) => {
         let loginToken = await login(user);
         console.log(loginToken);
 
-        if (loginToken.user.username == 'Admin')
-            props.history.push('/Admin');
-        else if (loginToken.user.username.indexOf('Store') >= 0)
-            props.history.push('/Manager');
-        else{
+        if (loginToken.type === 'RECEIVE_CURRENT_USER') {
+            if (loginToken.user.username === 'Admin')
+                props.history.push('/Admin');
+            else if (loginToken.user.username.indexOf('Store') >= 0)
+                props.history.push('/Manager');
+            else
+                alert('Invalid Credentials please try again');
+        } else
             alert('Invalid Credentials please try again');
-        }
+
 
     }
 
