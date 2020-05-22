@@ -7,7 +7,6 @@ import ProductList from "./ProductList";
 import Product from "./Product";
 import ProductDetails from "./ProductDetails";
 import Cart  from "./Cart/Cart";
-import Modal from "./Modal";
 // import store from './LoginHandler/store';
 // import { isAuth } from './LoginHandler/actions/authActions'
 // import PropTypes from "prop-types";

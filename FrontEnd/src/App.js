@@ -23,7 +23,6 @@ import CartMain from "./UserComponents/Cart/CartMain";
 import WishListMain from "./UserComponents/WishList/WishListMain";
 import WishListItemsList from "./UserComponents/WishList/WishListItemsList";
 
-import Modal from "./UserComponents/Modal";
 import login from "./UserComponents/login";
 import register from "./UserComponents/register";
 
@@ -65,7 +64,6 @@ function App() {
           <Route path="/Cart" component={CartMain}/>
           <Route path="/WishListMain"component={WishListMain} />
           <Route path="/WishListItemList" component={WishListItemsList}/>
-          <Route path="/Modal" component={Modal}/>
           <Route path="/login" component={login}/>
           <Route path="/register" component={register}/>
 
