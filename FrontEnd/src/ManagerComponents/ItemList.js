@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 
 
 
+
 const mapStateToProps = ({session}) => ({
     session
 })
@@ -18,7 +19,7 @@ const Item = props => (
         {/*<div className="image-container" ><img src={/uploads/}{...props.item.img} alt="icon" width="300" height="400" /> </div>*/}
         {/*<td>{props.item.img}</td>*/}
         {/*<img src= {"/uploads/"}{...props.item.img} width="150" height="200"/>*/}
-        <img style={{width:"150px", height:"200px"}} src={(`../../../Backend/public/uploads/${props.item.img}`) }/>
+        <img style={{width:"150px", height:"200px"}} src={(`/uploads/${props.item.img}`) }/>
         <td>{props.item.name}</td>
         <td>{props.item.category}</td>
         <td>{props.item.description}</td>
