@@ -2,6 +2,7 @@ import {userRoutes, sessionRouter} from '../Backend/UserBackend/src/routes/index
 import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME} from "./config";
 import session from 'express-session';
 import connectStore from 'connect-mongo';
+const request = require('request');
 
 const express = require('express');
 const cors = require('cors');
@@ -15,6 +16,22 @@ require('dotenv').config();
 (async () => {
 
     const app = express();
+    app.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        next();
+    });
+    app.get('/uploads/', (req, res) => {
+        request(
+            { url: 'https://github.com/nuwana24/OnlineFashionStore/tree/master/FrontEnd/public/uploads' },
+            (error, response, body) => {
+                if (error || response.statusCode !== 200) {
+                    return res.status(500).json({ type: 'error', message: err.message });
+                }
+
+                res.json(JSON.parse(body));
+            }
+        )
+    });
     const port = process.env.PORT || 8000;
 
 
