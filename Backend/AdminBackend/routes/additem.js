@@ -1,12 +1,17 @@
+const bodyParser = require('body-parser');
+
 const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const mongoose = require('mongoose');
 const AddItem = require('../Models/addItem.model');
 const multer = require('multer');
 const path = require('path');
 let Category = require('../Models/Category.model');
-// import y from './../../../public/uploads';
 
+const app = express();
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 router.get('/', (req, res)=>{
     AddItem.find()
@@ -16,7 +21,7 @@ router.get('/', (req, res)=>{
 const storage = multer.diskStorage({
     // destination: '../../../public/uploads/',
     destination: function(req, file, cb) {
-        cb(null, '../../public/uploads/');
+        cb(null, '../FrontEnd/public/uploads');
     },
     filename: function(req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));

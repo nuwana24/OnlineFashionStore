@@ -23,7 +23,7 @@ require('dotenv').config();
     app.use(bodyParser.urlencoded({extended: true}))
     app.use(bodyParser.json());
 
-    app.use(express.static(path.join(__dirname, '...', 'public')))
+    // app.use(express.static(path.join(__dirname, '...', 'public')))
 
     const uri = process.env.ATLAS_URI;
     await mongoose.connect(uri, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true});

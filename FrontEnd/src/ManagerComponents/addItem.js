@@ -148,7 +148,17 @@ class addItem extends Component {
             meterial : '',
             discount: 0
         })
-        window.location ='/ItemList'
+        this.props.history.push({
+            pathname: '/ItemList',
+            details: axios.get('http://localhost:5000/additem/')
+                .then(response => {
+                    if(response.data.length > 0){
+                        this.setState({
+                            itemlist: response.data.map(additem => additem.name)
+                        })
+                    }
+                })
+        });
 
     }
     state =  {
