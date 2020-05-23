@@ -53,7 +53,7 @@ router.post('/add',(req, res, next) => {
             const meterial = req.body.meterial;
 
             const addItem = new AddItem({img, category, name, description, price, quantity, size, meterial});
-            res.header('Access-Control-Allow-Origin', '*');
+
             addItem.save()
                 .then(() => res.json('Item added!'))
                 .catch(err => res.status(400).json('Error: ' + err));
