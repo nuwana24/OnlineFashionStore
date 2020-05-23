@@ -19,7 +19,7 @@ const Item = props => (
         {/*<div className="image-container" ><img src={/uploads/}{...props.item.img} alt="icon" width="300" height="400" /> </div>*/}
         {/*<td>{props.item.img}</td>*/}
         {/*<img src= {"/uploads/"}{...props.item.img} width="150" height="200"/>*/}
-        <img style={{width:"150px", height:"200px"}} src={(`/uploads/${props.item.img}`) }/>
+        <img style={{width:"150px", height:"200px"}} src={props.item.image}/>
         <td>{props.item.name}</td>
         <td>{props.item.category}</td>
         <td>{props.item.description}</td>
@@ -29,7 +29,7 @@ const Item = props => (
         {/*<td>{props.item.sizes}</td>*/}
         <td>{props.item.meterial}</td>
         <td>
-            <Link to={"/editItem/"+props.item._id}><Button style={{marginTop: "-5%", marginLeft:"5%",marginBottom:"5%"}} type="button" className="btn btn-success">Edit</Button></Link>
+            <Link to={"/editItem/"+props.item._id}><Button style={{marginTop: "-5%", marginLeft:"5%",marginBottom:"5%"}} type="button" className="btn btn-success">Edit</Button></Link><br/>
             <button style={{marginTop: "5%"}} type="button" className="btn btn-danger" onClick={() => {props.deleteItem(props.item._id)}}>Delete</button>
         </td>
     </tr>
@@ -47,11 +47,50 @@ class ItemList extends Component {
         }
 
     }
+
+    arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+
     componentDidMount() {
+        var allItems =[];
         axios.get('/additem/')
             .then(response => {
+
+                var items = response.data;
+
+                console.log(items.length);
+                for(var x = 0; x < items.length ; x++){
+                    console.log('awa');
+                    var base64Flag = 'data:image/jpeg;base64,';
+                    var imageStr = this.arrayBufferToBase64(items[x].img.data.data);
+                    const item = {
+                        image: base64Flag+imageStr,
+                        name: items[x].name,
+                        category:items[x].category,
+                        description:items[x].description,
+                        price: items[x].price,
+                        quantity:items[x].quantity,
+                        size:items[x].size,
+                        meterial:items[x].meterial,
+                        comment:items[x].comment,
+                        rating:items[x].name,
+                        discount:items[x].discount,
+                    }
+
+
+                    allItems.push(item)
+                    console.log(item);
+                }
+
+
+
+
                 this.setState({
-                    itemlist: response.data
+                    itemlist: allItems
                 })
             })
 
@@ -76,6 +115,8 @@ class ItemList extends Component {
     }
 
     render() {
+
+        console.log(this.state.itemlist);
         if (this.props.session.username !== null) {
 
             return (

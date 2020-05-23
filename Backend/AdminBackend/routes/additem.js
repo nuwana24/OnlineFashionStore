@@ -3,18 +3,19 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const router = require('express').Router();
 const mongoose = require('mongoose');
-const AddItem = require('../Models/addItem.model');
+const {AddItem} = require('../Models/addItem.model');
 const multer = require('multer');
 const path = require('path');
 let Category = require('../Models/Category.model');
+const fs = require('fs');
 
 const app = express();
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-router.get('/', (req, res)=>{
-    AddItem.find()
+router.get('/', async (req, res)=>{
+   await AddItem.find()
         .then(itemlist => res.json(itemlist))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -38,28 +39,36 @@ const imageFilter = function(req, file, cb) {
     cb(null, true);
 };
 
-router.post('/add',(req, res, next) => {
-    let upload = multer({ storage: storage, fileFilter: imageFilter }).single('file');
-    upload(req, res , function (err) {
-        if (!err) {
-            console.log(req.file)
-            const img = req.file.filename;
-            const category = req.body.category;
-            const name = req.body.name;
-            const description = req.body.description;
-            const price = req.body.price;
-            const quantity = req.body.quantity;
-            const size = req.body.size;
-            const meterial = req.body.meterial;
+var upload = multer({ storage: storage, fileFilter: imageFilter }).single('file');
+router.post('/add',async (req, res, next) => {
+    try{
+        await upload(req,res,err =>{
+            if (err) return res.json({success: false, err})
+            console.log(req.file.path);
+            const item = new AddItem();
+            item.img.data = fs.readFileSync(req.file.path);
+            item.img.contentType = "image/png";
+            item.category = req.body.category;
+            item.name = req.body.name;
+            item.description = req.body.description;
+            item.price = req.body.price;
+            item.quantity = req.body.quantity;
+            item.size = req.body.size;
+            item.meterial = req.body.meterial;
 
-            const addItem = new AddItem({img, category, name, description, price, quantity, size, meterial});
+            console.log(item.img);
+            // const addItem = new AddItem({img, category, name, description, price, quantity, size, meterial});
+            item.save((err) =>{
+                if(err) return res.status(400).json('error : ' +err)
+                return res.status(200).json('success');
+            })
 
-            addItem.save()
-                .then(() => res.json('Item added!'))
-                .catch(err => res.status(400).json('Error: ' + err));
-        }
-    })
-})
+        })
+    }catch (e) {
+        console.log(e);
+    }
+
+});
 router.route('/:id').get((req, res) => {
     AddItem.findById(req.params.id)
         .then(itemlist => res.json(itemlist))

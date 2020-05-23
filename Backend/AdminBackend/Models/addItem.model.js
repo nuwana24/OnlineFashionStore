@@ -3,7 +3,10 @@ const comments = new mongoose.Schema({comment:String})
 
 const addItemSchema =  new mongoose.Schema({
 
-    img: String,
+    img:{
+        data:Buffer,
+        contentType: String
+    } ,
     category:String,
     name:String,
     description:String,
@@ -23,4 +26,4 @@ const addItemSchema =  new mongoose.Schema({
 });
 const AddItem= mongoose.model('AddItem',addItemSchema);
 
-module.exports = AddItem;
+module.exports = { AddItem };

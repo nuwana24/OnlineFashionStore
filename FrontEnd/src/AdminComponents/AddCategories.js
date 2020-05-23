@@ -143,7 +143,7 @@ class AddCategories extends Component {
                 <NavBar />
                 <section style={sectionstyle}>
                 <Container>
-                    <Row xs={1} md={2}>
+                    {/*<Row xs={1} md={2}>*/}
                         <Col className="bg-light " style={{minHeight: '40rem',minWidth:'40px'}}>
                             <Card  style={{minWidth:'40px',minHeight:'42rem',marginTop:'3.5rem'}}>
 
@@ -216,7 +216,7 @@ class AddCategories extends Component {
                         </Card>
 
                         </Col>
-                    </Row>
+                    {/*</Row>*/}
                 </Container>
             </section>
             </div>

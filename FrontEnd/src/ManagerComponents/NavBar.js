@@ -15,7 +15,7 @@ export default class NavBar extends Component{
 
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand >
-                    <Link to='/'>
+                    <Link >
                         <img src={logo} className="menu__logo navbar-brand"></img>
                     </Link>
                 </Navbar.Brand>

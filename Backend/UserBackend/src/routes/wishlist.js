@@ -20,7 +20,7 @@ router.post("/addToWishList", (req, res) => {
                         WishList: {
                             id : req.body.productId,
                             name : req.body.name,
-                            img : req.body.img,
+                            // img : req.body.img,
                             price : req.body.price,
                             description : req.body.description,
                             discount : req.body.discount,

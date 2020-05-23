@@ -28,34 +28,95 @@ class Cart extends Component {
         Cart: [],
         total : 0,
         discount: 0,
-        redirect : false
+        redirect : false,
+        images:[],
+        loading:true,
     };
 
+    arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
     componentDidMount() {
-        if(this.props.session.userId !== null){
-            this.getItems();
+
+
+        if(this.props.session.userId !== null && this.state.images !== null){
+            this.getImages();
+            // this.getItems();
+
         }
     }
 
     getItems = () => {
+
         Axios.get('/api/cart/getCart', {params:{userId: this.props.session.userId}})
             .then(res => {
                 const cart = res.data;
 
                 let tempProducts = [];
+                let image='';
+                if(this.state.loading != true){
                 cart.forEach(item => {
-                    const singleItem = {...item};
+                    // let image= this.state.images.find(products => products.id === item.id);
+                    this.state.images.map(prod =>{
+                        console.log(prod);
+                        console.log(prod.id,item.id);
+                        if(prod.id === item.id){
+                            image = prod.image
+                        }
+                    })
+                    const singleItem = {image,...item};
+                    // console.log(image);
                     tempProducts = [...tempProducts, singleItem];
+
+
                 });
+
+
+
 
                 this.setState({
                     Cart : tempProducts
                 });
 
                  this.updateStates();
-            })
+            }})
+
     };
 
+    getImages(){
+        var allItems =[];
+        Axios.get('/additem/')
+            .then(response => {
+                var items = response.data;
+                for(var x = 0; x < items.length ; x++){
+                    var base64Flag = 'data:image/jpeg;base64,';
+                    var imageStr = this.arrayBufferToBase64(items[x].img.data.data);
+                    const item = {
+                        image: base64Flag+imageStr,
+                        id:items[x]._id,
+                    }
+                   allItems.push(item);
+
+                }
+                this.setState({
+                    images:allItems,
+                    loading:false,
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            }).finally(() =>
+            {
+                this.getItems();
+            }
+
+        )
+
+
+    }
     updateStates = () => {
 
         let total = 0;
@@ -193,6 +254,9 @@ class Cart extends Component {
     render() {
         let total = this.state.total;
         let discount = this.state.discount;
+
+
+console.log(this.state.images);
 
         if (this.state.redirect){
             return (

@@ -17,7 +17,7 @@ class WishListItem extends Component {
                 userId: this.props.session.userId,
                 productId: id,
                 name: name,
-                img: img,
+                // img: img,
                 price: price,
                 qty: 1,
                 discount: discount
@@ -30,7 +30,7 @@ class WishListItem extends Component {
 
     render() {
 
-        const {id, name,img, price, description, material, discount } = this.props.WishListItem;
+        const {id, name,image, price, description, material, discount } = this.props.WishListItem;
 
         const removeItem = this.props.removeWishList;
 
@@ -39,11 +39,11 @@ class WishListItem extends Component {
                 <div className="cardView">
 
                     <div className="img-container p-5 " >
-                        <Link to={{pathname: 'ProductDetails', item:{id, name, img, price, description, material}}}>
-                            <img src={(`/uploads/${img}`)} alt = "product" className="card-img"/>
+                        <Link to={{pathname: 'ProductDetails', item:{id, name, image, price, description, material}}}>
+                            <img src={image} alt = "product" className="card-img"/>
                         </Link>
                         <div style={{display: 'flex', justifyContent: 'left', alignItems: 'center', height: '8vh'}}>
-                            <button style={{position: "absolute", right: 40}} onClick={ this.addToCartHandler(id, name, img, price, discount)}>
+                            <button style={{position: "absolute", right: 40}} onClick={ this.addToCartHandler(id, name, image, price, discount)}>
                                 <i className="fas fa-cart-plus"/>
                             </button>
                             <button style={{position: "absolute", right: 20}} onClick={() => {

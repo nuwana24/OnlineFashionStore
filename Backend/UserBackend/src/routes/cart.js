@@ -5,7 +5,7 @@ const router = require('express').Router();
 //adding item to the cart
 router.post("/addToCart", (req, res) => {
 
-    //console.log(req.body.userId);
+    console.log(req.body.userId);
 
     User.findOne({_id: req.body.userId}
     ,(err, userInfo) => {

@@ -43,7 +43,7 @@ class CartItem extends Component{
         return (
         <div className="row my-2 text-capitalize text-center">
             <div className="col-10 mx-auto col-lg-2">
-                <img src={(`/uploads/${this.props.item.img}`)} style={{width: '5rem', height: '5rem'}} className="img-fluid" alt="product "/>
+                <img src={this.props.item.image} style={{width: '5rem', height: '5rem'}} className="img-fluid" alt="product "/>
             </div>
             <div className="col-10 mx-auto col-lg-2">
                 <span className="d-lg-none">Product: </span>{this.props.item.name}

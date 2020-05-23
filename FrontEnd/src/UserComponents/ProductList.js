@@ -21,22 +21,80 @@ class ProductList extends Component {
         currentCat:'All Items'
     };
 
+    arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+
     componentDidMount() {
-        Axios.get('/api/products/getProducts')
-            .then(res => {
-                const products = res.data;
+        var allItems =[];
+        Axios.get('/additem/')
+            .then(response => {
 
-                let tempProducts = [];
-                products.data.forEach(item => {
-                    const singleItem = {...item};
-                    tempProducts = [...tempProducts, singleItem];
-                });
+                var items = response.data;
 
-                this.setState(() => {
-                    return {products: tempProducts};
-                });
+                console.log(items.length);
+                for(var x = 0; x < items.length ; x++){
+                    console.log('awa');
+                    var base64Flag = 'data:image/jpeg;base64,';
+                    var imageStr = this.arrayBufferToBase64(items[x].img.data.data);
+                    const item = {
+                        _id : items[x]._id,
+                        image: base64Flag+imageStr,
+                        name: items[x].name,
+                        category:items[x].category,
+                        description:items[x].description,
+                        price: items[x].price,
+                        quantity:items[x].quantity,
+                        size:items[x].size,
+                        meterial:items[x].meterial,
+                        comment:items[x].comment,
+                        rating:items[x].name,
+                        discount:items[x].discount,
+                    }
 
+
+                    allItems.push(item)
+                    console.log(item);
+                }
+
+
+
+
+                this.setState({
+                    products: allItems
+                })
             })
+
+            .catch((error) => {
+                console.log(error);
+            })
+
+        // Axios.get('/api/products/getProducts')
+        //     .then(res => {
+        //         const products = res.data;
+        //
+        //         var base64Flag = 'data:image/jpeg;base64,';
+        //         var imageStr = this.arrayBufferToBase64(res.data.image.data.data);
+        //         // this.setState({
+        //         //     products: res.data,
+        //         //     image:base64Flag+imageStr,
+        //         //
+        //         // })
+        //
+        //         let tempProducts = [];
+        //         products.data.forEach(item => {
+        //             const singleItem = {...item};
+        //             tempProducts = [...tempProducts, singleItem];
+        //         });
+        //
+        //         this.setState(() => {
+        //             return {products: tempProducts, image:base64Flag+imageStr };
+        //         });
+        //
+        //     })
     }
 
     addToCart = (item) => {
@@ -72,7 +130,7 @@ class ProductList extends Component {
                                 // return <Product key={product.id} products={product} addToCart ={this.addToCart}/>;
 
                                 if (product.category == this.state.currentCat) {
-                                    return <Product key={product.id} products={product} addToCart ={this.addToCart} addToWishList = {this.addToWishList}/>;
+                                    return <Product key={product.id} products={product} addToCart ={this.addToCart} addToWishList = {this.addToWishList} />;
 
                                 } else if (this.state.currentCat == 'All Items') {
                                     return<Product key={product.id} products={product} addToCart ={this.addToCart} addToWishList = {this.addToWishList}/>;

@@ -77,7 +77,7 @@ const Manager = props => (
                 <div id="page-container">
                     <NavBar/>
                     <center>
-                    <Container style={{marginLeft: '8%'}}>
+                    <Container style={{marginTop:'2%'}}>
 
                         <h3 className="text-center text-bright">Store Managers</h3>
                         <Table responsive>

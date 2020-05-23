@@ -79,23 +79,49 @@ class ProductDetails extends Component {
     };
 
     componentDidMount() {
+        var allItems =[];
         Axios.get('/additem/')
             .then(response => {
+
+                var items = response.data;
+
+                console.log(items.length);
+                for(var x = 0; x < items.length ; x++){
+                    var base64Flag = 'data:image/jpeg;base64,';
+                    var imageStr = this.arrayBufferToBase64(items[x].img.data.data);
+                    const item = {
+                        image: base64Flag+imageStr,
+                        name: items[x].name,
+                        category:items[x].category,
+                        description:items[x].description,
+                        price: items[x].price,
+                        quantity:items[x].quantity,
+                        size:items[x].size,
+                        meterial:items[x].meterial,
+                        comment:items[x].comment,
+                        rating:items[x].name,
+                        discount:items[x].discount,
+                    }
+
+
+                    allItems.push(item)
+                }
+
+
                 this.setState({
-                   items: response.data
+                    items: allItems
                 })
             })
 
             .catch((error) => {
                 console.log(error);
             })
-        console.log(this.state.items.comment)
 
     }
 
     render() {
         const { rating } = this.state;
-        const {_id, name, img, price, description, meterial} = this.props.location.item;
+        const {_id, name, image, price, description, meterial} = this.props.location.item;
 
         const comments = [];
         const ratings = [];
@@ -135,7 +161,7 @@ class ProductDetails extends Component {
 
                     <div className="row">
                         <div className="col-10 mx-auto col-md-6 my-3">
-                            <img src ={(`/uploads/${img}`)} className="img-fluid" alt="product"/>
+                            <img src ={image} className="img-fluid" alt="product"/>
 
                                 </div>
                                 <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">

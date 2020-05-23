@@ -25,7 +25,7 @@ const NavBar  = ({session, logout}) =>{
 
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand >
-                    <Link to='/'>
+                    <Link>
                         <img src={logo} className="menu__logo navbar-brand"></img>
                     </Link>
                 </Navbar.Brand>
@@ -62,10 +62,10 @@ const NavBar  = ({session, logout}) =>{
                         </Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link ><a className=" nav-link mr-sm-2"  onClick={logout}>
+                        <Nav.Link ><Link className=" nav-link mr-sm-2"  to='/AdLog'>
                             <i className="fas fa-user-circle"></i> &nbsp;
                             Logout
-                        </a>
+                        </Link>
                         </Nav.Link>
 
                     </Nav>
