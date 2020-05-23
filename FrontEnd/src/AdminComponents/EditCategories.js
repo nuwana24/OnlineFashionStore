@@ -118,6 +118,7 @@ const mapStateToProps = ({ session}) => ({
             subCategories: [{ name: "" }],
             description:''
         })
+        alert('Category updated');
 
         // window.location = '/ViewCategory';
 
