@@ -54,10 +54,10 @@ const AdminLogin = ({session, login, ...props}) => {
             <div id="page-container">
             <MuiThemeProvider>
                 <LoginNav/>
-                <div>
+                <divç>
 
                     <form onSubmit={handleSubmit}>
-                        {/*<Row xs={1} md={2}>*/}
+                        <Row xs={1} md={2}>
                     <Col className="bg-light " style={{minHeight: '40rem',minWidth:'30px'}}>
                         <Card  style={{minWidth:'40px',minHeight:'42rem',marginTop:'3.5rem'}}>
                             <h4 style={{marginTop:'5rem'}} className='text-info font-weight-bold'>Admin and Manager Login</h4>
@@ -81,9 +81,9 @@ const AdminLogin = ({session, login, ...props}) => {
                            <Link to={'/'} className='text-dark mt-3' > Not an admin or a store manager?</Link>
                         </Card>
                     </Col>
-                        {/*</Row>*/}
+                        </Row>
                     </form>
-                </div>
+                </divç>
 
             </MuiThemeProvider>
         </div>
