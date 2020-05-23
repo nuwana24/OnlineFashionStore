@@ -29,8 +29,8 @@ const Item = props => (
         {/*<td>{props.item.sizes}</td>*/}
         <td>{props.item.meterial}</td>
         <td>
-            <Link to={"/editItem/"+props.item._id}><Button style={{marginTop: "-5%", marginLeft:"5%",marginBottom:"5%"}} type="button" className="btn btn-success">Edit</Button></Link><br/>
-            <button style={{marginTop: "5%"}} type="button" className="btn btn-danger" onClick={() => {props.deleteItem(props.item._id)}}>Delete</button>
+            <Link to={"/editItem/"+props.item.id}><Button style={{marginTop: "-5%", marginLeft:"5%",marginBottom:"5%"}} type="button" className="btn btn-success">Edit</Button></Link><br/>
+            <button style={{marginTop: "5%"}} type="button" className="btn btn-danger" onClick={() => {props.deleteItem(props.item.id)}}>Delete</button>
         </td>
     </tr>
 )
@@ -56,6 +56,11 @@ class ItemList extends Component {
     };
 
     componentDidMount() {
+
+        this.getItems();
+    }
+
+    getItems =() =>{
         var allItems =[];
         axios.get('/additem/')
             .then(response => {
@@ -68,6 +73,7 @@ class ItemList extends Component {
                     var base64Flag = 'data:image/jpeg;base64,';
                     var imageStr = this.arrayBufferToBase64(items[x].img.data.data);
                     const item = {
+                        id:items[x]._id,
                         image: base64Flag+imageStr,
                         name: items[x].name,
                         category:items[x].category,
@@ -97,7 +103,6 @@ class ItemList extends Component {
             .catch((error) => {
                 console.log(error);
             })
-
     }
     deleteItem(id){
         axios.delete('/additem/'+id)
@@ -106,6 +111,8 @@ class ItemList extends Component {
         this.setState({
             itemlist: this.state.itemlist.filter(el => el._id != id)
         })
+
+        this.getItems();
     }
 
     itemList(){

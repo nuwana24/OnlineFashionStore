@@ -78,6 +78,13 @@ class ProductDetails extends Component {
         console.log('Added to wishlist');
     };
 
+    arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+
     componentDidMount() {
         var allItems =[];
         Axios.get('/additem/')
@@ -85,11 +92,11 @@ class ProductDetails extends Component {
 
                 var items = response.data;
 
-                console.log(items.length);
                 for(var x = 0; x < items.length ; x++){
                     var base64Flag = 'data:image/jpeg;base64,';
                     var imageStr = this.arrayBufferToBase64(items[x].img.data.data);
                     const item = {
+                        id:items[x]._id,
                         image: base64Flag+imageStr,
                         name: items[x].name,
                         category:items[x].category,
@@ -99,7 +106,7 @@ class ProductDetails extends Component {
                         size:items[x].size,
                         meterial:items[x].meterial,
                         comment:items[x].comment,
-                        rating:items[x].name,
+                        rating:items[x].rating,
                         discount:items[x].discount,
                     }
 
@@ -128,7 +135,7 @@ class ProductDetails extends Component {
         var totRate = 0;
         var R = 0;
         {this.state.items.map(item => {
-            if(item._id == _id) {
+            if(item.id == _id) {
                 var x = item.comment.length;
                 for (var i = 0; i < x; i++) {
                     comments.push(item.comment[i]);

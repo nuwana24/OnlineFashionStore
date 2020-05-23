@@ -26,6 +26,7 @@ class Cart extends Component {
 
     state = {
         Cart: [],
+        Order:[],
         total : 0,
         discount: 0,
         redirect : false,
@@ -56,9 +57,11 @@ class Cart extends Component {
                 const cart = res.data;
 
                 let tempProducts = [];
+                let order = [];
                 let image='';
                 if(this.state.loading != true){
                 cart.forEach(item => {
+
                     // let image= this.state.images.find(products => products.id === item.id);
                     this.state.images.map(prod =>{
                         console.log(prod);
@@ -72,13 +75,22 @@ class Cart extends Component {
                     tempProducts = [...tempProducts, singleItem];
 
 
+                    const orders ={
+                        id:item.id,
+                        name:item.name,
+                        price:item.price,
+                        quantity: item.quantity,
+                        discount:item.discount
+
+                    }
+                    order.push(orders);
+
                 });
 
 
-
-
                 this.setState({
-                    Cart : tempProducts
+                    Cart : tempProducts,
+                    Order:order,
                 });
 
                  this.updateStates();
@@ -230,7 +242,7 @@ class Cart extends Component {
         const user = {
             userId : this.props.session.userId,
             username : this.props.session.username,
-            Cart : this.state.Cart
+            Cart : this.state.Order
         };
 
         confirmAlert({

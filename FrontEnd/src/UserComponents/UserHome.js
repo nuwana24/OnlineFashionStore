@@ -12,8 +12,8 @@ import Cart  from "./Cart/Cart";
 // import PropTypes from "prop-types";
 import {Carousel} from "react-bootstrap";
 import Caro1 from "../Images/caro1.jpeg";
-import Caro2 from "../Images/caro2.jpg";
-import Caro3 from "../caro3.jpg";
+import Caro2 from "../Images/caro2.jpeg";
+import Caro3 from "../Images/caro3.jpeg";
 
 class UserHome extends Component{
 
