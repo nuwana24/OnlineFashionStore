@@ -75,9 +75,6 @@ function App() {
           <Route path="/addDiscount" exact component={addDiscount}/>
           <Route path="/discountPopUp/:id" exact component={discountPopUp}/>
 
-
-
-
           <br />
       </switch>
       <FooterPage id='footer' />

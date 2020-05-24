@@ -123,9 +123,12 @@ class ProductList extends Component {
 
                 <div className = "py-5 ">
                     <center>
-                    <div className = "container">
+                    {/*<div className = "container">*/}
                         <Titles title={this.state.currentCat}/>
-                        <div className="row ">
+                        <div className='row  mr-5' style={{marginLeft:'5%'}}>
+                            <div className='col-12'>
+                                <div className='card-deck'>
+
                             {products.map( product =>{
                                 // return <Product key={product.id} products={product} addToCart ={this.addToCart}/>;
 
@@ -143,6 +146,9 @@ class ProductList extends Component {
                             })}
                         </div>
                     </div>
+                        </div>
+
+                    {/*</div>*/}
                     </center>
                 </div>
 

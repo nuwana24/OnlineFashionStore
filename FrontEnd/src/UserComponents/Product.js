@@ -59,14 +59,15 @@ const Product = ({session, ...props}) =>  {
 
     return (
 
-        <div style={{display: "inline-block"}}>
+        <div className='mr-0'>
+            <div style={{display: "inline-block"}}>
 
-            <Card style={{width: '18rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5">
+            <Card style={{width: '16rem', display: "inline-block"}} className="mr-3 mt-5">
 
                 <div >
                     <Link to={{pathname: '/ProductDetails', item:{_id, name, image, category,price, description,quantity,size,meterial,discount}}}>
                         <Card.Img variant='top' src={props.products.image}
-                                  style={{width: "18rem", height: "20rem"}}/>
+                                  style={{width: "16rem", height: "20rem"}}/>
                     </Link>
                 </div>
 
@@ -93,6 +94,8 @@ const Product = ({session, ...props}) =>  {
                     </button>
                 </Card.Body>
             </Card>
+        </div>
+
         </div>
     );
 };

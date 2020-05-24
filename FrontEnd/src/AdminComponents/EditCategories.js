@@ -120,7 +120,7 @@ const mapStateToProps = ({ session}) => ({
         })
 
         // window.location = '/ViewCategory';
-
+        alert('Category updated...');
     }
 
     render() {

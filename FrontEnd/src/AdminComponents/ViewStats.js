@@ -5,6 +5,7 @@ import { Bar } from 'react-chartjs-2';
 import NavBar from "./NavBar";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
+import {Spinner} from "react-bootstrap";
 
 const mapStateToProps = ({ session}) => ({
     session
@@ -15,7 +16,7 @@ export class ViewStats extends Component {
 
         super(props);
 
-        this.state = { Data: {}, TotFor:[] };
+        this.state = { Data: {}, TotFor:[] ,loading:true};
 
     }
 
@@ -23,8 +24,6 @@ export class ViewStats extends Component {
         axios.get(`/additem/`)
 
             .then(res => {
-
-                console.log(res);
 
                 const productStat = res.data;
 
@@ -39,12 +38,10 @@ export class ViewStats extends Component {
                     if (category.indexOf(product.category) === -1) {
                         category.push(product.category);
                     }
-                    // category.push(product.category);
 
                 });
 
               for(var i= 0 ; i < category.length;i++){
-                  // this.state.TotFor.push({category:category[i]});
                   for(var j = 0 ; j < item.length; j++){
                       if(category[i] == item[j].category){
                           this.state.TotFor.push({price: (item[j].price * item[j].quantity),category:category[i]});
@@ -76,11 +73,15 @@ export class ViewStats extends Component {
                     K = K+ y
                 })
 
+                CategoryWise.SwimWear.map(x =>{
+                    SW = SW + x
+                })
+
                 let tots =[];
                 tots.push(W);
+                tots.push(SW)
                 tots.push(K)
                 tots.push(T)
-                tots.push(126000)
                 tots.push(M)
 
 
@@ -88,7 +89,7 @@ export class ViewStats extends Component {
                 console.log(CategoryWise);
 
                 this.setState({
-
+                    loading:false,
                     Data: {
 
                         labels: category,
@@ -125,10 +126,13 @@ export class ViewStats extends Component {
                 <NavBar />
 
                 <center><h2>Total value of the prices of each category</h2></center>
-
+                {this.state.loading ? <center><Spinner animation='border' /></center> :
             <Bar data={this.state.Data}
-
-        options={{ maintainAspectRatio: false }} ></Bar>
+                 options={{
+                     responsive: true,
+                     maintainAspectRatio: true,
+                 }}
+        ></Bar> }
 
         </div>
 

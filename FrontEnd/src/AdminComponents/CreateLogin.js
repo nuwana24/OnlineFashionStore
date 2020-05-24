@@ -266,7 +266,7 @@ const mapStateToProps = ({ session}) => ({
                     <div>
                         <div>
                             <section style={sectionstyle}>
-                                <Container>
+                                <Container className='mt-3'>
 
                                     <Col>
                                         <div className="FormAddLogin" className="p-4 mb-2 bg-light text-dark">

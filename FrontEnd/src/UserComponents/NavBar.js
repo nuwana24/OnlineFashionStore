@@ -48,7 +48,7 @@ class NavBar extends Component{
 
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand >
-                    <Link to='/'>
+                    <Link onClick={() => this.props.onClickChanger("All Items")} to='/'>
                         <img src={logo} className="menu__logo navbar-brand"></img>
                     </Link>
                 </Navbar.Brand>
@@ -62,7 +62,7 @@ class NavBar extends Component{
                     </Nav>
                     <Nav>
                         <Nav.Link> <Link  className="nav-link" to="/WishListMain">
-                            <i className="fas fa-cart-plus"></i> &nbsp;
+                            <i className="fas fa-heart"></i> &nbsp;
                             Wishlist
                         </Link>
                         </Nav.Link>

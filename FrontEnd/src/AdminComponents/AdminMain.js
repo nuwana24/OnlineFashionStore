@@ -1,5 +1,5 @@
 import React, {Component, useEffect, useState} from "react";
-import {Card, Carousel, Col, Container, Image, Jumbotron, Row} from "react-bootstrap";
+import {Card, Carousel, Col, Container, Image, Jumbotron, Row, Spinner} from "react-bootstrap";
 
 import {render} from "react-dom";
 import {Link, Redirect} from "react-router-dom";
@@ -23,7 +23,9 @@ class AdminMain extends Component{
             TotalItemCost:0,
             items:[],
             orders:[],
-            loading:true
+            loading:true,
+            Iloading:true,
+            Oloading: true
 
 
         }
@@ -32,7 +34,7 @@ class AdminMain extends Component{
 
     componentDidMount() {
 
-
+        //Retrieving manager details
         axios.get('/managers/')
             .then(response => {
                 this.setState({
@@ -45,21 +47,26 @@ class AdminMain extends Component{
                 console.log(error);
             })
 
+        //Retrieving item details
         axios.get('/additem/')
             .then(response => {
                 this.setState({
                     items:response.data,
-                    ItemCount:response.data.length
+                    ItemCount:response.data.length,
+                    Iloading:false
                 })
             })
 
             .catch((error) => {
                 console.log(error);
             })
+
+        //Retrieving order details
         axios.get('/api/cart/getOrder')
             .then(response => {
                 this.setState({
                     orders:response.data.data,
+                    Oloading:false
                 })
             })
 
@@ -69,12 +76,12 @@ class AdminMain extends Component{
     }
 
 
-
     render() {
-      var Mcount = this.state.ManagerCount;
-      var ItemCount = this.state.ItemCount;
-      var totPrice = 0;
-      var totSales = 0;
+
+      var Mcount = this.state.ManagerCount; //Number of managers
+      var ItemCount = this.state.ItemCount; //Number of item types
+      var totPrice = 0; //Total products value
+      var totSales = 0; //Total sales
 
       this.state.items.map(item =>
       {
@@ -111,28 +118,42 @@ class AdminMain extends Component{
                                 <Card style={{width: '20rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5" bg='warning' text='light'>
 
                                     <Card.Body>
-                                        <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}} >{Mcount}</Card.Title>
+                                        <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}} >
+                                            {this.state.loading? <Spinner animation='grow'/> :
+                                                <span>{Mcount}</span>
+                                            }</Card.Title>
                                         <Card.Text>Number of Store managers </Card.Text>
                                     </Card.Body>
                                 </Card>
                                 <Card style={{width: '20rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5" bg='info' text='light'>
 
                                     <Card.Body>
-                                        <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}}>{ItemCount}</Card.Title>
+                                        <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}}>
+                                            {this.state.Iloading? <Spinner animation='grow'/> :
+                                                <span>{ItemCount}</span> }
+                                        </Card.Title>
                                         <Card.Text>Number of Product types </Card.Text>
                                     </Card.Body>
                                 </Card>
                                 <Card style={{width: '20rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5" bg='success' text='light'>
 
                                     <Card.Body>
-                                        <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}}>Rs.{totPrice}</Card.Title>
+                                        <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}}>
+                                            {this.state.Iloading ? <Spinner animation='grow'/> :
+                                                <span>Rs.{totPrice}</span>
+                                            }
+                                        </Card.Title>
                                         <Card.Text >Total value of the products available</Card.Text>
                                     </Card.Body>
                                 </Card>
                                 <Card style={{width: '20rem', flex: 2, display: "inline-block"}} className="mr-5 mt-5" bg='primary' text='light'>
 
                                     <Card.Body>
-                                        <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}}>Rs.{totSales}</Card.Title>
+                                        <Card.Title style={{fontSize: "50px", fontFamily: "Open-Sans",color:"white"}}>
+                                            {this.state.Oloading ? <Spinner animation='grow'/> :
+                                                <span> Rs.{totSales}</span>
+                                            }
+                                        </Card.Title>
                                         <Card.Text >Sales upto date</Card.Text>
                                     </Card.Body>
                                 </Card>
