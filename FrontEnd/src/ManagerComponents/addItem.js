@@ -47,7 +47,7 @@ class addItem extends Component {
             price : '',
             quantity : '',
             size :'',
-            sizes : ['Small','Medium','Large'],
+            sizes : ['Select','Small','Medium','Large'],
             meterial : '',
             discount : 0,
             categories : []
@@ -205,23 +205,10 @@ class addItem extends Component {
         })
     }
 
-    // handleFileChange = (e) => {
-    //     let target = e.target;
-    //     let value = target.files[0];
-    //
-    //     this.setState({
-    //         file : value
-    //     })
-    // }
+
 
     render() {
-        // const onDrop = (files)=>{
-        //
-        //     let formData = new FormData();
-        //     const config = {
-        //         header:{conten}
-        //     }
-        // }
+
         let $imagePreview = (<div className="previewText image-container"></div>);
         if (this.state.imagePreviewUrl) {
             $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="300" height="400" /> </div>);

@@ -46,7 +46,7 @@ class addItem extends Component {
             price : '',
             quantity : '',
             size :'',
-            sizes : ['Small','Medium','Large'],
+            sizes : ['Select','Small','Medium','Large'],
             meterial : '',
             itemlist: [],
             categories : []
@@ -259,42 +259,7 @@ class addItem extends Component {
                             <div className="p-3 mb-2 bg-light text-dark">
                                 <center><h3>Update Item</h3></center>
                                 <form onSubmit={this.onSubmit} enctype="multipart/form-data">
-                                    {/*<div style={{display: 'flex', justifyContent:'space-between'}}>*/}
-                                    {/*    <Dropzone*/}
-                                    {/*        onDrop={onDrop}*/}
-                                    {/*        multiple*/}
-                                    {/*        maxSize*/}
-                                    {/*    >*/}
-                                    {/*        {({getRootProps, getInputProps}) =>(*/}
-                                    {/*            <div style={{width:'300px', height:'240px', border:'1px solid lightgrey', display:'flex',alignItems:'center', justifyContent:'center'}}*/}
-                                    {/*                 {...getRootProps()}*/}
-                                    {/*            >*/}
-                                    {/*                <input{...getInputProps()}/>*/}
-                                    {/*                <Icon type="plus" style={{fontSize:'3rem',color:'#949494'}}/>*/}
 
-                                    {/*            </div>*/}
-                                    {/*        )}*/}
-
-                                    {/*    </Dropzone>*/}
-
-                                    {/*    <div style={{  width:'300px', height:'240px', border:'1px solid lightgrey', display:'flex',overflowX:'scroll'}}>*/}
-
-                                    {/*        <div>*/}
-                                    {/*            <img/>*/}
-                                    {/*        </div>*/}
-
-
-                                    {/*    </div>*/}
-
-
-                                    {/*</div>*/}
-                                    {/*<p>Upload a new Image</p>*/}
-                                    {/*<div className="form-group">*/}
-                                    {/*    <input  type="file" name="file" onChange={this.handleFileChange} />*/}
-                                    {/*    /!*<button type="button" onClick={this.submit} > Upload </button>*!/*/}
-                                    {/*    { $imagePreview }*/}
-
-                                    {/*</div>*/}
 
                                     <div className="form-group">
                                         <label>Category </label>
