@@ -41,9 +41,9 @@ const Login = ({session, login, errors, ...props}) => {
     };
 
     return(
-        <React.Fragment>
+        <React.Fragment >
             <LoginNav />
-            <div className="my-lg-5">
+            <div className="my-lg-5"style={{minHeight:'60vh'}}>
                 <Card className="bg-light mb-3 text-center w-50 mx-auto">
                     <CardBody >
                         <CardTitle> <h2><strong>Login</strong></h2></CardTitle>

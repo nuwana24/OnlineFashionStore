@@ -50,7 +50,7 @@ const AdminLogin = ({session, login, ...props}) => {
 
 
     return (
-        <div align='center'>
+        <div align='center' style={{minHeight:'50vh'}}>
             <div id="page-container">
             <MuiThemeProvider>
                 <LoginNav/>

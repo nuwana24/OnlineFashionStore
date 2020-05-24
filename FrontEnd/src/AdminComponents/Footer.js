@@ -7,7 +7,7 @@ import color from "@material-ui/core/colors/blueGrey";
 
 const FooterPage = () => {
     return (
-        <div >
+        <div style={{Bottom:'0'}}>
            <footer>
                <div  className="Footer" className="p-3 mb-2 bg-dark text-white">
                <Row >
