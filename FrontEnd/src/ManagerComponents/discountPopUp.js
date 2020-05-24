@@ -122,7 +122,7 @@ class discountPopUp extends Component{
                 <div>
                     <React.Fragment>
                         <NavBar/>
-                        <div style={{width: "50%", marginTop: "3%", marginLeft: "25%"}}>
+                        <div style={{width: "50%", marginTop: "3%", marginLeft: "25%",minHeight:'70vh'}}>
 
                             <Card>
                                 <CardBody>

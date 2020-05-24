@@ -127,7 +127,7 @@ class ItemList extends Component {
         if (this.props.session.username !== null) {
 
             return (
-                <div>
+                <div style={{minHeight:'100vh'}}>
                     <NavBar/>
                     <Container>
 

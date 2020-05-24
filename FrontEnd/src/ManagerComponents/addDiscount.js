@@ -90,8 +90,8 @@ class ItemList extends Component {
             return (
                 <div>
                     <NavBar/>
-                    <Container>
-
+                    <Container >
+                        <div style={{minHeight:'100vh'}}>
                         <h3 style={{marginTop: "3%"}} className="text-center text-bright">Item List</h3>
                         <table className="table" style={{marginLeft: "2%"}}>
                             <thead className="thead-dark">
@@ -112,6 +112,7 @@ class ItemList extends Component {
                             {this.itemList()}
                             </tbody>
                         </table>
+                        </div>
                     </Container>
                 </div>
             );
