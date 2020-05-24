@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import {Card} from "react-bootstrap";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {confirmAlert} from "react-confirm-alert";
+import Axios from "axios";
 
 const mapStateToProps = ({ session}) => ({
     session
@@ -38,23 +40,48 @@ const Product = ({session, ...props}) =>  {
             };
 
             props.addToCart(item)
+        } else {
+            confirmAlert({
+                title: 'Login',
+                message: 'Please login',
+                buttons: [
+                    {
+                        label: 'Ok',
+
+                    }
+                ]
+            })
         }
 
     };
 
     const addToWishListHandler = () =>{
-        const item = {
-            userId: session.userId,
-            productId: _id,
-            name: name,
-            // img: image,
-            price: price,
-            description: description,
-            discount: discount,
-            material: meterial
-        };
 
-        props.addToWishList(item);
+        if(session.userId !== null) {
+            const item = {
+                userId: session.userId,
+                productId: _id,
+                name: name,
+                // img: image,
+                price: price,
+                description: description,
+                discount: discount,
+                material: meterial
+            };
+
+            props.addToWishList(item);
+        } else {
+            confirmAlert({
+                title: 'Login',
+                message: 'Please login',
+                buttons: [
+                    {
+                        label: 'Ok',
+
+                    }
+                ]
+            })
+        }
     };
 
     return (
@@ -86,7 +113,7 @@ const Product = ({session, ...props}) =>  {
                         </Card.Text>
                     }
 
-                    <button className="cart-btn ml-1" onClick={() => props.addToCart} onClick={addToCartHandler}>
+                    <button className="cart-btn ml-1" onClick={addToCartHandler}>
                         <i className="fas fa-cart-plus"/>
                     </button>
                     <button style={{position: "absolute", right: 20}} onClick={addToWishListHandler}>
