@@ -39,7 +39,7 @@ const mapStateToProps = ({ session}) => ({
             lastName: '',
             email: '',
             genders: ['Male', 'Female', 'Prefer not to say'],
-            gender: '',
+            gender: 'Male',
             password: '',
             password2: '',
             dateOfBirth: new Date(),
@@ -165,8 +165,6 @@ const mapStateToProps = ({ session}) => ({
             email: this.state.email,
             password: this.state.password,
         }
-        console.log(manager);
-        console.log(man);
 
         if (manager.email !== '') {
             this.state.addedManagers.map(added => {

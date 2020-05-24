@@ -69,7 +69,6 @@ class ItemList extends Component {
 
                 console.log(items.length);
                 for(var x = 0; x < items.length ; x++){
-                    console.log('awa');
                     var base64Flag = 'data:image/jpeg;base64,';
                     var imageStr = this.arrayBufferToBase64(items[x].img.data.data);
                     const item = {

@@ -79,14 +79,10 @@ export class ViewStats extends Component {
 
                 let tots =[];
                 tots.push(W);
-                tots.push(SW)
-                tots.push(K)
-                tots.push(T)
-                tots.push(M)
-
-
-
-                console.log(CategoryWise);
+                tots.push(SW);
+                tots.push(K);
+                tots.push(T);
+                tots.push(M);
 
                 this.setState({
                     loading:false,
@@ -122,7 +118,7 @@ export class ViewStats extends Component {
         if (this.props.session.username !== null) {
         return (
 
-            <div >
+            <div style={{minHeight:'85vh'}}>
                 <NavBar />
 
                 <center><h2>Total value of the prices of each category</h2></center>

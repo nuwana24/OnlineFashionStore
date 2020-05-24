@@ -26,6 +26,7 @@ const mapStateToProps = ({ session}) => ({
          this.onChangelastName = this.onChangelastName.bind(this);
          this.onChangeEmail = this.onChangeEmail.bind(this);
          this.onChangePassword = this.onChangePassword.bind(this);
+         this.onChangePassword2 = this.onChangePassword2.bind(this);
          this.onChangeGender = this.onChangeGender.bind(this);
          this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
          this.onChangeAddress = this.onChangeAddress.bind(this);
@@ -41,12 +42,15 @@ const mapStateToProps = ({ session}) => ({
              genders: ['Male', 'Female', 'Prefer not to say'],
              gender: '',
              password: '',
+             password2:'',
              dateOfBirth: new Date().getDate(),
              Address: '',
              Address2: '',
              city: '',
              zip: 0,
-             managers: []
+             managers: [],
+             passwordV: '',
+             pwdFormat: '',
          }
      }
 
@@ -65,6 +69,7 @@ const mapStateToProps = ({ session}) => ({
                      Address2: response.data.Address2,
                      city: response.data.city,
                      zip: response.data.zip,
+                     validation: false
                  })
 
              })
@@ -102,6 +107,12 @@ const mapStateToProps = ({ session}) => ({
      onChangePassword(e) {
          this.setState({
              password: e.target.value
+         });
+     }
+
+     onChangePassword2(e) {
+         this.setState({
+             password2: e.target.value
          });
      }
 
@@ -158,22 +169,48 @@ const mapStateToProps = ({ session}) => ({
              zip: this.state.zip
          }
 
-         console.log(manager)
-         axios.post('/managers/update/' + this.props.match.params.id, manager)
-             .then(res => console.log(res.data));
 
-         this.props.history.push({
-             pathname: '/ViewManager',
-             details: axios.get('/managers/')
-                 .then(response => {
-                     if(response.data.length > 0){
-                         this.setState({
-                             managers: response.data.map(manager =>manager.firstName)
-                         })
-                     }
-                 })
-         });
+         if (new RegExp((/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)).test(this.state.password)) {
+             this.setState({
+                 validation: true
+             })
+         } else {
+             this.setState({
+                 pwdFormat: "The password should contain atleast one number,character and a special character",
+                 validation: false,
+             })
+         }
+         if (this.state.password2 !== this.state.password) {
+             this.setState({
+                 passwordV: "Re-entered password do not match the password!",
+                 validation: false,
+             })
+         } else {
+             this.setState({
+                 validation: true
+             })
+         }
+         if (this.state.validation === true) {
+             axios.post('/managers/update/' + this.props.match.params.id, manager)
+                 .then(res => console.log(res.data));
 
+             this.setState({
+                 passwordV: '',
+                 pwdFormat: '',
+             })
+             this.props.history.push({
+                 pathname: '/ViewManager',
+                 details: axios.get('/managers/')
+                     .then(response => {
+                         if (response.data.length > 0) {
+                             this.setState({
+                                 managers: response.data.map(manager => manager.firstName)
+                             })
+                         }
+                     })
+             });
+             alert('Manager updated');
+         }
 
      }
 
@@ -218,7 +255,8 @@ const mapStateToProps = ({ session}) => ({
                                                      </Form.Group>
                                                      <Form.Group as={Col} controlId="formGridLname">
                                                          <Form.Label>Last Name</Form.Label>
-                                                         <Form.Control placeholder="Enter Last Name"
+                                                         <Form.Control required
+                                                                       placeholder="Enter Last Name"
                                                                        onChange={this.onChangelastName}
                                                                        value={this.state.lastName}/>
                                                      </Form.Group>
@@ -228,7 +266,8 @@ const mapStateToProps = ({ session}) => ({
                                                          <Form.Label>Email</Form.Label>
                                                          <Form.Control type="email" placeholder="Enter email"
                                                                        onChange={this.onChangeEmail}
-                                                                       value={this.state.email}/>
+                                                                       value={this.state.email}
+                                                                       required/>
                                                      </Form.Group>
                                                  </Form.Row>
                                                  <Form.Row>
@@ -236,12 +275,23 @@ const mapStateToProps = ({ session}) => ({
                                                          <Form.Label>Password</Form.Label>
                                                          <Form.Control type="password" placeholder="Password"
                                                                        onChange={this.onChangePassword}
-                                                                       value={this.state.password}/>
+                                                                       required/>
+                                                         <p style={{
+                                                             color: "red",
+                                                             fontSize: "smaller"
+                                                         }}>{this.state.pwdFormat}</p>
                                                      </Form.Group>
 
                                                      <Form.Group as={Col} controlId="formGridRePassword">
                                                          <Form.Label>Re-enter Password</Form.Label>
-                                                         <Form.Control type="password" placeholder="Re-enter Password"/>
+                                                         <Form.Control type="password" placeholder="Re-enter Password"
+                                                                       onChange={this.onChangePassword2}
+                                                                       value={this.state.password2}
+                                                                       required/>
+                                                         <p style={{
+                                                             color: "red",
+                                                             fontSize: "smaller"
+                                                         }}>{this.state.passwordV}</p>
                                                      </Form.Group>
 
                                                  </Form.Row>
@@ -263,7 +313,8 @@ const mapStateToProps = ({ session}) => ({
                                                          <Form.Label>Gender</Form.Label><br/>
                                                          <Form.Control as="select" placeholder="Choose..."
                                                                        onChange={this.onChangeGender}
-                                                                       value={this.state.gender}>
+                                                                       value={this.state.gender}
+                                                                       required>
                                                              {
                                                                  this.state.genders.map(function (gender) {
                                                                      return <option
@@ -280,27 +331,31 @@ const mapStateToProps = ({ session}) => ({
                                                      <Form.Label>Address</Form.Label>
                                                      <Form.Control placeholder="1234 Main St"
                                                                    onChange={this.onChangeAddress}
-                                                                   value={this.state.Address}/>
+                                                                   value={this.state.Address}
+                                                                   required/>
                                                  </Form.Group>
 
                                                  <Form.Group controlId="formGridAddress2">
                                                      <Form.Label>Address 2</Form.Label>
-                                                     <Form.Control placeholder="Apartment, studio, or floor"
+                                                     <Form.Control placeholder="Address part 2"
                                                                    onChange={this.onChangeAddress2}
-                                                                   value={this.state.Address2}/>
+                                                                   value={this.state.Address2}
+                                                                   required/>
                                                  </Form.Group>
 
                                                  <Form.Row>
                                                      <Form.Group as={Col} controlId="formGridCity">
                                                          <Form.Label>City</Form.Label>
                                                          <Form.Control onChange={this.onChangeCity}
-                                                                       value={this.state.city}/>
+                                                                       value={this.state.city}
+                                                                       required />
                                                      </Form.Group>
 
                                                      <Form.Group as={Col} controlId="formGridZip">
                                                          <Form.Label>Zip</Form.Label>
                                                          <Form.Control onChange={this.onChangeZip}
-                                                                       value={this.state.zip}/>
+                                                                       value={this.state.zip}
+                                                                       required/>
                                                      </Form.Group>
                                                  </Form.Row>
 

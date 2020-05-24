@@ -121,6 +121,7 @@ const mapStateToProps = ({ session}) => ({
 
         // window.location = '/ViewCategory';
         alert('Category updated...');
+        this.props.history.push('/ViewCategory');
     }
 
     render() {
