@@ -48,7 +48,7 @@ class NavBar extends Component{
 
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand >
-                    <Link onClick={() => this.props.onClickChanger("All Items")} to='/'>
+                    <Link to='/'>
                         <img src={logo} className="menu__logo navbar-brand"></img>
                     </Link>
                 </Navbar.Brand>

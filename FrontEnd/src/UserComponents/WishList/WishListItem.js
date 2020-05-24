@@ -10,19 +10,18 @@ const mapStateToProps = ({ session}) => ({
 
 class WishListItem extends Component {
 
-    addToCartHandler = (id, name, img, price, discount) => {
+    addToCartHandler = (id, name, price, discount) => {
 
         if(this.props.session.userId !== null){
             const item = {
                 userId: this.props.session.userId,
                 productId: id,
                 name: name,
-                // img: img,
                 price: price,
                 qty: 1,
                 discount: discount
             };
-
+            console.log('WishListItem addToCart')
             this.props.addToCart(item)
         }
 
@@ -43,7 +42,7 @@ class WishListItem extends Component {
                             <img src={image} alt = "product" className="card-img"/>
                         </Link>
                         <div style={{display: 'flex', justifyContent: 'left', alignItems: 'center', height: '8vh'}}>
-                            <button style={{position: "absolute", right: 40}} onClick={ this.addToCartHandler(id, name, image, price, discount)}>
+                            <button style={{position: "absolute", right: 40}} onClick={() => this.addToCartHandler(id, name, price, discount)}>
                                 <i className="fas fa-cart-plus"/>
                             </button>
                             <button style={{position: "absolute", right: 20}} onClick={() => {

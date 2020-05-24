@@ -75,43 +75,32 @@ class WishListItemsList extends Component{
                 let tempList = [];
                 let image='';
                 if(this.state.loading !== true){
-                list.forEach(item => {
-                    this.state.images.map(prod =>{
-                        console.log(prod);
-                        console.log(prod.id,item.id);
-                        if(prod.id === item.id){
-                            image = prod.image
-                        }
-                    })
-                    const singleItem = {image,...item};
-                    // const singleItem = {...item};
-                    tempList = [...tempList, singleItem];
-                });
+                    list.forEach(item => {
+                        this.state.images.map(prod =>{
+                            if(prod.id === item.id){
+                                image = prod.image
+                            }
+                        })
+                        const singleItem = {image,...item};
+                        tempList = [...tempList, singleItem];
+                    });
 
-                this.setState({
-                    WishList : tempList
-                })
-            }})
+                    this.setState({
+                        WishList : tempList
+                    })
+                }})
     }
 
     removeWishList = (productId) => {
         Axios.get('/api/WishList/rmoveWishList', {params:{userId: this.props.session.userId, productId: productId}})
             .then(res => {
-                const list = res.data;
 
-                let tempList = [];
-                list.forEach(item => {
-                    const singleItem = {...item};
-                    tempList = [...tempList, singleItem];
-                });
-
-                this.setState({
-                    WishList : tempList
-                })
+                this.getWishList();
             })
     };
 
     addToCart = (item) => {
+        console.log('WishListItemList add to cart');
         Axios.post('/api/cart/addToCart', item);
     };
 
